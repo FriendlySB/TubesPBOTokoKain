@@ -1,16 +1,17 @@
-
 package Model;
 
-public class Admin {
-    int id_admin;
-    int id_user;
+public class Admin extends User {
 
-    public Admin(int id_admin, int id_user) {
-        this.id_admin = id_admin;
-        this.id_user = id_user;
-    }
+    private int id_admin;
+    private ChatRoom chatroom;
 
     public Admin() {
+    }
+
+    public Admin(int id_admin, ChatRoom chatroom, int id_user, String username, String nama_lengkap, String email, String password, Tipeuser tipeuser) {
+        super(id_user, username, nama_lengkap, email, password, tipeuser);
+        this.id_admin = id_admin;
+        this.chatroom = chatroom;
     }
 
     public int getId_admin() {
@@ -21,17 +22,12 @@ public class Admin {
         this.id_admin = id_admin;
     }
 
-    public int getId_user() {
-        return id_user;
+    public ChatRoom getChatroom() {
+        return chatroom;
     }
 
-    public void setId_user(int id_user) {
-        this.id_user = id_user;
-    }
-
-    @Override
-    public String toString() {
-        return "Admin{" + "id_admin=" + id_admin + ", id_user=" + id_user + '}';
+    public void setChatroom(ChatRoom chatroom) {
+        this.chatroom = chatroom;
     }
     
 }
