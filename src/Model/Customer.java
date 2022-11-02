@@ -12,7 +12,7 @@ public class Customer extends User {
     public Customer() {
     }
 
-    public Customer(String alamat, String noTelpon, ChatRoom chatroom, Keranjang keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, Tipeuser tipeuser) {
+    public Customer(String alamat, String noTelpon, ChatRoom chatroom, Keranjang keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
         super(id_user, username, nama_lengkap, email, password, tipeuser);
         this.alamat = alamat;
         this.noTelpon = noTelpon;

@@ -8,7 +8,7 @@ public class Admin extends User {
     public Admin() {
     }
 
-    public Admin(int id_admin, ChatRoom chatroom, int id_user, String username, String nama_lengkap, String email, String password, Tipeuser tipeuser) {
+    public Admin(int id_admin, ChatRoom chatroom, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
         super(id_user, username, nama_lengkap, email, password, tipeuser);
         this.id_admin = id_admin;
         this.chatroom = chatroom;

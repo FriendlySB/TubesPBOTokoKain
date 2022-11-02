@@ -1,18 +1,18 @@
 package Model;
 
-public abstract class User implements TipeUser {
+public abstract class User {
 
     private int id_user;
     private String username;
     private String nama_lengkap;
     private String email;
     private String password;
-    private Tipeuser tipeuser;
+    private TipeUser tipeuser;
 
     public User() {
     }
 
-    public User(int id_user, String username, String nama_lengkap, String email, String password, Tipeuser tipeuser) {
+    public User(int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
         this.id_user = id_user;
         this.username = username;
         this.nama_lengkap = nama_lengkap;
@@ -61,11 +61,11 @@ public abstract class User implements TipeUser {
         this.password = password;
     }
 
-    public Tipeuser getTipeuser() {
+    public TipeUser getTipeuser() {
         return tipeuser;
     }
 
-    public void setTipeuser(Tipeuser tipeuser) {
+    public void setTipeuser(TipeUser tipeuser) {
         this.tipeuser = tipeuser;
     }
     
