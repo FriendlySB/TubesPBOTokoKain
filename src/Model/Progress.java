@@ -1,10 +1,10 @@
 package Model;
 
-public interface Progress {
-    enum progress{
-        DIBUAT,
-        DIKEMAS,
-        DIKIRIM,
-        SELESAI
-    }
+public enum Progress {
+
+    DIBUAT,
+    DIKEMAS,
+    DIKIRIM,
+    SELESAI
+
 }

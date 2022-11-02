@@ -2,7 +2,7 @@ package Model;
 
 import java.util.ArrayList;
 
-public class Transaksi implements Progress, TipeBayar, TipePengiriman {
+public class Transaksi implements TipePengiriman {
 
     private int id_transaksi;
     private int tipe_pengiriman;
@@ -91,5 +91,4 @@ public class Transaksi implements Progress, TipeBayar, TipePengiriman {
         this.detailTransaksi = detailTransaksi;
     }
 
-    
 }
