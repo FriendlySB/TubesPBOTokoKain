@@ -23,5 +23,41 @@ public class kain_toko extends Kain{
         this.bahan = bahan;
         this.stok = stok;
     }
+
+    public kain_toko() {
+    }
+
+    public MotifKain getMotif() {
+        return motif;
+    }
+
+    public void setMotif(MotifKain motif) {
+        this.motif = motif;
+    }
+
+    public WarnaKain getWarna() {
+        return warna;
+    }
+
+    public void setWarna(WarnaKain warna) {
+        this.warna = warna;
+    }
+
+    public BahanKain getBahan() {
+        return bahan;
+    }
+
+    public void setBahan(BahanKain bahan) {
+        this.bahan = bahan;
+    }
+
+    public int getStok() {
+        return stok;
+    }
+
+    public void setStok(int stok) {
+        this.stok = stok;
+    }
+    
     
 }
