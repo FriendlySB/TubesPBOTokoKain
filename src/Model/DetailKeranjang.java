@@ -4,15 +4,14 @@ public class DetailKeranjang {
 
     private int quantity;
     private Kain kain;
-    private KainCustom kainCustom;
 
     public DetailKeranjang() {
     }
 
-    public DetailKeranjang(int quantity, Kain kain, KainCustom kainCustom) {
+    public DetailKeranjang(int quantity, Kain kain) {
         this.quantity = quantity;
         this.kain = kain;
-        this.kainCustom = kainCustom;
+        
     }
 
     public int getQuantity() {
@@ -31,13 +30,4 @@ public class DetailKeranjang {
         this.kain = kain;
     }
 
-    public KainCustom getKainCustom() {
-        return kainCustom;
-    }
-
-    public void setKainCustom(KainCustom kainCustom) {
-        this.kainCustom = kainCustom;
-    }
-
-    
 }
