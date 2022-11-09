@@ -5,17 +5,15 @@ public class DetailTransaksi {
     private int detail_transaksi;
     private int quantity;
     private int berat;
-    private KainCustom kainCustom;
     private Kain kain;
 
     public DetailTransaksi() {
     }
 
-    public DetailTransaksi(int detail_transaksi, int quantity, int berat, KainCustom kainCustom, Kain kain) {
+    public DetailTransaksi(int detail_transaksi, int quantity, int berat, Kain kain) {
         this.detail_transaksi = detail_transaksi;
         this.quantity = quantity;
         this.berat = berat;
-        this.kainCustom = kainCustom;
         this.kain = kain;
     }
 
@@ -41,14 +39,6 @@ public class DetailTransaksi {
 
     public void setBerat(int berat) {
         this.berat = berat;
-    }
-
-    public KainCustom getKainCustom() {
-        return kainCustom;
-    }
-
-    public void setKainCustom(KainCustom kainCustom) {
-        this.kainCustom = kainCustom;
     }
 
     public Kain getKain() {
