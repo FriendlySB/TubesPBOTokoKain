@@ -1,5 +1,6 @@
 package Model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 
 public class Transaksi implements TipePengiriman {
@@ -12,11 +13,12 @@ public class Transaksi implements TipePengiriman {
     private TipeBayar tipeBayar;
     private TipePengiriman tipePengiriman;
     private ArrayList<DetailTransaksi> detailTransaksi;
-
+    private Timestamp waktu_transaksi;
+    
     public Transaksi() {
     }
 
-    public Transaksi(int id_transaksi, int tipe_pengiriman, String alamat, int total_bayar, Progress progress, TipeBayar tipeBayar, TipePengiriman tipePengiriman, ArrayList<DetailTransaksi> detailTransaksi) {
+    public Transaksi(int id_transaksi, int tipe_pengiriman, String alamat, int total_bayar, Progress progress, TipeBayar tipeBayar, TipePengiriman tipePengiriman, ArrayList<DetailTransaksi> detailTransaksi, Timestamp waktu_transaksi) {
         this.id_transaksi = id_transaksi;
         this.tipe_pengiriman = tipe_pengiriman;
         this.alamat = alamat;
@@ -25,7 +27,18 @@ public class Transaksi implements TipePengiriman {
         this.tipeBayar = tipeBayar;
         this.tipePengiriman = tipePengiriman;
         this.detailTransaksi = detailTransaksi;
+        this.waktu_transaksi = waktu_transaksi;
     }
+
+    public Timestamp getWaktu_transaksi() {
+        return waktu_transaksi;
+    }
+
+    public void setWaktu_transaksi(Timestamp waktu_transaksi) {
+        this.waktu_transaksi = waktu_transaksi;
+    }
+
+   
 
     public int getId_transaksi() {
         return id_transaksi;
