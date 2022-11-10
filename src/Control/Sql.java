@@ -388,14 +388,13 @@ public class Sql {
         }
     }
 
-    public static boolean insertBahan(kain_toko curKain) {
+    public static boolean insertBahan(BahanKain curKain) {
         conn.connect();
-        String query = "INSERT INTO bahan VALUES(?,?,?)";
+        String query = "INSERT INTO bahan(`nama_bahan`, `harga_bahan`) VALUES(?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, curKain.getBahan().getId_bahan());
-            stmt.setString(2, curKain.getBahan().getNama_bahan());
-            stmt.setInt(3, curKain.getBahan().getHarga_bahan());
+            stmt.setString(1, curKain.getNama_bahan());
+            stmt.setInt(2, curKain.getHarga_bahan());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -404,14 +403,13 @@ public class Sql {
         }
     }
 
-    public static boolean insertWarna(kain_toko curKain) {
+    public static boolean insertWarna(WarnaKain curKain) {
         conn.connect();
-        String query = "INSERT INTO warna VALUES(?,?,?)";
+        String query = "INSERT INTO warna(`nama_warna`,`harga_warna`) VALUES(?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, curKain.getWarna().getId_warna());
-            stmt.setString(2, curKain.getWarna().getNama_warna());
-            stmt.setInt(3, curKain.getWarna().getHarga_warna());
+            stmt.setString(2, curKain.getNama_warna());
+            stmt.setInt(3, curKain.getHarga_warna());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -420,14 +418,13 @@ public class Sql {
         }
     }
 
-    public static boolean insertMotif(kain_toko curKain) {
+    public static boolean insertMotif(MotifKain curKain) {
         conn.connect();
-        String query = "INSERT INTO motif VALUES(?,?,?)";
+        String query = "INSERT INTO motif(`nama_motif`, `harga_warna`) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, curKain.getMotif().getId_motif());
-            stmt.setString(2, curKain.getMotif().getNama_motif());
-            stmt.setInt(3, curKain.getMotif().getHarga_bahan());
+            stmt.setString(2, curKain.getNama_motif());
+            stmt.setInt(3, curKain.getHarga_bahan());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -453,9 +450,9 @@ public class Sql {
                     stmt2.setInt(3, curKain.getWarna().getId_warna());
                     stmt2.setInt(4, curKain.getMotif().getId_motif());
                     stmt2.setInt(5, curKain.getStok());
-                    insertBahan(curKain);
-                    insertWarna(curKain);
-                    insertMotif(curKain);
+//                    insertBahan(curKain);
+//                    insertWarna(curKain);
+//                    insertMotif(curKain);
                     stmt2.executeUpdate();
                     return (true);
                 } catch (SQLException e) {
