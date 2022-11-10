@@ -34,6 +34,10 @@ public class MainMenuAdmin{
         JButton menuInputKain = new JButton("Input Kain");
         menuInputKain.setBounds(150, 100, 300, 50);
         
+        menuInputKain.addActionListener(e -> {
+            new MenuInputKain();
+        });
+        
         JButton menuEditKain = new JButton("Edit Data Kain");
         menuEditKain.setBounds(150, 160, 300, 50);
         
