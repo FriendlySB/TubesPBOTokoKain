@@ -35,6 +35,7 @@ public class MainMenuAdmin{
         menuInputKain.setBounds(150, 100, 300, 50);
         
         menuInputKain.addActionListener(e -> {
+            frame.dispose();
             new MenuInputKain();
         });
         
