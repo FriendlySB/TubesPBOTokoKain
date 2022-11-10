@@ -33,6 +33,10 @@ public class MainMenuUser{
         
         JButton menuBeliKain = new JButton("Beli Kain");
         menuBeliKain.setBounds(150, 100, 300, 50);
+        menuBeliKain.addActionListener(e -> {
+            frame.dispose();
+            new MenuBeliKain();
+        });
         
         JButton menuCekTransaksi = new JButton("Transaksi");
         menuCekTransaksi.setBounds(150, 160, 300, 50);
