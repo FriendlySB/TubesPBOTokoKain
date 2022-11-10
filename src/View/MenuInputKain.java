@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.*;
 import javax.swing.*;
 import Control.Sql;
 import Model.*;
