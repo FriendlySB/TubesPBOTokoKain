@@ -6,8 +6,12 @@
 package View;
 
 import javax.swing.*;
-
+import Control.Sql;
+import Model.*;
+import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 /**
  *
@@ -40,14 +44,40 @@ public class MenuLogin {
         inputPassword.setBounds(155, 215, 175, 25);
         frame.add(password);
         frame.add(inputPassword);
-
+        
         JButton login = new JButton("Login");
         login.setBounds(205, 250, 75, 25);
         frame.add(login);
-
+        
         JLabel createAccount = new JLabel("Click here to create new account");
         createAccount.setBounds(148, 285, 200, 25);
+        createAccount.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                //new MenuRegister();
+                JOptionPane.showMessageDialog(null, "hi"); //test
+            }
+
+            @Override
+            public void mouseEntered(MouseEvent evt) {
+                Color c = Color.red; // When the mouse moves over a label, the background color changed.
+                createAccount.setBackground(createAccount.getForeground());
+                createAccount.setForeground(c);
+            }
+
+            @Override
+            public void mouseExited(MouseEvent evt) {
+                Color c = createAccount.getBackground();
+                createAccount.setBackground(createAccount.getForeground());
+                createAccount.setForeground(c);
+            }
+        });
+//        createAccount.setEnabled(true);
+
         frame.add(createAccount);
+
+    
+
 
     }
 
