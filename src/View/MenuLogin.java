@@ -10,8 +10,11 @@ import Control.Sql;
 import Model.*;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 
 /**
  *
@@ -28,34 +31,74 @@ public class MenuLogin {
 
         JLabel title = new JLabel("Account");
         title.setBounds(175, 50, 200, 50);
-        title.setFont(new Font("Sans", Font.BOLD, 32));
+        title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
 
         JLabel username = new JLabel("Username");
-        username.setBounds(155, 130, 75, 25);
+        username.setBounds(155, 110, 75, 25);
         JTextField inputUsername = new JTextField();
-        inputUsername.setBounds(155, 155, 175, 25);
+        inputUsername.setBounds(155, 135, 175, 25);
         frame.add(username);
         frame.add(inputUsername);
 
         JLabel password = new JLabel("Password");
-        password.setBounds(155, 190, 75, 25);
+        password.setBounds(155, 170, 75, 25);
         JPasswordField inputPassword = new JPasswordField();
-        inputPassword.setBounds(155, 215, 175, 25);
+        inputPassword.setBounds(155, 195, 175, 25);
         frame.add(password);
         frame.add(inputPassword);
-        
+
         JButton login = new JButton("Login");
-        login.setBounds(205, 250, 75, 25);
+        login.setBounds(205, 235, 75, 25);
         frame.add(login);
-        
+        login.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = inputUsername.getText();
+                String password = new String(inputPassword.getPassword());
+                Sql db = new Sql();
+                ArrayList<User> users = db.getAllUsers();
+                String warning = "User tidak ditemukan";
+                int i = 0;
+                boolean found = false;
+                boolean passwordCheck = false;
+                while (i < users.size() && !found) {
+                    if (users.get(i).getUsername().equals(username)) {
+                        found = true;
+                        if (users.get(i).getPassword().equals(password)) {
+                            passwordCheck = true;
+                        } else {
+                            warning = "Password kurang tepat";
+                        }
+                    } else {
+                        i++;
+                    }
+                }
+                if (passwordCheck) {
+                    if (users.get(i) instanceof Customer) {
+                        frame.dispose();
+                        Customer customer = (Customer) users.get(i);
+                        new MainMenuUser();
+                    } else {
+                        frame.dispose();
+                        Admin admin = (Admin) users.get(i);
+                        new MainMenuAdmin();
+                    }
+                } else if ((found && !passwordCheck) || !found) {
+                    JOptionPane.showMessageDialog(null, warning, "Warning", JOptionPane.WARNING_MESSAGE);
+                }
+
+            }
+        });
+
         JLabel createAccount = new JLabel("Click here to create new account");
         createAccount.setBounds(148, 285, 200, 25);
         createAccount.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
+                frame.dispose();
                 //new MenuRegister();
-                JOptionPane.showMessageDialog(null, "hi"); //test
+//                JOptionPane.showMessageDialog(null, "hi"); //test 
             }
 
             @Override
@@ -72,12 +115,7 @@ public class MenuLogin {
                 createAccount.setForeground(c);
             }
         });
-//        createAccount.setEnabled(true);
-
         frame.add(createAccount);
-
-    
-
 
     }
 
