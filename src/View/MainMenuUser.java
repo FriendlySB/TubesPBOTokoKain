@@ -63,5 +63,4 @@ public class MainMenuUser {
         frame.setJMenuBar(mb);
         frame.add(panel);
     }
-
 }

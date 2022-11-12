@@ -70,7 +70,7 @@ public class Sql {
         }
         return listWarna;
     }
-    
+
     public ArrayList<MotifKain> getAllMotif() {
         ArrayList<MotifKain> listMotif = new ArrayList();
         conn.connect();
@@ -541,4 +541,37 @@ public class Sql {
         return (false);
     }
 
+    public static boolean updateDataCustomer(Customer customer) {
+        conn.connect();
+        String query = "UPDATE users set username = ?,nama_lengkap = ?,email = ?,alamat = ?,no_telpon = ? "
+                + "where id_user = '" + customer.getId_user() + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, customer.getUsername());
+            stmt.setString(2, customer.getNama_lengkap());
+            stmt.setString(3, customer.getEmail());
+            stmt.setString(4, customer.getAlamat());
+            stmt.setString(5, customer.getNoTelpon());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+
+    public static boolean updatePassword(String oldPass, String newPass, int idUser) {
+        conn.connect();
+        String query = "Update users set password = ? where password = '" + oldPass + "' AND id_user = '" + idUser + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, newPass);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+
+    }
 }
