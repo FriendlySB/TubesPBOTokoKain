@@ -236,6 +236,39 @@ public class Sql {
         }
         return (users);
     }
+    
+        // SELECT ALL Customers from table users
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        conn.connect();
+        String query = "SELECT * FROM users WHERE status = 'CUSTOMER'";
+        try {
+            Statement stmt1 = conn.con.createStatement();
+            ResultSet rs = stmt1.executeQuery(query);
+            while (rs.next()) {
+                TipeUser enumVal = TipeUser.valueOf(rs.getString("status"));
+                if (enumVal == TipeUser.CUSTOMER) {
+                    Customer currentCust = new Customer();
+                    currentCust.setId_user(rs.getInt("id_user"));
+                    currentCust.setUsername(rs.getString("username"));
+                    currentCust.setNama_lengkap(rs.getString("nama_lengkap"));
+                    currentCust.setEmail(rs.getString("email"));
+                    currentCust.setPassword(rs.getString("password"));
+                    currentCust.setTipeuser(enumVal);
+                    currentCust.setAlamat(rs.getString("alamat"));
+                    currentCust.setNoTelpon(rs.getString("no_telpon"));
+                    currentCust.setKeranjang(getSQLKeranjang(rs.getInt("id_user")));
+                    currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
+                    currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    customers.add(currentCust);
+                } 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (customers);
+    }
 
     public ArrayList<Transaksi> getSQLListTransaksi(int id_User) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
@@ -379,6 +412,7 @@ public class Sql {
                     e.printStackTrace();
                     return (false);
                 }
+
             }
             stmt.executeUpdate();
             return (true);

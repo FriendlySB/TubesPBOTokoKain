@@ -4,11 +4,19 @@
  */
 package View;
 
+import Control.Sql;
+import Model.ChatRoom;
+import Model.Customer;
+import Model.Keranjang;
+import Model.TipeUser;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -43,10 +51,10 @@ public class MenuRegister {
 
         JLabel namaLengkap = new JLabel("Nama Lengkap");
         namaLengkap.setBounds(90, 170, 100, 25);
-        JTextField inputnamaLengkap = new JTextField();
-        inputnamaLengkap.setBounds(90, 195, 175, 25);
+        JTextField inputNamaLengkap = new JTextField();
+        inputNamaLengkap.setBounds(90, 195, 175, 25);
         frame.add(namaLengkap);
-        frame.add(inputnamaLengkap);
+        frame.add(inputNamaLengkap);
 
         JLabel email = new JLabel("Email");
         email.setBounds(90, 230, 100, 25);
@@ -79,6 +87,64 @@ public class MenuRegister {
         JButton register = new JButton("Register");
         register.setBounds(230, 305, 120, 30);
         frame.add(register);
+        register.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                String username = inputUsername.getText();
+                String namaLengkap = inputNamaLengkap.getText();
+                String email = inputEmail.getText();
+                String password = new String(inputPassword.getPassword());
+                String alamat = inputAlamat.getText();
+                String noTelepon = inputNoTelepon.getText();
+                Sql db = new Sql();
+                ArrayList<Customer> customers = db.getAllCustomers();
+                String warning = "Username telah digunakan";
+                int i = 0;
+                boolean exist = false;
+                while (i < customers.size() && !exist) {
+                    if (customers.get(i).getUsername().equals(username)) {
+                        exist = true;
+                        warning = "Username telah digunakan";
+                    } else if (customers.get(i).getNama_lengkap().equals(namaLengkap)) {
+                        exist = true;
+                        warning = "Nama sudah terdaftar";
+                    } else if (customers.get(i).getEmail().equals(email)) {
+                        exist = true;
+                        warning = "Email sudah terdaftar";
+                    } else if (customers.get(i).getNoTelpon().equals(noTelepon)) {
+                        exist = true;
+                        warning = "Nomor Telepon telah digunakan";
+                    } else {
+                        i++;
+                    }
+                }
+                if (exist) {
+                    JOptionPane.showMessageDialog(null, warning, "Warning", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    Customer newCust = new Customer();
+                    newCust.setAlamat(alamat);
+                    newCust.setChatroom(new ChatRoom());
+                    newCust.setEmail(email);
+                    newCust.setKeranjang(new Keranjang());
+                    newCust.setNama_lengkap(namaLengkap);
+                    newCust.setNoTelpon(noTelepon);
+                    newCust.setPassword(password);
+                    newCust.setTipeuser(TipeUser.CUSTOMER);
+                    newCust.setTransaksi(new ArrayList<>());
+                    newCust.setUsername(username);
+
+                    boolean executeInsert = db.insertNewUser(newCust);
+                    if (executeInsert) {
+                        frame.dispose();
+                        JOptionPane.showMessageDialog(null, "Registrasi berhasil!");
+                        new MenuLogin();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Register gagal!", "Warning", JOptionPane.WARNING_MESSAGE);
+                    }
+                }
+
+            }
+        });
 
         JLabel haveAccount = new JLabel("Already have an account? Log in");
         haveAccount.setBounds(200, 365, 200, 25);
@@ -107,5 +173,4 @@ public class MenuRegister {
         });
         frame.add(haveAccount);
     }
-
 }
