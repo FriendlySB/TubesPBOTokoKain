@@ -22,7 +22,7 @@ import java.util.ArrayList;
  */
 public class MenuLogin {
 
-    public static void main(String[] args) {
+    public MenuLogin() {
         JFrame frame = new JFrame("Login");
         frame.setSize(500, 400);
         frame.setLayout(null);
@@ -118,5 +118,4 @@ public class MenuLogin {
         frame.add(createAccount);
 
     }
-
 }
