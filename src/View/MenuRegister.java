@@ -79,11 +79,11 @@ public class MenuRegister {
         JButton register = new JButton("Register");
         register.setBounds(230, 305, 120, 30);
         frame.add(register);
-        
-        JLabel createAccount = new JLabel("Already have an account? Log in");
-        createAccount.setBounds(200, 365, 200, 25);
-        createAccount.setForeground(Color.BLUE);
-        createAccount.addMouseListener(new MouseAdapter() {
+
+        JLabel haveAccount = new JLabel("Already have an account? Log in");
+        haveAccount.setBounds(200, 365, 200, 25);
+        haveAccount.setForeground(Color.BLUE);
+        haveAccount.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frame.dispose();
@@ -93,22 +93,19 @@ public class MenuRegister {
             @Override
             public void mouseEntered(MouseEvent evt) {
                 Color c = Color.BLACK;
-                createAccount.setBackground(createAccount.getForeground());
-                createAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
-                createAccount.setForeground(c);
+                haveAccount.setBackground(haveAccount.getForeground());
+                haveAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
+                haveAccount.setForeground(c);
             }
 
             @Override
             public void mouseExited(MouseEvent evt) {
-                Color c = createAccount.getBackground();
-                createAccount.setBackground(createAccount.getForeground());
-                createAccount.setForeground(c);
+                Color c = haveAccount.getBackground();
+                haveAccount.setBackground(haveAccount.getForeground());
+                haveAccount.setForeground(c);
             }
         });
-        frame.add(createAccount);
+        frame.add(haveAccount);
     }
 
-    public static void main(String[] args) {
-        new MenuRegister();
-    }
 }

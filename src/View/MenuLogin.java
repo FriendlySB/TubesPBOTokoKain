@@ -9,6 +9,7 @@ import javax.swing.*;
 import Control.Sql;
 import Model.*;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -91,20 +92,21 @@ public class MenuLogin {
             }
         });
 
-        JLabel createAccount = new JLabel("Click here to create new account");
-        createAccount.setBounds(148, 285, 200, 25);
+        JLabel createAccount = new JLabel("Don't have an account? Create one");
+        createAccount.setBounds(143, 285, 200, 25);
+        createAccount.setForeground(Color.BLUE);
         createAccount.addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 frame.dispose();
-                //new MenuRegister();
-//                JOptionPane.showMessageDialog(null, "hi"); //test 
+                new MenuRegister();
             }
 
             @Override
             public void mouseEntered(MouseEvent evt) {
-                Color c = Color.red; // When the mouse moves over a label, the background color changed.
+                Color c = Color.BLACK;
                 createAccount.setBackground(createAccount.getForeground());
+                createAccount.setCursor(new Cursor(Cursor.HAND_CURSOR));
                 createAccount.setForeground(c);
             }
 
