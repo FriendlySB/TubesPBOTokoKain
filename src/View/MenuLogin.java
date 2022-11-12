@@ -29,8 +29,8 @@ public class MenuLogin {
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
 
-        JLabel title = new JLabel("Account");
-        title.setBounds(175, 50, 200, 50);
+        JLabel title = new JLabel("Login");
+        title.setBounds(197, 50, 200, 50);
         title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
 
