@@ -385,13 +385,14 @@ public class Sql {
     }
 
     //Insert User
-    public static boolean insertNewUser(User user) {
+    public boolean insertNewUser(User user) {
         conn.connect();
-        String query = "INSERT INTO users VALUES(?,?,?,?,?,?,?,CAST(? AS TipeUser))";
+        String query = "INSERT INTO users VALUES(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             if (user instanceof Customer) {
                 Customer curCust = (Customer) user;
+                stmt.setString(1, null);
                 stmt.setString(2, curCust.getUsername());
                 stmt.setString(3, curCust.getNama_lengkap());
                 stmt.setString(4, curCust.getEmail());
@@ -399,22 +400,22 @@ public class Sql {
                 stmt.setString(6, curCust.getAlamat());
                 stmt.setString(7, curCust.getNoTelpon());
                 stmt.setString(8, curCust.getTipeuser().toString());
-                String query2 = "INSERT INTO keranjang VALUES(?,?)";
-                try {
-                    PreparedStatement stmt2 = conn.con.prepareStatement(query2);
-                    stmt2.setInt(1, curCust.getId_user());
-                    stmt2.setInt(2, curCust.getKeranjang().getId_keranjang());
-                    for (int i = 0; i < curCust.getKeranjang().getDetailKeranjang().size(); i++) {
-                        insertDetailKeranjang(curCust.getKeranjang(), i);
-                    }
-                    stmt2.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return (false);
-                }
-
+//                String query2 = "INSERT INTO keranjang VALUES(?,?)"; 
+//                try {//bagian ini dicomment sementara agar tidak error ketika menjalankan registrasi
+//                    PreparedStatement stmt2 = conn.con.prepareStatement(query2);
+//                    stmt2.setInt(1, curCust.getId_user());
+//                    stmt2.setInt(2, curCust.getKeranjang().getId_keranjang());
+//                    for (int i = 0; i < curCust.getKeranjang().getDetailKeranjang().size(); i++) {
+//                        insertDetailKeranjang(curCust.getKeranjang(), i);
+//                    }
+//                    stmt2.executeUpdate();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    return (false);
+//                }
+                stmt.executeUpdate();
             }
-            stmt.executeUpdate();
+            
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();

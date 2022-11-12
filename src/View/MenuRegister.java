@@ -96,51 +96,56 @@ public class MenuRegister {
                 String password = new String(inputPassword.getPassword());
                 String alamat = inputAlamat.getText();
                 String noTelepon = inputNoTelepon.getText();
-                Sql db = new Sql();
-                ArrayList<Customer> customers = db.getAllCustomers();
-                String warning = "Username telah digunakan";
-                int i = 0;
-                boolean exist = false;
-                while (i < customers.size() && !exist) {
-                    if (customers.get(i).getUsername().equals(username)) {
-                        exist = true;
-                        warning = "Username telah digunakan";
-                    } else if (customers.get(i).getNama_lengkap().equals(namaLengkap)) {
-                        exist = true;
-                        warning = "Nama sudah terdaftar";
-                    } else if (customers.get(i).getEmail().equals(email)) {
-                        exist = true;
-                        warning = "Email sudah terdaftar";
-                    } else if (customers.get(i).getNoTelpon().equals(noTelepon)) {
-                        exist = true;
-                        warning = "Nomor Telepon telah digunakan";
-                    } else {
-                        i++;
+                String warning = "Data belum lengkap";
+                if ("".equals(username) || "".equals(namaLengkap) || "".equals(email) || "".equals(password)|| "".equals(alamat) || "".equals(noTelepon)) {
+                    JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                }else{
+                    Sql db = new Sql();
+                    ArrayList<Customer> customers = db.getAllCustomers();
+                    int i = 0;
+                    boolean exist = false;
+                    while (i < customers.size() && !exist) {
+                        if (customers.get(i).getUsername().equals(username)) {
+                            exist = true;
+                            warning = "Username telah digunakan";
+                        } else if (customers.get(i).getNama_lengkap().equals(namaLengkap)) {
+                            exist = true;
+                            warning = "Nama sudah terdaftar";
+                        } else if (customers.get(i).getEmail().equals(email)) {
+                            exist = true;
+                            warning = "Email sudah terdaftar";
+                        } else if (customers.get(i).getNoTelpon().equals(noTelepon)) {
+                            exist = true;
+                            warning = "Nomor Telepon telah digunakan";
+                        } else {
+                            i++;
+                        }
                     }
-                }
-                if (exist) {
-                    JOptionPane.showMessageDialog(null, warning, "Warning", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    Customer newCust = new Customer();
-                    newCust.setAlamat(alamat);
-                    newCust.setChatroom(new ChatRoom());
-                    newCust.setEmail(email);
-                    newCust.setKeranjang(new Keranjang());
-                    newCust.setNama_lengkap(namaLengkap);
-                    newCust.setNoTelpon(noTelepon);
-                    newCust.setPassword(password);
-                    newCust.setTipeuser(TipeUser.CUSTOMER);
-                    newCust.setTransaksi(new ArrayList<>());
-                    newCust.setUsername(username);
+                    if (exist) {
+                        JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    } else {
+                        Customer newCust = new Customer();
+                        newCust.setAlamat(alamat);
+                        newCust.setChatroom(new ChatRoom());
+                        newCust.setEmail(email);
+                        newCust.setKeranjang(new Keranjang());
+                        newCust.setNama_lengkap(namaLengkap);
+                        newCust.setNoTelpon(noTelepon);
+                        newCust.setPassword(password);
+                        newCust.setTipeuser(TipeUser.CUSTOMER);
+                        newCust.setTransaksi(new ArrayList<>());
+                        newCust.setUsername(username);
 
-                    boolean executeInsert = db.insertNewUser(newCust);
-                    if (executeInsert) {
-                        frame.dispose();
-                        JOptionPane.showMessageDialog(null, "Registrasi berhasil!");
-                        new MenuLogin();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Register gagal!", "Warning", JOptionPane.WARNING_MESSAGE);
+                        boolean executeInsert = db.insertNewUser(newCust);
+                        if (executeInsert) {
+                            frame.dispose();
+                            JOptionPane.showMessageDialog(null, "Registrasi berhasil!");
+                            new MenuLogin();
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Registrasi gagal!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                        }
                     }
+
                 }
 
             }
@@ -172,5 +177,9 @@ public class MenuRegister {
             }
         });
         frame.add(haveAccount);
+        
+    }
+    public static void main(String[] args) {
+        new MenuRegister();
     }
 }

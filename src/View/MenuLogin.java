@@ -57,9 +57,12 @@ public class MenuLogin {
             public void actionPerformed(ActionEvent e) {
                 String username = inputUsername.getText();
                 String password = new String(inputPassword.getPassword());
-                Sql db = new Sql();
+                String warning = "Terdapat input yang masih kosong";                
+                if (username.equals("") || password.equals("")) {
+                    JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
+                }else{
+                     Sql db = new Sql();
                 ArrayList<User> users = db.getAllUsers();
-                String warning = "User tidak ditemukan";
                 int i = 0;
                 boolean found = false;
                 boolean passwordCheck = false;
@@ -86,8 +89,10 @@ public class MenuLogin {
                         new MainMenuAdmin(admin);
                     }
                 } else if ((found && !passwordCheck) || !found) {
-                    JOptionPane.showMessageDialog(null, warning, "Warning", JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
                 }
+                }
+               
 
             }
         });
@@ -119,5 +124,8 @@ public class MenuLogin {
         });
         frame.add(createAccount);
 
+    }
+    public static void main(String[] args) {
+        new MenuLogin();
     }
 }
