@@ -236,6 +236,39 @@ public class Sql {
         }
         return (users);
     }
+    
+        // SELECT ALL Customers from table users
+    public ArrayList<Customer> getAllCustomers() {
+        ArrayList<Customer> customers = new ArrayList<>();
+
+        conn.connect();
+        String query = "SELECT * FROM users WHERE status = 'CUSTOMER'";
+        try {
+            Statement stmt1 = conn.con.createStatement();
+            ResultSet rs = stmt1.executeQuery(query);
+            while (rs.next()) {
+                TipeUser enumVal = TipeUser.valueOf(rs.getString("status"));
+                if (enumVal == TipeUser.CUSTOMER) {
+                    Customer currentCust = new Customer();
+                    currentCust.setId_user(rs.getInt("id_user"));
+                    currentCust.setUsername(rs.getString("username"));
+                    currentCust.setNama_lengkap(rs.getString("nama_lengkap"));
+                    currentCust.setEmail(rs.getString("email"));
+                    currentCust.setPassword(rs.getString("password"));
+                    currentCust.setTipeuser(enumVal);
+                    currentCust.setAlamat(rs.getString("alamat"));
+                    currentCust.setNoTelpon(rs.getString("no_telpon"));
+                    currentCust.setKeranjang(getSQLKeranjang(rs.getInt("id_user")));
+                    currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
+                    currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    customers.add(currentCust);
+                } 
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return (customers);
+    }
 
     public ArrayList<Transaksi> getSQLListTransaksi(int id_User) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
@@ -352,13 +385,14 @@ public class Sql {
     }
 
     //Insert User
-    public static boolean insertNewUser(User user) {
+    public boolean insertNewUser(User user) {
         conn.connect();
-        String query = "INSERT INTO users VALUES(?,?,?,?,?,?,?,CAST(? AS TipeUser))";
+        String query = "INSERT INTO users VALUES(?,?,?,?,?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             if (user instanceof Customer) {
                 Customer curCust = (Customer) user;
+                stmt.setString(1, null);
                 stmt.setString(2, curCust.getUsername());
                 stmt.setString(3, curCust.getNama_lengkap());
                 stmt.setString(4, curCust.getEmail());
@@ -366,21 +400,22 @@ public class Sql {
                 stmt.setString(6, curCust.getAlamat());
                 stmt.setString(7, curCust.getNoTelpon());
                 stmt.setString(8, curCust.getTipeuser().toString());
-                String query2 = "INSERT INTO keranjang VALUES(?,?)";
-                try {
-                    PreparedStatement stmt2 = conn.con.prepareStatement(query2);
-                    stmt2.setInt(1, curCust.getId_user());
-                    stmt2.setInt(2, curCust.getKeranjang().getId_keranjang());
-                    for (int i = 0; i < curCust.getKeranjang().getDetailKeranjang().size(); i++) {
-                        insertDetailKeranjang(curCust.getKeranjang(), i);
-                    }
-                    stmt2.executeUpdate();
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                    return (false);
-                }
+//                String query2 = "INSERT INTO keranjang VALUES(?,?)"; 
+//                try {//bagian ini dicomment sementara agar tidak error ketika menjalankan registrasi
+//                    PreparedStatement stmt2 = conn.con.prepareStatement(query2);
+//                    stmt2.setInt(1, curCust.getId_user());
+//                    stmt2.setInt(2, curCust.getKeranjang().getId_keranjang());
+//                    for (int i = 0; i < curCust.getKeranjang().getDetailKeranjang().size(); i++) {
+//                        insertDetailKeranjang(curCust.getKeranjang(), i);
+//                    }
+//                    stmt2.executeUpdate();
+//                } catch (SQLException e) {
+//                    e.printStackTrace();
+//                    return (false);
+//                }
+                stmt.executeUpdate();
             }
-            stmt.executeUpdate();
+            
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
