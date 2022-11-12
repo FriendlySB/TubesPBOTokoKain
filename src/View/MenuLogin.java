@@ -57,42 +57,42 @@ public class MenuLogin {
             public void actionPerformed(ActionEvent e) {
                 String username = inputUsername.getText();
                 String password = new String(inputPassword.getPassword());
-                String warning = "Terdapat input yang masih kosong";                
+                String warning = "Terdapat input yang masih kosong";
                 if (username.equals("") || password.equals("")) {
                     JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
-                }else{
-                     Sql db = new Sql();
-                ArrayList<User> users = db.getAllUsers();
-                int i = 0;
-                boolean found = false;
-                boolean passwordCheck = false;
-                while (i < users.size() && !found) {
-                    if (users.get(i).getUsername().equals(username)) {
-                        found = true;
-                        if (users.get(i).getPassword().equals(password)) {
-                            passwordCheck = true;
+                } else {
+                    warning = "User tidak ditemukan";
+                    Sql db = new Sql();
+                    ArrayList<User> users = db.getAllUsers();
+                    int i = 0;
+                    boolean found = false;
+                    boolean passwordCheck = false;
+                    while (i < users.size() && !found) {
+                        if (users.get(i).getUsername().equals(username)) {
+                            found = true;
+                            if (users.get(i).getPassword().equals(password)) {
+                                passwordCheck = true;
+                            } else {
+                                warning = "Password kurang tepat";
+                            }
                         } else {
-                            warning = "Password kurang tepat";
+                            i++;
+                        }
+                    }
+                    if (passwordCheck) {
+                        if (users.get(i) instanceof Customer) {
+                            frame.dispose();
+                            Customer customer = (Customer) users.get(i);
+                            new MainMenuUser(customer);
+                        } else {
+                            frame.dispose();
+                            Admin admin = (Admin) users.get(i);
+                            new MainMenuAdmin(admin);
                         }
                     } else {
-                        i++;
+                        JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
                     }
                 }
-                if (passwordCheck) {
-                    if (users.get(i) instanceof Customer) {
-                        frame.dispose();
-                        Customer customer = (Customer) users.get(i);
-                        new MainMenuUser(customer);
-                    } else {
-                        frame.dispose();
-                        Admin admin = (Admin) users.get(i);
-                        new MainMenuAdmin(admin);
-                    }
-                } else if ((found && !passwordCheck) || !found) {
-                    JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
-                }
-                }
-               
 
             }
         });
@@ -124,8 +124,5 @@ public class MenuLogin {
         });
         frame.add(createAccount);
 
-    }
-    public static void main(String[] args) {
-        new MenuLogin();
     }
 }

@@ -97,9 +97,9 @@ public class MenuRegister {
                 String alamat = inputAlamat.getText();
                 String noTelepon = inputNoTelepon.getText();
                 String warning = "Data belum lengkap";
-                if ("".equals(username) || "".equals(namaLengkap) || "".equals(email) || "".equals(password)|| "".equals(alamat) || "".equals(noTelepon)) {
+                if ("".equals(username) || "".equals(namaLengkap) || "".equals(email) || "".equals(password) || "".equals(alamat) || "".equals(noTelepon)) {
                     JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
-                }else{
+                } else {
                     Sql db = new Sql();
                     ArrayList<Customer> customers = db.getAllCustomers();
                     int i = 0;
@@ -177,9 +177,6 @@ public class MenuRegister {
             }
         });
         frame.add(haveAccount);
-        
-    }
-    public static void main(String[] args) {
-        new MenuRegister();
+
     }
 }
