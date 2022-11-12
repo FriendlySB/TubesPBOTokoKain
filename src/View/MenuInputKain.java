@@ -18,7 +18,6 @@ public class MenuInputKain {
         subFrame.setSize(500, 300);
         backMenu.addActionListener(b -> {
             frame.dispose();
-            new MainMenuAdmin();
         });
         frame.setSize(700, 300);
         frame.setTitle("Menu Input Kain");
@@ -57,7 +56,6 @@ public class MenuInputKain {
             subFrame.add(backMenu);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
-                new MainMenuAdmin();
             });
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
@@ -91,7 +89,6 @@ public class MenuInputKain {
             subFrame.add(backMenu);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
-                new MainMenuAdmin();
             });
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
@@ -125,7 +122,6 @@ public class MenuInputKain {
             subFrame.add(backMenu);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
-                new MainMenuAdmin();
             });
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });

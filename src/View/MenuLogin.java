@@ -78,11 +78,11 @@ public class MenuLogin {
                     if (users.get(i) instanceof Customer) {
                         frame.dispose();
                         Customer customer = (Customer) users.get(i);
-                        new MainMenuUser();
+                        new MainMenuUser(customer);
                     } else {
                         frame.dispose();
                         Admin admin = (Admin) users.get(i);
-                        new MainMenuAdmin();
+                        new MainMenuAdmin(admin);
                     }
                 } else if ((found && !passwordCheck) || !found) {
                     JOptionPane.showMessageDialog(null, warning, "Warning", JOptionPane.WARNING_MESSAGE);

@@ -10,11 +10,12 @@ import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.Date;
 import javax.swing.*;
+import Model.Customer;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainMenuUser{
     
-    public MainMenuUser() {
+    public MainMenuUser(Customer customer) {
         JFrame frame = new JFrame();
         frame.setSize(600,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -61,7 +62,4 @@ public class MainMenuUser{
         frame.add(panel);
     }
     
-    public static void main(String args[]) {
-        new MainMenuUser();
-    }
 }
