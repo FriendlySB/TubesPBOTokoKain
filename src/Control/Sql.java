@@ -564,8 +564,8 @@ public class Sql {
         String query = "INSERT INTO warna(`nama_warna`,`harga_warna`) VALUES(?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(2, curKain.getNama_warna());
-            stmt.setInt(3, curKain.getHarga_warna());
+            stmt.setString(1, curKain.getNama_warna());
+            stmt.setInt(2, curKain.getHarga_warna());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -579,8 +579,8 @@ public class Sql {
         String query = "INSERT INTO motif(`nama_motif`, `harga_warna`) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(2, curKain.getNama_motif());
-            stmt.setInt(3, curKain.getHarga_motif());
+            stmt.setString(1, curKain.getNama_motif());
+            stmt.setInt(2, curKain.getHarga_motif());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
