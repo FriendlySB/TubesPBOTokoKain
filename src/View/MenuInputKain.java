@@ -3,6 +3,7 @@ package View;
 import javax.swing.*;
 import Control.Sql;
 import Model.*;
+import java.util.ArrayList;
 
 public class MenuInputKain {
 
@@ -15,7 +16,7 @@ public class MenuInputKain {
         JFrame frame = new JFrame();
         JFrame subFrame = new JFrame();
         subFrame.setLayout(null);
-        subFrame.setSize(500, 300);
+        subFrame.setSize(500, 600);
         backMenu.addActionListener(b -> {
             frame.dispose();
         });
@@ -45,14 +46,102 @@ public class MenuInputKain {
             subFrame.add(inpBahan);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
+            JLabel labWarna = new JLabel("pilihan warna: ");
+            labWarna.setBounds(10, 85, 100, 25);
+            subFrame.add(labWarna);
+            ArrayList<JRadioButton> tomWarna = new ArrayList();
+            ArrayList<WarnaKain> warnaKain = con.getAllWarna();
+
+            for (int i = 0; i < warnaKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(warnaKain.get(i).getNama_warna());
+                tomWarna.add(tempTom);
+            }
+            int tempX = 10;
+            int tempY = 115;
+            for (int i = 0; i < tomWarna.size(); i++) {
+                if (tempY > 205) {
+                    tempY = 115;
+                    tempX += 110;
+                }
+                tomWarna.get(i).setBounds(tempX, tempY, 100, 25);
+                subFrame.add(tomWarna.get(i));
+                tempY += 30;
+            }
+
+            JLabel labMotif = new JLabel("pilihan motif: ");
+            labMotif.setBounds(10, 225, 100, 25);
+            subFrame.add(labMotif);
+            ArrayList<JRadioButton> tomMotif = new ArrayList();
+            ArrayList<MotifKain> motifKain = con.getAllMotif();
+
+            for (int i = 0; i < motifKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(motifKain.get(i).getNama_motif());
+                tomMotif.add(tempTom);
+            }
+            int tempX2 = 10;
+            int tempY2 = 255;
+            for (int i = 0; i < tomMotif.size(); i++) {
+                if (tempY2 > 345) {
+                    tempY2 = 255;
+                    tempX2 += 110;
+                }
+                tomMotif.get(i).setBounds(tempX2, tempY2, 100, 25);
+                subFrame.add(tomMotif.get(i));
+                tempY2 += 30;
+            }
+
             JButton add = new JButton("Tambah");
-            add.setBounds(10, 150, 100, 25);
+            add.setBounds(10, 400, 100, 25);
+
             add.addActionListener(a -> {
                 int harga = Integer.parseInt(inpHarga.getText());
-                BahanKain bahan = new BahanKain(0, inpBahan.getText(), harga);
+                BahanKain tempo = con.getBahanBottom();
+                int idBahan = tempo.getId_bahan() + 1;
+                BahanKain bahan = new BahanKain(idBahan, inpBahan.getText(), harga);
                 con.insertBahan(bahan);
+                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                if (input == JOptionPane.OK_OPTION) {
+                    ArrayList<String> idMotif = new ArrayList();
+                    ArrayList<String> idWarna = new ArrayList();
+                    for (int i = 0; i < motifKain.size(); i++) {
+                        if (tomMotif.get(i).isSelected()) {
+                            idMotif.add(tomMotif.get(i).getText());
+                        }
+                    }
+                    for (int i = 0; i < warnaKain.size(); i++) {
+                        if (tomWarna.get(i).isSelected()) {
+                            idWarna.add(tomWarna.get(i).getText());
+                        }
+                    }
+                    if (idMotif.size() >= idWarna.size()) {
+                        for (int i = 0; i < idMotif.size(); i++) {
+                            MotifKain tempMotif = con.getMotif(idMotif.get(i));
+                            for (int j = 0; j < idWarna.size(); j++) {
+                                String idKain = inpBahan.getText().substring(0, 2);
+                                WarnaKain tempWarna = con.getWarna(idWarna.get(j));
+                                idKain += idMotif.get(i).substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = inpBahan.getText().substring(0, 2);
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < idWarna.size(); i++) {
+                            WarnaKain tempWarna = con.getWarna(idWarna.get(i));
+                            for (int j = 0; j < idMotif.size(); j++) {
+                                String idKain = inpBahan.getText().substring(0, 2);
+                                MotifKain tempMotif = con.getMotif(idMotif.get(j));
+                                idKain += idMotif.get(i).substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = inpBahan.getText().substring(0, 2);
+                            }
+                        }
+                    }
+                };
             });
             subFrame.add(add);
+            backMenu.setBounds(10, 450, 150, 40);
             subFrame.add(backMenu);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
@@ -60,8 +149,11 @@ public class MenuInputKain {
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
         JButton bWarna = new JButton("Warna");
-        bWarna.setBounds(240, 50, 200, 50);
+
+        bWarna.setBounds(
+                240, 50, 200, 50);
         frame.add(bWarna);
+
         bWarna.addActionListener(e -> {
             frame.dispose();
             subFrame.setVisible(true);
@@ -78,14 +170,102 @@ public class MenuInputKain {
             subFrame.add(inpWarna);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
+            JLabel labBahan = new JLabel("pilihan bahan: ");
+            labBahan.setBounds(10, 85, 100, 25);
+            subFrame.add(labBahan);
+            ArrayList<JRadioButton> tomBahan = new ArrayList();
+            ArrayList<BahanKain> bahanKain = con.getAllBahan();
+
+            for (int i = 0; i < bahanKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(bahanKain.get(i).getNama_bahan());
+                tomBahan.add(tempTom);
+            }
+            int tempX = 10;
+            int tempY = 115;
+            for (int i = 0; i < tomBahan.size(); i++) {
+                if (tempY > 205) {
+                    tempY = 115;
+                    tempX += 110;
+                }
+                tomBahan.get(i).setBounds(tempX, tempY, 100, 25);
+                subFrame.add(tomBahan.get(i));
+                tempY += 30;
+            }
+
+            JLabel labMotif = new JLabel("pilihan motif: ");
+            labMotif.setBounds(10, 225, 100, 25);
+            subFrame.add(labMotif);
+            ArrayList<JRadioButton> tomMotif = new ArrayList();
+            ArrayList<MotifKain> motifKain = con.getAllMotif();
+
+            for (int i = 0; i < motifKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(motifKain.get(i).getNama_motif());
+                tomMotif.add(tempTom);
+            }
+            int tempX2 = 10;
+            int tempY2 = 255;
+            for (int i = 0; i < tomMotif.size(); i++) {
+                if (tempY2 > 345) {
+                    tempY2 = 255;
+                    tempX2 += 110;
+                }
+                tomMotif.get(i).setBounds(tempX2, tempY2, 100, 25);
+                subFrame.add(tomMotif.get(i));
+                tempY2 += 30;
+            }
+
             JButton add = new JButton("Tambah");
-            add.setBounds(10, 200, 100, 25);
+            add.setBounds(10, 400, 100, 25);
+
             add.addActionListener(a -> {
                 int harga = Integer.parseInt(inpHarga.getText());
-                WarnaKain warna = new WarnaKain(0, inpWarna.getText(), harga);
+                WarnaKain tempo = con.getWarnaBottom();
+                int idWarna = tempo.getId_warna() + 1;
+                WarnaKain warna = new WarnaKain(idWarna, inpWarna.getText(), harga);
                 con.insertWarna(warna);
+                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                if (input == JOptionPane.OK_OPTION) {
+                    ArrayList<String> idMotif = new ArrayList();
+                    ArrayList<String> idBahan = new ArrayList();
+                    for (int i = 0; i < motifKain.size(); i++) {
+                        if (tomMotif.get(i).isSelected()) {
+                            idMotif.add(tomMotif.get(i).getText());
+                        }
+                    }
+                    for (int i = 0; i < bahanKain.size(); i++) {
+                        if (tomBahan.get(i).isSelected()) {
+                            idBahan.add(tomBahan.get(i).getText());
+                        }
+                    }
+                    if (idMotif.size() >= idBahan.size()) {
+                        for (int i = 0; i < idMotif.size(); i++) {
+                            MotifKain tempMotif = con.getMotif(idMotif.get(i));
+                            for (int j = 0; j < idBahan.size(); j++) {
+                                String idKain = idBahan.get(j).substring(0, 2);
+                                BahanKain tempBahan = con.getBahan(idBahan.get(j));
+                                idKain += idMotif.get(i).substring(0, 2) + inpWarna.getText().substring(0, 2);
+                                kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = idBahan.get(j).substring(0, 2);
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < idBahan.size(); i++) {
+                            BahanKain tempBahan = con.getBahan(idBahan.get(i));
+                            for (int j = 0; j < idMotif.size(); j++) {
+                                String idKain = idBahan.get(j).substring(0, 2);
+                                MotifKain tempMotif = con.getMotif(idMotif.get(j));
+                                idKain += idMotif.get(i).substring(0, 2) + inpWarna.getText().substring(0, 2);
+                                kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = idBahan.get(j).substring(0, 2);
+                            }
+                        }
+                    }
+                };
             });
             subFrame.add(add);
+            backMenu.setBounds(10, 450, 150, 40);
             subFrame.add(backMenu);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
@@ -93,8 +273,11 @@ public class MenuInputKain {
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
         JButton bMotif = new JButton("Motif");
-        bMotif.setBounds(460, 50, 200, 50);
+
+        bMotif.setBounds(
+                460, 50, 200, 50);
         frame.add(bMotif);
+
         bMotif.addActionListener(e -> {
             frame.dispose();
             subFrame.setVisible(true);
@@ -111,27 +294,114 @@ public class MenuInputKain {
             subFrame.add(inpMotif);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
+            JLabel labBahan = new JLabel("pilihan bahan: ");
+            labBahan.setBounds(10, 85, 100, 25);
+            subFrame.add(labBahan);
+            ArrayList<JRadioButton> tomBahan = new ArrayList();
+            ArrayList<BahanKain> bahanKain = con.getAllBahan();
+
+            for (int i = 0; i < bahanKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(bahanKain.get(i).getNama_bahan());
+                tomBahan.add(tempTom);
+            }
+            int tempX = 10;
+            int tempY = 115;
+            for (int i = 0; i < tomBahan.size(); i++) {
+                if (tempY > 205) {
+                    tempY = 115;
+                    tempX += 110;
+                }
+                tomBahan.get(i).setBounds(tempX, tempY, 100, 25);
+                subFrame.add(tomBahan.get(i));
+                tempY += 30;
+            }
+
+            JLabel labWarna = new JLabel("pilihan warna: ");
+            labWarna.setBounds(10, 225, 100, 25);
+            subFrame.add(labWarna);
+            ArrayList<JRadioButton> tomWarna = new ArrayList();
+            ArrayList<WarnaKain> warnaKain = con.getAllWarna();
+
+            for (int i = 0; i < warnaKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(warnaKain.get(i).getNama_warna());
+                tomWarna.add(tempTom);
+            }
+            int tempX2 = 10;
+            int tempY2 = 255;
+            for (int i = 0; i < tomWarna.size(); i++) {
+                if (tempY2 > 345) {
+                    tempY2 = 255;
+                    tempX2 += 110;
+                }
+                tomWarna.get(i).setBounds(tempX2, tempY2, 100, 25);
+                subFrame.add(tomWarna.get(i));
+                tempY2 += 30;
+            }
             JButton add = new JButton("Tambah");
-            add.setBounds(10, 200, 100, 25);
+            add.setBounds(10, 400, 100, 25);
+
             add.addActionListener(a -> {
                 int harga = Integer.parseInt(inpHarga.getText());
-                MotifKain motif = new MotifKain(0, inpMotif.getText(), harga);
+                MotifKain tempo = con.getMotifBottom();
+                int idMotif = tempo.getId_motif() + 1;
+                MotifKain motif = new MotifKain(idMotif, inpMotif.getText(), harga);
                 con.insertMotif(motif);
+                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                if (input == JOptionPane.OK_OPTION) {
+                    ArrayList<String> idWarna = new ArrayList();
+                    ArrayList<String> idBahan = new ArrayList();
+                    for (int i = 0; i < warnaKain.size(); i++) {
+                        if (tomWarna.get(i).isSelected()) {
+                            idWarna.add(tomWarna.get(i).getText());
+                        }
+                    }
+                    for (int i = 0; i < bahanKain.size(); i++) {
+                        if (tomBahan.get(i).isSelected()) {
+                            idBahan.add(tomBahan.get(i).getText());
+                        }
+                    }
+                    if (idWarna.size() >= idBahan.size()) {
+                        for (int i = 0; i < idWarna.size(); i++) {
+                            WarnaKain tempWarna = con.getWarna(idWarna.get(i));
+                            for (int j = 0; j < idBahan.size(); j++) {
+                                String idKain = idBahan.get(j).substring(0, 2);
+                                BahanKain tempBahan = con.getBahan(idBahan.get(j));
+                                idKain += inpMotif.getText().substring(0, 2) + idWarna.get(i).substring(0, 2);
+                                kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = idBahan.get(j).substring(0, 2);
+                            }
+                        }
+                    } else {
+                        for (int i = 0; i < idBahan.size(); i++) {
+                            BahanKain tempBahan = con.getBahan(idBahan.get(i));
+                            for (int j = 0; j < idWarna.size(); j++) {
+                                String idKain = idBahan.get(i).substring(0, 2);
+                                WarnaKain tempWarna = con.getWarna(idWarna.get(j));
+                                idKain += inpMotif.getText().substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                                idKain = idBahan.get(i).substring(0, 2);
+                            }
+                        }
+                    }
+                };
             });
             subFrame.add(add);
             subFrame.add(backMenu);
+            backMenu.setBounds(10, 450, 150, 40);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
             });
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(backMenu);
-        frame.setLayout(null);
-        frame.setVisible(true);
-    }
 
-    public static void main(String[] args) {
-        new MenuInputKain();
+        frame.add(backMenu);
+
+        frame.setLayout(
+                null);
+        frame.setVisible(
+                true);
     }
 }
