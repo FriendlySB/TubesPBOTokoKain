@@ -94,16 +94,19 @@ public class Sql {
     }
 
     public Kain getKain(String id_kain) {
+        conn.connect();
         if (id_kain.contains("CUSTOM")) {
             String query = "SELECT * FROM kain_custom WHERE id_kain='" + id_kain + "'";
+            KainCustom curKain = new KainCustom();
             try {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                KainCustom curKain = new KainCustom();
-                curKain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
-                curKain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
-                curKain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
-                curKain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+                while (rs.next()) {
+                    curKain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+                    curKain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+                    curKain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+                    curKain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+                }
                 return curKain;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -114,9 +117,9 @@ public class Sql {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 kain_toko curKain = new kain_toko();
-                curKain.setBahan(getBahan(rs.getInt("id_bahan")));
-                curKain.setWarna(getWarna(rs.getInt("id_warna")));
-                curKain.setMotif(getMotif(rs.getInt("id_motif")));
+                curKain.setBahan(getBahan(rs.getString("nama_bahan")));
+                curKain.setWarna(getWarna(rs.getString("nama_warna")));
+                curKain.setMotif(getMotif(rs.getString("nama_motif")));
                 return curKain;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -125,8 +128,8 @@ public class Sql {
         return null;
     }
 
-    public BahanKain getBahan(int id_bahan) {
-        String query = "SELECT * FROM bahan WHERE id_bahan='" + id_bahan + "'";
+    public BahanKain getBahan(String nama_bahan) {
+        String query = "SELECT * FROM bahan WHERE nama_bahan='" + nama_bahan + "'";
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -141,36 +144,40 @@ public class Sql {
         return null;
     }
 
-    public WarnaKain getWarna(int id_warna) {
-        String query = "SELECT * FROM warna WHERE id_warna='" + id_warna + "'";
+    public WarnaKain getWarna(String namaWarna) {
+        String query = "SELECT * FROM warna WHERE nama_warna='" + namaWarna + "'";
+        WarnaKain curWarna = new WarnaKain();
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            WarnaKain curWarna = new WarnaKain();
-            curWarna.setId_warna(rs.getInt("id_warna"));
-            curWarna.setNama_warna(rs.getString("nama_warna"));
-            curWarna.setHarga_warna(rs.getInt("harga_warna"));
-            return curWarna;
+            while (rs.next()) {
+                curWarna.setId_warna(rs.getInt("id_warna"));
+                curWarna.setNama_warna(rs.getString("nama_warna"));
+                curWarna.setHarga_warna(rs.getInt("harga_warna"));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return curWarna;
     }
 
-    public MotifKain getMotif(int id_motif) {
-        String query = "SELECT * FROM motif WHERE id_motif='" + id_motif + "'";
+    public MotifKain getMotif(String nama_motif) {
+        String query = "SELECT * FROM motif WHERE nama_motif='" + nama_motif + "'";
+        MotifKain curMotif = new MotifKain();
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            MotifKain curMotif = new MotifKain();
-            curMotif.setId_motif(rs.getInt("id_motif"));
-            curMotif.setNama_motif(rs.getString("nama_motif"));
-            curMotif.setHarga_motif(rs.getInt("harga_motif"));
-            return curMotif;
+            while (rs.next()) {
+                curMotif.setId_motif(rs.getInt("id_motif"));
+                curMotif.setNama_motif(rs.getString("nama_motif"));
+                curMotif.setHarga_motif(rs.getInt("harga_motif"));
+            }
+
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return curMotif;
     }
 
     // SELECT ALL from table users
@@ -535,6 +542,7 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setString(1, id_kain);
+            stmt.executeUpdate();
             if (kain instanceof kain_toko) {
                 String query2 = "INSERT INTO kain_toko VALUES(?,?,?,?,?)";
                 try {
@@ -571,7 +579,6 @@ public class Sql {
                     return (false);
                 }
             }
-            stmt.executeUpdate();
         } catch (SQLException e) {
             e.printStackTrace();
             return (false);
