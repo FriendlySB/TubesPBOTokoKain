@@ -145,8 +145,8 @@ public class Sql {
         return curBahan;
     }
 
-    public BahanKain getBahanTop() {
-        String query = "SELECT * FROM bahan limit 1";
+    public BahanKain getBahanBottom() {
+        String query = "SELECT * FROM bahan order by id_bahan DESC limit 1";
         BahanKain curBahan = new BahanKain();
         try {
             Statement stmt = conn.con.createStatement();
@@ -162,8 +162,8 @@ public class Sql {
         return curBahan;
     }
 
-    public WarnaKain getWarnaTop() {
-        String query = "SELECT * FROM warna limit 1";
+    public WarnaKain getWarnaBottom() {
+        String query = "SELECT * FROM warna order by id_warna DESC limit 1";
         WarnaKain curWarna = new WarnaKain();
         try {
             Statement stmt = conn.con.createStatement();
@@ -198,8 +198,8 @@ public class Sql {
         return curWarna;
     }
 
-    public MotifKain getMotifTop() {
-        String query = "SELECT * FROM motif limit 1";
+    public MotifKain getMotifBottom() {
+        String query = "SELECT * FROM motif order by id_motif DESC limit 1";
         MotifKain curMotif = new MotifKain();
         try {
             Statement stmt = conn.con.createStatement();
@@ -546,11 +546,12 @@ public class Sql {
 
     public static boolean insertBahan(BahanKain curKain) {
         conn.connect();
-        String query = "INSERT INTO bahan(`nama_bahan`, `harga_bahan`) VALUES(?,?)";
+        String query = "INSERT INTO bahan VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(1, curKain.getNama_bahan());
-            stmt.setInt(2, curKain.getHarga_bahan());
+            stmt.setInt(1, curKain.getId_bahan());
+            stmt.setString(2, curKain.getNama_bahan());
+            stmt.setInt(3, curKain.getHarga_bahan());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -561,11 +562,12 @@ public class Sql {
 
     public static boolean insertWarna(WarnaKain curKain) {
         conn.connect();
-        String query = "INSERT INTO warna(`nama_warna`,`harga_warna`) VALUES(?,?)";
+        String query = "INSERT INTO warna VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(1, curKain.getNama_warna());
-            stmt.setInt(2, curKain.getHarga_warna());
+            stmt.setInt(1, curKain.getId_warna());
+            stmt.setString(2, curKain.getNama_warna());
+            stmt.setInt(3, curKain.getHarga_warna());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -576,11 +578,12 @@ public class Sql {
 
     public static boolean insertMotif(MotifKain curKain) {
         conn.connect();
-        String query = "INSERT INTO motif(`nama_motif`, `harga_warna`) VALUES(?,?,?)";
+        String query = "INSERT INTO motif VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(1, curKain.getNama_motif());
-            stmt.setInt(2, curKain.getHarga_motif());
+            stmt.setInt(1, curKain.getId_motif());
+            stmt.setString(2, curKain.getNama_motif());
+            stmt.setInt(3, curKain.getHarga_motif());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
