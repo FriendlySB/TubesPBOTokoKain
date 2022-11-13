@@ -38,13 +38,14 @@ public class Sql {
         conn.connect();
         String query = "SELECT * FROM bahan";
         try {
-            BahanKain bahan = new BahanKain();
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                BahanKain bahan = new BahanKain();
                 bahan.setId_bahan(rs.getInt("id_bahan"));
                 bahan.setNama_bahan(rs.getString("nama_bahan"));
                 bahan.setHarga_bahan(rs.getInt("harga_bahan"));
+                listBahan.add(bahan);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -57,13 +58,14 @@ public class Sql {
         conn.connect();
         String query = "SELECT * FROM warna";
         try {
-            WarnaKain warna = new WarnaKain();
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                WarnaKain warna = new WarnaKain();
                 warna.setId_warna(rs.getInt("id_warna"));
                 warna.setNama_warna(rs.getString("nama_warna"));
                 warna.setHarga_warna(rs.getInt("harga_warna"));
+                listWarna.add(warna);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -76,13 +78,14 @@ public class Sql {
         conn.connect();
         String query = "SELECT * FROM motif";
         try {
-            MotifKain motif = new MotifKain();
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
+                MotifKain motif = new MotifKain();
                 motif.setId_motif(rs.getInt("id_motif"));
                 motif.setNama_motif(rs.getString("nama_motif"));
                 motif.setHarga_motif(rs.getInt("harga_motif"));
+                listMotif.add(motif);
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -236,8 +239,8 @@ public class Sql {
         }
         return (users);
     }
-    
-        // SELECT ALL Customers from table users
+
+    // SELECT ALL Customers from table users
     public ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 
@@ -262,7 +265,7 @@ public class Sql {
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
                     currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
                     customers.add(currentCust);
-                } 
+                }
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -415,7 +418,7 @@ public class Sql {
 //                }
                 stmt.executeUpdate();
             }
-            
+
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
