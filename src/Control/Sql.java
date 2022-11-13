@@ -130,18 +130,54 @@ public class Sql {
 
     public BahanKain getBahan(String nama_bahan) {
         String query = "SELECT * FROM bahan WHERE nama_bahan='" + nama_bahan + "'";
+        BahanKain curBahan = new BahanKain();
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            BahanKain curBahan = new BahanKain();
-            curBahan.setId_bahan(rs.getInt("id_bahan"));
-            curBahan.setNama_bahan(rs.getString("nama_bahan"));
-            curBahan.setHarga_bahan(rs.getInt("harga_bahan"));
-            return curBahan;
+            while (rs.next()) {
+                curBahan.setId_bahan(rs.getInt("id_bahan"));
+                curBahan.setNama_bahan(rs.getString("nama_bahan"));
+                curBahan.setHarga_bahan(rs.getInt("harga_bahan"));
+            }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return curBahan;
+    }
+
+    public BahanKain getBahanBottom() {
+        String query = "SELECT * FROM bahan order by id_bahan DESC limit 1";
+        BahanKain curBahan = new BahanKain();
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                curBahan.setId_bahan(rs.getInt("id_bahan"));
+                curBahan.setNama_bahan(rs.getString("nama_bahan"));
+                curBahan.setHarga_bahan(rs.getInt("harga_bahan"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return curBahan;
+    }
+
+    public WarnaKain getWarnaBottom() {
+        String query = "SELECT * FROM warna order by id_warna DESC limit 1";
+        WarnaKain curWarna = new WarnaKain();
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                curWarna.setId_warna(rs.getInt("id_warna"));
+                curWarna.setNama_warna(rs.getString("nama_warna"));
+                curWarna.setHarga_warna(rs.getInt("harga_warna"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return curWarna;
     }
 
     public WarnaKain getWarna(String namaWarna) {
@@ -160,6 +196,24 @@ public class Sql {
             e.printStackTrace();
         }
         return curWarna;
+    }
+
+    public MotifKain getMotifBottom() {
+        String query = "SELECT * FROM motif order by id_motif DESC limit 1";
+        MotifKain curMotif = new MotifKain();
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                curMotif.setId_motif(rs.getInt("id_motif"));
+                curMotif.setNama_motif(rs.getString("nama_motif"));
+                curMotif.setHarga_motif(rs.getInt("harga_motif"));
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return curMotif;
     }
 
     public MotifKain getMotif(String nama_motif) {
@@ -492,11 +546,12 @@ public class Sql {
 
     public static boolean insertBahan(BahanKain curKain) {
         conn.connect();
-        String query = "INSERT INTO bahan(`nama_bahan`, `harga_bahan`) VALUES(?,?)";
+        String query = "INSERT INTO bahan VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setString(1, curKain.getNama_bahan());
-            stmt.setInt(2, curKain.getHarga_bahan());
+            stmt.setInt(1, curKain.getId_bahan());
+            stmt.setString(2, curKain.getNama_bahan());
+            stmt.setInt(3, curKain.getHarga_bahan());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -507,9 +562,10 @@ public class Sql {
 
     public static boolean insertWarna(WarnaKain curKain) {
         conn.connect();
-        String query = "INSERT INTO warna(`nama_warna`,`harga_warna`) VALUES(?,?)";
+        String query = "INSERT INTO warna VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, curKain.getId_warna());
             stmt.setString(2, curKain.getNama_warna());
             stmt.setInt(3, curKain.getHarga_warna());
             stmt.executeUpdate();
@@ -522,9 +578,10 @@ public class Sql {
 
     public static boolean insertMotif(MotifKain curKain) {
         conn.connect();
-        String query = "INSERT INTO motif(`nama_motif`, `harga_warna`) VALUES(?,?,?)";
+        String query = "INSERT INTO motif VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, curKain.getId_motif());
             stmt.setString(2, curKain.getNama_motif());
             stmt.setInt(3, curKain.getHarga_motif());
             stmt.executeUpdate();
@@ -544,7 +601,10 @@ public class Sql {
             stmt.setString(1, id_kain);
             stmt.executeUpdate();
             if (kain instanceof kain_toko) {
-                String query2 = "INSERT INTO kain_toko VALUES(?,?,?,?,?)";
+                Statement stmtForreigKeyOff = conn.con.createStatement();
+                stmtForreigKeyOff.execute("SET FOREIGN_KEY_CHECKS=0");
+                stmtForreigKeyOff.close();
+                String query2 = "INSERT INTO kain_toko VALUES(?,?,?,?,?);";
                 try {
                     PreparedStatement stmt2 = conn.con.prepareStatement(query2);
                     kain_toko curKain = (kain_toko) kain;
@@ -553,10 +613,10 @@ public class Sql {
                     stmt2.setInt(3, curKain.getWarna().getId_warna());
                     stmt2.setInt(4, curKain.getMotif().getId_motif());
                     stmt2.setInt(5, curKain.getStok());
-//                    insertBahan(curKain);
-//                    insertWarna(curKain);
-//                    insertMotif(curKain);
                     stmt2.executeUpdate();
+                    Statement stmtForreigKeyOn = conn.con.createStatement();
+                    stmtForreigKeyOn.execute("SET FOREIGN_KEY_CHECKS=1");
+                    stmtForreigKeyOn.close();
                     return (true);
                 } catch (SQLException e) {
                     e.printStackTrace();
