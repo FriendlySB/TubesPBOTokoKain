@@ -103,38 +103,46 @@ public class MenuInputKain {
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idMotif = new ArrayList();
                     ArrayList<String> idWarna = new ArrayList();
+                    ArrayList<String> namaMotif = new ArrayList();
+                    ArrayList<String> namaWarna = new ArrayList();
                     for (int i = 0; i < motifKain.size(); i++) {
                         if (tomMotif.get(i).isSelected()) {
-                            idMotif.add(tomMotif.get(i).getText());
+                            MotifKain temp = con.getMotif(tomMotif.get(i).getText());
+                            namaMotif.add(temp.getNama_motif());
+                            String idToAdd = Integer.toString(temp.getId_motif());
+                            idMotif.add(idToAdd);
                         }
                     }
                     for (int i = 0; i < warnaKain.size(); i++) {
                         if (tomWarna.get(i).isSelected()) {
-                            idWarna.add(tomWarna.get(i).getText());
+                            WarnaKain temp = con.getWarna(tomWarna.get(i).getText());
+                            namaWarna.add(temp.getNama_warna());
+                            String idToAdd = Integer.toString(temp.getId_warna());
+                            idWarna.add(idToAdd);
                         }
                     }
                     if (idMotif.size() >= idWarna.size()) {
                         for (int i = 0; i < idMotif.size(); i++) {
-                            MotifKain tempMotif = con.getMotif(idMotif.get(i));
+                            MotifKain tempMotif = con.getMotif(namaMotif.get(i));
                             for (int j = 0; j < idWarna.size(); j++) {
-                                String idKain = inpBahan.getText().substring(0, 2);
-                                WarnaKain tempWarna = con.getWarna(idWarna.get(j));
-                                idKain += idMotif.get(i).substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                String idKain = Integer.toString(bahan.getId_bahan());
+                                WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
+                                idKain += "-" + idMotif.get(i) + "-" + idWarna.get(j);
                                 kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = inpBahan.getText().substring(0, 2);
+                                idKain = Integer.toString(bahan.getId_bahan());
                             }
                         }
                     } else {
                         for (int i = 0; i < idWarna.size(); i++) {
                             WarnaKain tempWarna = con.getWarna(idWarna.get(i));
                             for (int j = 0; j < idMotif.size(); j++) {
-                                String idKain = inpBahan.getText().substring(0, 2);
+                                String idKain = Integer.toString(bahan.getId_bahan());
                                 MotifKain tempMotif = con.getMotif(idMotif.get(j));
-                                idKain += idMotif.get(i).substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                idKain += "-" + idMotif.get(i) + "-" + idWarna.get(j);
                                 kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = inpBahan.getText().substring(0, 2);
+                                idKain = Integer.toString(bahan.getId_bahan());
                             }
                         }
                     }
@@ -227,38 +235,47 @@ public class MenuInputKain {
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idMotif = new ArrayList();
                     ArrayList<String> idBahan = new ArrayList();
+                    ArrayList<String> namaMotif = new ArrayList();
+                    ArrayList<String> namaBahan = new ArrayList();
+
                     for (int i = 0; i < motifKain.size(); i++) {
                         if (tomMotif.get(i).isSelected()) {
-                            idMotif.add(tomMotif.get(i).getText());
+                            MotifKain temp = con.getMotif(tomMotif.get(i).getText());
+                            namaMotif.add(temp.getNama_motif());
+                            String idToAdd = Integer.toString(temp.getId_motif());
+                            idMotif.add(idToAdd);
                         }
                     }
                     for (int i = 0; i < bahanKain.size(); i++) {
                         if (tomBahan.get(i).isSelected()) {
-                            idBahan.add(tomBahan.get(i).getText());
+                            BahanKain temp = con.getBahan(tomBahan.get(i).getText());
+                            namaBahan.add(temp.getNama_bahan());
+                            String idToAdd = Integer.toString(temp.getId_bahan());
+                            idBahan.add(idToAdd);
                         }
                     }
                     if (idMotif.size() >= idBahan.size()) {
                         for (int i = 0; i < idMotif.size(); i++) {
-                            MotifKain tempMotif = con.getMotif(idMotif.get(i));
+                            MotifKain tempMotif = con.getMotif(namaMotif.get(i));
                             for (int j = 0; j < idBahan.size(); j++) {
-                                String idKain = idBahan.get(j).substring(0, 2);
-                                BahanKain tempBahan = con.getBahan(idBahan.get(j));
-                                idKain += idMotif.get(i).substring(0, 2) + inpWarna.getText().substring(0, 2);
+                                String idKain = idBahan.get(j);
+                                BahanKain tempBahan = con.getBahan(namaBahan.get(j));
+                                idKain += "-" + idMotif.get(i) + "-" + warna.getId_warna();
                                 kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = idBahan.get(j).substring(0, 2);
+                                idKain = idBahan.get(j);
                             }
                         }
                     } else {
                         for (int i = 0; i < idBahan.size(); i++) {
-                            BahanKain tempBahan = con.getBahan(idBahan.get(i));
+                            BahanKain tempBahan = con.getBahan(namaBahan.get(i));
                             for (int j = 0; j < idMotif.size(); j++) {
-                                String idKain = idBahan.get(j).substring(0, 2);
-                                MotifKain tempMotif = con.getMotif(idMotif.get(j));
-                                idKain += idMotif.get(i).substring(0, 2) + inpWarna.getText().substring(0, 2);
+                                String idKain = idBahan.get(j);
+                                MotifKain tempMotif = con.getMotif(namaMotif.get(j));
+                                idKain += "-" + idMotif.get(i) + "-" + warna.getId_warna();
                                 kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = idBahan.get(j).substring(0, 2);
+                                idKain = idBahan.get(j);
                             }
                         }
                     }
@@ -350,38 +367,47 @@ public class MenuInputKain {
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idWarna = new ArrayList();
                     ArrayList<String> idBahan = new ArrayList();
+                    ArrayList<String> namaWarna = new ArrayList();
+                    ArrayList<String> namaBahan = new ArrayList();
+
                     for (int i = 0; i < warnaKain.size(); i++) {
                         if (tomWarna.get(i).isSelected()) {
-                            idWarna.add(tomWarna.get(i).getText());
+                            WarnaKain temp = con.getWarna(tomWarna.get(i).getText());
+                            namaWarna.add(temp.getNama_warna());
+                            String idToAdd = Integer.toString(temp.getId_warna());
+                            idWarna.add(idToAdd);
                         }
                     }
                     for (int i = 0; i < bahanKain.size(); i++) {
                         if (tomBahan.get(i).isSelected()) {
-                            idBahan.add(tomBahan.get(i).getText());
+                            BahanKain temp = con.getBahan(tomBahan.get(i).getText());
+                            namaBahan.add(temp.getNama_bahan());
+                            String idToAdd = Integer.toString(temp.getId_bahan());
+                            idBahan.add(idToAdd);
                         }
                     }
                     if (idWarna.size() >= idBahan.size()) {
                         for (int i = 0; i < idWarna.size(); i++) {
-                            WarnaKain tempWarna = con.getWarna(idWarna.get(i));
+                            WarnaKain tempWarna = con.getWarna(namaWarna.get(i));
                             for (int j = 0; j < idBahan.size(); j++) {
-                                String idKain = idBahan.get(j).substring(0, 2);
-                                BahanKain tempBahan = con.getBahan(idBahan.get(j));
-                                idKain += inpMotif.getText().substring(0, 2) + idWarna.get(i).substring(0, 2);
+                                String idKain = idBahan.get(j);
+                                BahanKain tempBahan = con.getBahan(namaBahan.get(j));
+                                idKain += "-" + motif.getId_motif() + "-" + idWarna.get(i);
                                 kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = idBahan.get(j).substring(0, 2);
+                                idKain = idBahan.get(j);
                             }
                         }
                     } else {
                         for (int i = 0; i < idBahan.size(); i++) {
-                            BahanKain tempBahan = con.getBahan(idBahan.get(i));
+                            BahanKain tempBahan = con.getBahan(namaBahan.get(i));
                             for (int j = 0; j < idWarna.size(); j++) {
-                                String idKain = idBahan.get(i).substring(0, 2);
-                                WarnaKain tempWarna = con.getWarna(idWarna.get(j));
-                                idKain += inpMotif.getText().substring(0, 2) + idWarna.get(j).substring(0, 2);
+                                String idKain = idBahan.get(i);
+                                WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
+                                idKain += "-" + motif.getId_motif() + "-" + idWarna.get(j);
                                 kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
-                                idKain = idBahan.get(i).substring(0, 2);
+                                idKain = idBahan.get(j);
                             }
                         }
                     }
@@ -403,5 +429,9 @@ public class MenuInputKain {
                 null);
         frame.setVisible(
                 true);
+    }
+
+    public static void main(String[] args) {
+        new MenuInputKain();
     }
 }
