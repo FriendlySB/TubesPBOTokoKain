@@ -31,7 +31,7 @@ import java.sql.PreparedStatement;
 public class Sql {
 
     static DatabaseHandler conn = new DatabaseHandler();
-
+    
     public ArrayList<BahanKain> getAllBahan() {
         ArrayList<BahanKain> listBahan = new ArrayList();
         conn.connect();
@@ -71,7 +71,7 @@ public class Sql {
         }
         return listWarna;
     }
-
+    
     public ArrayList<MotifKain> getAllMotif() {
         ArrayList<MotifKain> listMotif = new ArrayList();
         conn.connect();
@@ -91,7 +91,24 @@ public class Sql {
         }
         return listMotif;
     }
-
+    
+    public ArrayList<String> getAllIDKain() {
+        ArrayList<String> listIDKain = new ArrayList();
+        conn.connect();
+        String query = "SELECT * FROM kain";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String id = rs.getString("id_kain");
+                listIDKain.add(id);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listIDKain;
+    }
+    
     public Kain getKain(String id_kain) {
         conn.connect();
         if (id_kain.contains("CUSTOM")) {
