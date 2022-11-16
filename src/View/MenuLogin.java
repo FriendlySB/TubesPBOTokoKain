@@ -83,10 +83,12 @@ public class MenuLogin {
                         if (users.get(i) instanceof Customer) {
                             frame.dispose();
                             Customer customer = (Customer) users.get(i);
-                            new MainMenuUser(customer);
+                            CurrentUser.getInstance().setUser(customer);
+                            new MainMenuUser();
                         } else {
                             frame.dispose();
                             Admin admin = (Admin) users.get(i);
+                             CurrentUser.getInstance().setUser(admin);
                             new MainMenuAdmin(admin);
                         }
                     } else {

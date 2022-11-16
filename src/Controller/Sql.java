@@ -31,7 +31,7 @@ import java.sql.PreparedStatement;
 public class Sql {
 
     static DatabaseHandler conn = new DatabaseHandler();
-    
+
     public ArrayList<BahanKain> getAllBahan() {
         ArrayList<BahanKain> listBahan = new ArrayList();
         conn.connect();
@@ -71,7 +71,7 @@ public class Sql {
         }
         return listWarna;
     }
-    
+
     public ArrayList<MotifKain> getAllMotif() {
         ArrayList<MotifKain> listMotif = new ArrayList();
         conn.connect();
@@ -91,7 +91,7 @@ public class Sql {
         }
         return listMotif;
     }
-    
+
     public ArrayList<String> getAllIDKain() {
         ArrayList<String> listIDKain = new ArrayList();
         conn.connect();
@@ -108,7 +108,7 @@ public class Sql {
         }
         return listIDKain;
     }
-    
+
     public Kain getKain(String id_kain) {
         conn.connect();
         if (id_kain.contains("CUSTOM")) {
@@ -487,6 +487,21 @@ public class Sql {
         }
     }
 
+    public static boolean insertKeranjang(User user, Kain kain, int jumlahKain) {
+        conn.connect();
+        String query = "INSERT INTO keranjang VALUES(?,?,?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, user.getId_user());
+            stmt.setString(2, kain.getId_kain());
+            stmt.setInt(3, jumlahKain);
+            stmt.executeUpdate();
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
 
     public static boolean insertTransaksi(Customer customer, int id_transaksi) {
         conn.connect();
@@ -777,8 +792,8 @@ public class Sql {
             return false;
         }
     }
-    
-     public boolean insertAdmin() {
+
+    public boolean insertAdmin() {
         conn.connect();
         String query = "INSERT INTO admin (id_user) VALUES (?)";
         try {
@@ -792,8 +807,8 @@ public class Sql {
             return (false);
         }
     }
-     
-     public int getID_userBottom() {
+
+    public int getID_userBottom() {
         String query = "SELECT * FROM users ORDER BY id_user DESC LIMIT 1";
         int id = 0;
         try {
