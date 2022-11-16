@@ -42,6 +42,10 @@ public class MainMenuAdmin {
         JButton menuEditKain = new JButton("Edit Data Kain");
         menuEditKain.setBounds(150, 160, 300, 50);
 
+        menuEditKain.addActionListener(e -> {
+            new MenuEditKain();
+        });
+
         JButton menuEditProgressPesanan = new JButton("Edit Progress Pesanan");
         menuEditProgressPesanan.setBounds(150, 220, 300, 50);
 
