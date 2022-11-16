@@ -487,13 +487,13 @@ public class Sql {
         }
     }
 
-    public static boolean insertKeranjang(User user, Kain kain, int jumlahKain) {
+    public static boolean insertKeranjang(User user, String id_kain, int jumlahKain) {
         conn.connect();
         String query = "INSERT INTO keranjang VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, user.getId_user());
-            stmt.setString(2, kain.getId_kain());
+            stmt.setString(2, id_kain);
             stmt.setInt(3, jumlahKain);
             stmt.executeUpdate();
             return (true);
@@ -822,5 +822,21 @@ public class Sql {
             e.printStackTrace();
         }
         return id;
+    }
+    
+    public int countStockKain(String id_kain){
+        String query = "SELECT stok FROM kain_toko WHERE id_kain = '" + id_kain + "'";
+        int stock = 0;
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                stock = rs.getInt("stok");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return stock;
     }
 }
