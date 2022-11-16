@@ -6,7 +6,7 @@
 package View;
 
 import javax.swing.*;
-import Control.Sql;
+import Controller.Sql;
 import Model.*;
 import java.awt.Color;
 import java.awt.Cursor;

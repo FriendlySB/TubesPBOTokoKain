@@ -4,7 +4,7 @@
  */
 package View;
 
-import Control.Sql;
+import Controller.Sql;
 import Model.ChatRoom;
 import Model.Customer;
 import Model.Keranjang;

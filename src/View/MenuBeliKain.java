@@ -6,10 +6,13 @@ import java.awt.event.ActionListener;
 import java.awt.event.ItemEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.time.LocalDate;
-import java.time.ZoneId;
-import java.util.Date;
 import javax.swing.*;
+import Model.Kain;
+import Model.kain_toko;
+import Model.KainCustom;
+import Controller.Sql;
+import Controller.Controller;
+import java.util.ArrayList;
 
 public class MenuBeliKain {
 
@@ -53,6 +56,17 @@ public class MenuBeliKain {
         inputJumlahCustom.setBounds(180, 110, 150, 25);
         JButton buttonAddToCartCustom = new JButton("Add to Cart");
         buttonAddToCartCustom.setBounds(220, 140, 100, 40);
+        buttonAddToCartCustom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                Sql sql = new Sql();
+                Controller controller = new Controller();
+                String idKain = controller.createIDKainCustom(sql.countIDKainCustom());
+                KainCustom kain = new KainCustom(inputBahanCustom.getText(),
+                        inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
+                sql.insertKain(kain,idKain);
+            }
+        });
         
         panelKainCustom.add(labelBahanCustom);
         panelKainCustom.add(inputBahanCustom);

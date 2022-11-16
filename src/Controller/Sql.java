@@ -3,7 +3,7 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package Control;
+package Controller;
 
 import Model.Admin;
 import Model.BahanKain;
@@ -645,7 +645,7 @@ public class Sql {
         }
         return (false);
     }
-
+    
     public static boolean updateDataCustomer(Customer customer) {
         conn.connect();
         String query = "UPDATE users set username = ?,nama_lengkap = ?,email = ?,alamat = ?,no_telpon = ? "
@@ -676,6 +676,24 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
             return (false);
+        }
+
+    }
+    
+    public static int countIDKainCustom() {
+        conn.connect();
+        String query = "SELECT COUNT(id_kain) AS 'jumlah' FROM kain_custom";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            ResultSet rs = stmt.executeQuery(query);
+            int result = 0;
+            while (rs.next()) {
+                result = rs.getInt("jumlah");
+            }
+            return result + 1;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return -1;
         }
 
     }
