@@ -760,4 +760,35 @@ public class Sql {
             return false;
         }
     }
+    
+     public boolean insertAdmin() {
+        conn.connect();
+        String query = "INSERT INTO admin (id_user) VALUES (?)";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            int id = getID_userBottom();
+            stmt.setInt(1, id);
+            stmt.executeUpdate(query);
+            return (true);
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+     
+     public int getID_userBottom() {
+        String query = "SELECT * FROM users ORDER BY id_user DESC LIMIT 1";
+        int id = 0;
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                id = rs.getInt("id_user");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
+    }
 }
