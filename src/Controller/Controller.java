@@ -60,4 +60,13 @@ public class Controller {
         }
         return motif;
     }
+    
+    public boolean cekStokKain(String id_kain, int jumlahDibeli){
+        Sql sql = new Sql();
+        int stokKain = sql.countStockKain(id_kain);
+        if(jumlahDibeli <= stokKain){
+            return true;
+        }
+        return false;
+    }
 }

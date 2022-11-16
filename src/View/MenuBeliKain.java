@@ -19,6 +19,7 @@ import java.util.ArrayList;
 public class MenuBeliKain {
     Sql sql = new Sql();
     Controller controller = new Controller();
+    ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
     
     public MenuBeliKain() {
         User curUser = CurrentUser.getInstance().getUser();
@@ -48,7 +49,11 @@ public class MenuBeliKain {
         labelBeliKainToko.setBounds(20, 20, 250, 25);
         JLabel labelBeliKain = new JLabel("Pilih kain");
         labelBeliKain.setBounds(20, 50, 125, 25);
-        JComboBox comboBoxKainToko = new JComboBox();
+        String arrNamaKain[] = new String[listIDKain.size()];
+        for(int i = 0; i < arrNamaKain.length; i++){
+            arrNamaKain[i] = controller.getNamaKain(listIDKain.get(i));
+        }
+        JComboBox comboBoxKainToko = new JComboBox(arrNamaKain);
         comboBoxKainToko.setBounds(150, 50, 250, 25);
         JLabel labelJumlahKainToko = new JLabel("Input Jumlah Kain");
         labelJumlahKainToko.setBounds(20, 80, 150, 25);
@@ -59,7 +64,22 @@ public class MenuBeliKain {
         buttonAddToCartToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                //t
+                if(inputJumlahKainToko.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Mohon mengisi jumlah kain", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String idKain = listIDKain.get(comboBoxKainToko.getSelectedIndex());
+                    int quantity = Integer.parseInt(inputJumlahKainToko.getText());
+                    if(controller.cekStokKain(idKain, quantity) == true){
+                        sql.insertKeranjang(curUser,idKain,quantity);
+                        JOptionPane.showMessageDialog(null, "Kain telah ditambahkan ke cart Anda", 
+                               "Message", JOptionPane.INFORMATION_MESSAGE); 
+                        frame.dispose();
+                        new MenuBeliKain();
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Maaf, stok " + controller.getNamaKain(idKain) + " sudah habis",
+                               "Peringatan", JOptionPane.WARNING_MESSAGE); 
+                    }
+                }
             }
         });
         
@@ -87,19 +107,28 @@ public class MenuBeliKain {
         JTextField inputJumlahCustom = new JTextField();
         inputJumlahCustom.setBounds(180, 110, 150, 25);
         JButton buttonAddToCartCustom = new JButton("Add to Cart");
-        buttonAddToCartCustom.setBounds(220, 140, 100, 40);
+        buttonAddToCartCustom.setBounds(250, 180, 100, 40);
         buttonAddToCartCustom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Sql sql = new Sql();
                 Controller controller = new Controller();
-                String idKain = controller.createIDKainCustom(sql.countIDKainCustom());
-                KainCustom kain = new KainCustom(inputBahanCustom.getText(),
+                if(inputBahanCustom.getText().equals("") || 
+                        inputWarnaCustom.getText().equals("") || 
+                        inputMotifCustom.getText().equals("") ||
+                        inputJumlahCustom.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Mohon lengkapi data kain custom Anda", 
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    String idKain = controller.createIDKainCustom(sql.countIDKainCustom());
+                    KainCustom kain = new KainCustom(inputBahanCustom.getText(),
                         inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
-                sql.insertKain(kain,idKain);
-                sql.insertKeranjang(curUser,kain,Integer.parseInt(inputJumlahCustom.getText()));
-                System.out.println(curUser.getId_user() + kain.getId_kain()+Integer.parseInt(inputJumlahCustom.getText()));
-                frame.dispose();
+                    sql.insertKain(kain,idKain);
+                    sql.insertKeranjang(curUser,idKain,Integer.parseInt(inputJumlahCustom.getText()));
+                    JOptionPane.showMessageDialog(null, "Kain telah ditambahkan ke cart Anda", 
+                               "Message", JOptionPane.INFORMATION_MESSAGE);
+                }
+                
             }
         });
         
