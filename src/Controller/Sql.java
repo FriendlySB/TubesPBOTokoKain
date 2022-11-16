@@ -763,7 +763,7 @@ public class Sql {
     
      public boolean insertAdmin() {
         conn.connect();
-        String query = "INSERT INTO admin (id_user) values (?)";
+        String query = "INSERT INTO admin (id_user) VALUES (?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             int id = getID_userBottom();
@@ -777,7 +777,7 @@ public class Sql {
     }
      
      public int getID_userBottom() {
-        String query = "SELECT * FROM users order by id_user desc limit 1";
+        String query = "SELECT * FROM users ORDER BY id_user DESC LIMIT 1";
         int id = 0;
         try {
             Statement stmt = conn.con.createStatement();

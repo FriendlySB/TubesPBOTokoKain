@@ -89,7 +89,7 @@ public class tambahAdmin {
                 String admin_pass = field_pass.getText();
                 String admin_address = "";
                 String admin_telp = "";
-                String warn = "masih terdapat data yang belum di isi";
+                String warn = "Masih terdapat data yang belum di isi";
                 
                 if(admin_username.equals("") || admin_email.equals("") || admin_namaLengkap.equals("") ||
                         admin_pass.equals("")){
