@@ -27,16 +27,43 @@ public class MenuBeliKain {
         
         JPanel panelKainToko = new JPanel();
         panelKainToko.setSize(600, 400);
+        panelKainToko.setLayout(null);
+        panelKainToko.setVisible(true);
+        
         JPanel panelKainCustom = new JPanel();
         panelKainCustom.setSize(600, 400);
         panelKainCustom.setLayout(null);
         panelKainCustom.setVisible(true);
         
         JLabel judul = new JLabel("Silahkan pilih kain toko atau kain custom");
-        judul.setBounds(0, 5, 300, 20);
+        judul.setBounds(20, 5, 300, 20);
         
         //Kain Toko
+        JLabel labelBeliKainToko = new JLabel("Silahkan memilih kain toko");
+        labelBeliKainToko.setBounds(20, 20, 250, 25);
+        JLabel labelBeliKain = new JLabel("Pilih kain");
+        labelBeliKain.setBounds(20, 50, 125, 25);
+        JComboBox comboBoxKainToko = new JComboBox();
+        comboBoxKainToko.setBounds(150, 50, 250, 25);
+        JLabel labelJumlahKainToko = new JLabel("Input Jumlah Kain");
+        labelJumlahKainToko.setBounds(20, 80, 150, 25);
+        JTextField inputJumlahKainToko = new JTextField();
+        inputJumlahKainToko.setBounds(150, 80, 50, 25);
+        JButton buttonAddToCartToko = new JButton("Add to Cart");
+        buttonAddToCartToko.setBounds(250, 180, 100, 40);
+        buttonAddToCartToko.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                
+            }
+        });
         
+        panelKainToko.add(labelBeliKainToko);
+        panelKainToko.add(labelBeliKain);
+        panelKainToko.add(comboBoxKainToko);
+        panelKainToko.add(labelJumlahKainToko);
+        panelKainToko.add(inputJumlahKainToko);
+        panelKainToko.add(buttonAddToCartToko);
         //Kain Custom
         JLabel labelBahanCustom = new JLabel("Input Bahan Custom");
         labelBahanCustom.setBounds(20, 20, 150, 25);
