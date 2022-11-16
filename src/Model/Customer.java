@@ -6,13 +6,13 @@ public class Customer extends User {
     private String alamat;
     private String noTelpon;
     private ChatRoom chatroom;
-    private Keranjang keranjang;
+    private ArrayList<Keranjang> keranjang;
     private ArrayList<Transaksi> transaksi;
 
     public Customer() {
     }
 
-    public Customer(String alamat, String noTelpon, ChatRoom chatroom, Keranjang keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
+    public Customer(String alamat, String noTelpon, ChatRoom chatroom, ArrayList<Keranjang> keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
         super(id_user, username, nama_lengkap, email, password, tipeuser);
         this.alamat = alamat;
         this.noTelpon = noTelpon;
@@ -21,6 +21,7 @@ public class Customer extends User {
         this.transaksi = transaksi;
     }
 
+  
     public String getAlamat() {
         return alamat;
     }
@@ -45,11 +46,11 @@ public class Customer extends User {
         this.chatroom = chatroom;
     }
 
-    public Keranjang getKeranjang() {
+    public ArrayList<Keranjang> getKeranjang() {
         return keranjang;
     }
 
-    public void setKeranjang(Keranjang keranjang) {
+    public void setKeranjang(ArrayList<Keranjang> keranjang) {
         this.keranjang = keranjang;
     }
 
