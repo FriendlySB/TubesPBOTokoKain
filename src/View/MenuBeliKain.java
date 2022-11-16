@@ -12,6 +12,8 @@ import Model.kain_toko;
 import Model.KainCustom;
 import Controller.Sql;
 import Controller.Controller;
+import Model.CurrentUser;
+import Model.User;
 import java.util.ArrayList;
 
 public class MenuBeliKain {
@@ -19,6 +21,7 @@ public class MenuBeliKain {
     Controller controller = new Controller();
     
     public MenuBeliKain() {
+        User curUser = CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
         frame.setSize(600,400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -94,6 +97,9 @@ public class MenuBeliKain {
                 KainCustom kain = new KainCustom(inputBahanCustom.getText(),
                         inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
                 sql.insertKain(kain,idKain);
+                sql.insertKeranjang(curUser,kain,Integer.parseInt(inputJumlahCustom.getText()));
+                System.out.println(curUser.getId_user() + kain.getId_kain()+Integer.parseInt(inputJumlahCustom.getText()));
+                frame.dispose();
             }
         });
         

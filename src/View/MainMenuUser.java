@@ -1,5 +1,6 @@
 package View;
 
+import Model.CurrentUser;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -15,7 +16,8 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 
 public class MainMenuUser {
 
-    public MainMenuUser(Customer customer) {
+    public MainMenuUser() {
+        Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -52,6 +54,9 @@ public class MainMenuUser {
 
         JMenuBar mb = new JMenuBar();
         JButton menuCart = new JButton("Cart");
+        menuCart.addActionListener(e -> {
+            new MenuLihatKeranjang();
+        });
         mb.add(Box.createGlue());
         mb.add(menuCart);
 
