@@ -127,7 +127,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idWarna.size(); j++) {
                                 String idKain = Integer.toString(bahan.getId_bahan());
                                 WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
-                                idKain += "-" + idMotif.get(i) + "-" + idWarna.get(j);
+                                idKain += "-" + idWarna.get(j) + "-" + idMotif.get(i);
                                 kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = Integer.toString(bahan.getId_bahan());
@@ -139,7 +139,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idMotif.size(); j++) {
                                 String idKain = Integer.toString(bahan.getId_bahan());
                                 MotifKain tempMotif = con.getMotif(idMotif.get(j));
-                                idKain += "-" + idMotif.get(i) + "-" + idWarna.get(j);
+                                idKain += "-" + idWarna.get(j) + "-" + idMotif.get(i);
                                 kain_toko tempKain = new kain_toko(tempMotif, tempWarna, bahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = Integer.toString(bahan.getId_bahan());
@@ -260,7 +260,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idBahan.size(); j++) {
                                 String idKain = idBahan.get(j);
                                 BahanKain tempBahan = con.getBahan(namaBahan.get(j));
-                                idKain += "-" + idMotif.get(i) + "-" + warna.getId_warna();
+                                idKain += "-" + warna.getId_warna() + "-" + idMotif.get(i);
                                 kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = idBahan.get(j);
@@ -272,7 +272,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idMotif.size(); j++) {
                                 String idKain = idBahan.get(j);
                                 MotifKain tempMotif = con.getMotif(namaMotif.get(j));
-                                idKain += "-" + idMotif.get(i) + "-" + warna.getId_warna();
+                                idKain += "-" + warna.getId_warna() + "-" + idMotif.get(i);
                                 kain_toko tempKain = new kain_toko(tempMotif, warna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = idBahan.get(j);
@@ -392,7 +392,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idBahan.size(); j++) {
                                 String idKain = idBahan.get(j);
                                 BahanKain tempBahan = con.getBahan(namaBahan.get(j));
-                                idKain += "-" + motif.getId_motif() + "-" + idWarna.get(i);
+                                idKain += "-" + idWarna.get(i) + "-" + motif.getId_motif();
                                 kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = idBahan.get(j);
@@ -404,7 +404,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idWarna.size(); j++) {
                                 String idKain = idBahan.get(i);
                                 WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
-                                idKain += "-" + motif.getId_motif() + "-" + idWarna.get(j);
+                                idKain += "-" + idWarna.get(j) + "-" + motif.getId_motif();
                                 kain_toko tempKain = new kain_toko(motif, tempWarna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = idBahan.get(j);
