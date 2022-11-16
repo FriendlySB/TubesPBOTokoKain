@@ -645,7 +645,7 @@ public class Sql {
         }
         return (false);
     }
-    
+
     public static boolean updateDataCustomer(Customer customer) {
         conn.connect();
         String query = "UPDATE users set username = ?,nama_lengkap = ?,email = ?,alamat = ?,no_telpon = ? "
@@ -679,7 +679,7 @@ public class Sql {
         }
 
     }
-    
+
     public static int countIDKainCustom() {
         conn.connect();
         String query = "SELECT COUNT(id_kain) AS 'jumlah' FROM kain_custom";
@@ -696,5 +696,102 @@ public class Sql {
             return -1;
         }
 
+    }
+
+    public boolean deleteKain(String idKain) {
+        conn.connect();
+        String query = "DELETE FROM kain where id_kain LIKE '%" + idKain + "%';";
+        String query2 = "DELETE FROM kain_toko where id_kain LIKE '%" + idKain + "%';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            PreparedStatement stmt2 = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            stmt2.executeUpdate(query2);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteBahan(int id_bahan) {
+        conn.connect();
+        String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean UpdateBahan(int id_bahan, int change) {
+        conn.connect();
+        String query = "UPDATE bahan SET harga_bahan = ? WHERE id_bahan = '" + id_bahan + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, change);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deleteWarna(int id_warna) {
+        conn.connect();
+        String query = "DELETE FROM warna where id_warna ='" + id_warna + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean UpdateWarna(int id_warna, int change) {
+        conn.connect();
+        String query = "UPDATE warna SET harga_warna = ? WHERE id_warna = '" + id_warna + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, change);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean deletemotif(int id_motif) {
+        conn.connect();
+        String query = "DELETE FROM motif where id_motif ='" + id_motif + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean UpdateMotif(int id_motif, int change) {
+        conn.connect();
+        String query = "UPDATE bahan SET harga_motif = ? WHERE id_motif = '" + id_motif + "';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, change);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }
