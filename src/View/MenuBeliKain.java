@@ -15,7 +15,9 @@ import Controller.Controller;
 import java.util.ArrayList;
 
 public class MenuBeliKain {
-
+    Sql sql = new Sql();
+    Controller controller = new Controller();
+    
     public MenuBeliKain() {
         JFrame frame = new JFrame();
         frame.setSize(600,400);
@@ -54,7 +56,7 @@ public class MenuBeliKain {
         buttonAddToCartToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                
+                //t
             }
         });
         
