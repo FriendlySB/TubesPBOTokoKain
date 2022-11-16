@@ -1,34 +1,32 @@
 package Model;
 
-import java.util.ArrayList;
-
 public class Keranjang {
 
-    private ArrayList<DetailKeranjang> detailKeranjang;
-    private int id_keranjang;
-
-    public Keranjang(ArrayList<DetailKeranjang> detailKeranjang, int id_keranjang) {
-        this.detailKeranjang = detailKeranjang;
-        this.id_keranjang = id_keranjang;
-    }
+    private String id_kain;
+    private int quantity;
 
     public Keranjang() {
     }
 
-    public ArrayList<DetailKeranjang> getDetailKeranjang() {
-        return detailKeranjang;
+    public Keranjang(String id_kain, int quantity) {
+        this.id_kain = id_kain;
+        this.quantity = quantity;
     }
 
-    public void setDetailKeranjang(ArrayList<DetailKeranjang> detailKeranjang) {
-        this.detailKeranjang = detailKeranjang;
+    public String getId_kain() {
+        return id_kain;
     }
 
-    public int getId_keranjang() {
-        return id_keranjang;
+    public void setId_kain(String id_kain) {
+        this.id_kain = id_kain;
     }
 
-    public void setId_keranjang(int id_keranjang) {
-        this.id_keranjang = id_keranjang;
+    public int getQuantity() {
+        return quantity;
     }
-    
+
+    public void setQuantity(int quantity) {
+        this.quantity = quantity;
+    }
+
 }

@@ -128,7 +128,7 @@ public class MenuRegister {
                         newCust.setAlamat(alamat);
                         newCust.setChatroom(new ChatRoom());
                         newCust.setEmail(email);
-                        newCust.setKeranjang(new Keranjang());
+                        newCust.setKeranjang(new ArrayList<>());
                         newCust.setNama_lengkap(namaLengkap);
                         newCust.setNoTelpon(noTelepon);
                         newCust.setPassword(password);

@@ -9,7 +9,6 @@ import Model.Admin;
 import Model.BahanKain;
 import Model.ChatRoom;
 import Model.Customer;
-import Model.DetailKeranjang;
 import Model.DetailTransaksi;
 import Model.Kain;
 import Model.KainCustom;
@@ -256,7 +255,7 @@ public class Sql {
 
                     currentCust.setAlamat(rs.getString("alamat"));
                     currentCust.setNoTelpon(rs.getString("no_telpon"));
-                    currentCust.setKeranjang(getSQLKeranjang(rs.getInt("id_user")));
+                    currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
 
                     currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
@@ -322,7 +321,7 @@ public class Sql {
                     currentCust.setTipeuser(enumVal);
                     currentCust.setAlamat(rs.getString("alamat"));
                     currentCust.setNoTelpon(rs.getString("no_telpon"));
-                    currentCust.setKeranjang(getSQLKeranjang(rs.getInt("id_user")));
+                    currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
                     currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
                     customers.add(currentCust);
@@ -379,38 +378,22 @@ public class Sql {
         return null;
     }
 
-    public Keranjang getSQLKeranjang(int id_user) {
+    public ArrayList<Keranjang> getKeranjang(int id_user) {
         String query = "SELECT * FROM keranjang WHERE id_user='" + id_user + "'";
-        try {
-            Statement stmt = conn.con.createStatement();
-            ResultSet rs = stmt.executeQuery(query);
-            Keranjang curKeranjang = new Keranjang();
-            curKeranjang.setId_keranjang(rs.getInt("id_keranjang"));
-            curKeranjang.setDetailKeranjang(getSQLDetailKeranjang(rs.getInt("id_keranjang")));
-            return curKeranjang;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
-
-    public ArrayList<DetailKeranjang> getSQLDetailKeranjang(int id_keranjang) {
-        ArrayList<DetailKeranjang> listDetailKeranjang = new ArrayList<>();
-        String query = "SELECT * FROM detail_keranjang WHERE id_keranjang='" + id_keranjang + "'";
+        ArrayList<Keranjang> listKeranjang = new ArrayList<>();
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
-                DetailKeranjang curDetailKeranjang = new DetailKeranjang();
-                curDetailKeranjang.setQuantity(rs.getInt("quantity"));
-                curDetailKeranjang.setKain(getKain(rs.getString("id_kain")));
-                listDetailKeranjang.add(curDetailKeranjang);
+                Keranjang curKeranjang = new Keranjang();
+                curKeranjang.setId_kain(rs.getString("id_kain"));
+                curKeranjang.setQuantity(rs.getInt("quantity"));
+                listKeranjang.add(curKeranjang);
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return listDetailKeranjang;
-
+        return listKeranjang;
     }
 
     public ChatRoom getSQLChatRoom(int id_user) {
@@ -487,23 +470,6 @@ public class Sql {
         }
     }
 
-    // Insert DetailKeranjang
-    public static boolean insertDetailKeranjang(Keranjang keranjang, int id_detail_keranjang) {
-        conn.connect();
-        String query = "INSERT INTO detail_keranjang VALUES(?,?,?,?)";
-        try {
-            PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, keranjang.getId_keranjang());
-            stmt.setInt(2, id_detail_keranjang);
-            stmt.setString(3, keranjang.getDetailKeranjang().get(id_detail_keranjang + 1).getKain().getId_kain());
-            stmt.setInt(4, keranjang.getDetailKeranjang().get(id_detail_keranjang + 1).getQuantity());
-            stmt.executeUpdate();
-            return (true);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return (false);
-        }
-    }
 
     public static boolean insertTransaksi(Customer customer, int id_transaksi) {
         conn.connect();
