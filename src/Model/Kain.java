@@ -1,6 +1,6 @@
 package Model;
 
-public class Kain {
+public abstract class Kain {
 
     private String id_kain;
    
