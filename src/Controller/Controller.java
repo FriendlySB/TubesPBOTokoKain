@@ -37,7 +37,7 @@ public class Controller {
     
     public String getNamaWarna(String id_kain){
         Sql sql = new Sql();
-        int id = Integer.parseInt(id_kain.split("-")[1]) - 2000;
+        int id = Integer.parseInt(id_kain.split("-")[1]) -2000;
         String warna = "";
         ArrayList<WarnaKain> listWarna = new ArrayList<>(sql.getAllWarna());
         for(int i = 0; i < listWarna.size(); i++){
