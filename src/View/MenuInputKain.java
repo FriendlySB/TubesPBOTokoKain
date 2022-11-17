@@ -421,14 +421,142 @@ public class MenuInputKain {
             });
             subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         });
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton tomKain = new JButton("Tambah kombinasi kain");
+        tomKain.setBounds(240, 120, 200, 50);
+        frame.add(tomKain);
 
+        tomKain.addActionListener(c -> {
+            frame.dispose();
+            subFrame.setSize(500, 700);
+            subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            subFrame.setVisible(true);
+            subFrame.setTitle("Tambah Kombinasi Kain");
+            JLabel labBahan = new JLabel("pilihan bahan: ");
+            labBahan.setBounds(10, 10, 100, 25);
+            subFrame.add(labBahan);
+            ArrayList<JRadioButton> tomBahan = new ArrayList();
+            ArrayList<BahanKain> bahanKain = con.getAllBahan();
+            for (int i = 0; i < bahanKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(bahanKain.get(i).getNama_bahan());
+                tomBahan.add(tempTom);
+            }
+            int tempX = 10;
+            int tempY = 45;
+            for (int i = 0; i < tomBahan.size(); i++) {
+                if (tempY > 135) {
+                    tempY = 45;
+                    tempX += 110;
+                }
+                tomBahan.get(i).setBounds(tempX, tempY, 100, 25);
+                subFrame.add(tomBahan.get(i));
+                tempY += 30;
+            }
+
+            JLabel labWarna = new JLabel("pilihan warna: ");
+            labWarna.setBounds(10, 165, 100, 25);
+            subFrame.add(labWarna);
+            ArrayList<JRadioButton> tomWarna = new ArrayList();
+            ArrayList<WarnaKain> warnaKain = con.getAllWarna();
+
+            for (int i = 0; i < warnaKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(warnaKain.get(i).getNama_warna());
+                tomWarna.add(tempTom);
+            }
+            int tempX2 = 10;
+            int tempY2 = 195;
+            for (int i = 0; i < tomWarna.size(); i++) {
+                if (tempY2 > 285) {
+                    tempY2 = 195;
+                    tempX2 += 110;
+                }
+                tomWarna.get(i).setBounds(tempX2, tempY2, 100, 25);
+                subFrame.add(tomWarna.get(i));
+                tempY2 += 30;
+            }
+            JLabel labMotif = new JLabel("pilihan motif: ");
+            labMotif.setBounds(10, 315, 100, 25);
+            subFrame.add(labMotif);
+            ArrayList<JRadioButton> tomMotif = new ArrayList();
+            ArrayList<MotifKain> motifKain = con.getAllMotif();
+
+            for (int i = 0; i < motifKain.size(); i++) {
+                JRadioButton tempTom = new JRadioButton(motifKain.get(i).getNama_motif());
+                tomMotif.add(tempTom);
+            }
+            int tempX3 = 10;
+            int tempY3 = 345;
+            for (int i = 0; i < tomMotif.size(); i++) {
+                if (tempY3 > 435) {
+                    tempY3 = 345;
+                    tempX3 += 110;
+                }
+                tomMotif.get(i).setBounds(tempX3, tempY3, 100, 25);
+                subFrame.add(tomMotif.get(i));
+                tempY3 += 30;
+            }
+            JButton add = new JButton("Tambah");
+            add.setBounds(10, 620, 100, 25);
+            subFrame.add(add);
+            add.addActionListener(d -> {
+                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                if (input == JOptionPane.OK_OPTION) {
+                    ArrayList<String> idBahan = new ArrayList();
+                    ArrayList<String> namaBahan = new ArrayList();
+                    ArrayList<String> idWarna = new ArrayList();
+                    ArrayList<String> namaWarna = new ArrayList();
+                    ArrayList<String> idMotif = new ArrayList();
+                    ArrayList<String> namaMotif = new ArrayList();
+                    for (int i = 0; i < bahanKain.size(); i++) {
+                        if (tomBahan.get(i).isSelected()) {
+                            BahanKain temp = con.getBahan(tomBahan.get(i).getText());
+                            namaBahan.add(temp.getNama_bahan());
+                            String idToAdd = Integer.toString(temp.getId_bahan());
+                            idBahan.add(idToAdd);
+                        }
+                    }
+                    for (int i = 0; i < motifKain.size(); i++) {
+                        if (tomMotif.get(i).isSelected()) {
+                            MotifKain temp = con.getMotif(tomMotif.get(i).getText());
+                            namaMotif.add(temp.getNama_motif());
+                            String idToAdd = Integer.toString(temp.getId_motif());
+                            idMotif.add(idToAdd);
+                        }
+                    }
+                    for (int i = 0; i < warnaKain.size(); i++) {
+                        if (tomWarna.get(i).isSelected()) {
+                            WarnaKain temp = con.getWarna(tomWarna.get(i).getText());
+                            namaWarna.add(temp.getNama_warna());
+                            String idToAdd = Integer.toString(temp.getId_warna());
+                            idWarna.add(idToAdd);
+                        }
+                    }
+                    for (int i = 0; i < idBahan.size(); i++) {
+                        BahanKain tempBahan = con.getBahan(namaBahan.get(i));
+                        for (int j = 0; j < idWarna.size(); j++) {
+                            WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
+                            for (int k = 0; k < idMotif.size(); k++) {
+                                MotifKain tempMotif = con.getMotif(namaMotif.get(k));
+                                String idKain = idBahan.get(i) + "-" + idWarna.get(j) + "-" + idMotif.get(k);
+                                kain_toko tempKain = new kain_toko(tempMotif, tempWarna, tempBahan, 0, idKain);
+                                con.insertKain(tempKain, idKain);
+                            }
+                        }
+                    }
+                }
+            });
+            subFrame.add(add);
+            subFrame.add(backMenu);
+            backMenu.setBounds(10, 450, 150, 40);
+            backMenu.addActionListener(b -> {
+                subFrame.dispose();
+            });
+        });
+
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.add(backMenu);
 
-        frame.setLayout(
-                null);
-        frame.setVisible(
-                true);
+        frame.setLayout(null);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {
