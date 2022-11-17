@@ -366,7 +366,6 @@ public class Sql {
                 curTransaksi.setAlamat(rs.getString("alamat"));
                 curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
                 curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
-                curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
                 listTransaksi.add(curTransaksi);
             }
             return listTransaksi;
