@@ -1,9 +1,16 @@
 package Controller;
 
 import Model.*;
+import View.MenuLihatDetailTransaksi;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import javax.swing.JButton;
+import javax.swing.JOptionPane;
 
-public class Controller {
+public class Controller implements TipePengiriman {
 
     public Controller() {
         
@@ -68,5 +75,67 @@ public class Controller {
             return true;
         }
         return false;
+    }
+    
+    public String getTipeBayar(TipeBayar tipe){
+        if(tipe.equals(TipeBayar.CASH)){
+            return "Cash";
+        }
+        if(tipe.equals(TipeBayar.COD)){
+            return "COD";
+        }
+        if(tipe.equals(TipeBayar.GOPAY)){
+            return "GoPay";
+        }
+        if(tipe.equals(TipeBayar.OVO)){
+            return "OVO";
+        }
+        if(tipe.equals(TipeBayar.TRANSFER)){
+            return "TransferBank";
+        }
+        return "Unknown";
+    }
+    
+    public String getTipePengiriman(int tipePengiriman){
+        if(tipePengiriman == GOJEK){
+            return "Gojek";
+        }
+        if(tipePengiriman == JNE){
+            return "JNE";
+        }
+        if(tipePengiriman == JNT){
+            return "JNT";
+        }
+        if(tipePengiriman == PEGAWAI){
+            return "Pegawai";
+        }
+        return "Unknown";
+    }
+    
+    public String getProgress(Progress progress){
+        if(progress.equals(Progress.DIBUAT)){
+            return "Sedang dibuat";
+        }
+        if(progress.equals(Progress.DIKEMAS)){
+            return "Sedang dikemas";
+        }
+        if(progress.equals(Progress.DIKIRIM)){
+            return "Sedang dikirim";
+        }
+        if(progress.equals(Progress.SELESAI)){
+            return "Selesai";
+        }
+        return "Unknown";
+    }
+    
+    public Object[] createIsiTableTransaksi(Transaksi transaksi){
+        int id = transaksi.getId_transaksi();
+        String waktu = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss").format(transaksi.getWaktu_transaksi());
+        String tipeBayar = getTipeBayar(transaksi.getTipeBayar());
+        String tipePengiriman = getTipePengiriman(transaksi.getTipe_pengiriman());
+        String progress = getProgress(transaksi.getProgress());
+        int totalBayar = transaksi.getTotal_bayar();
+        Object[] data = {id,waktu,tipeBayar,tipePengiriman,progress,totalBayar};
+        return data;
     }
 }
