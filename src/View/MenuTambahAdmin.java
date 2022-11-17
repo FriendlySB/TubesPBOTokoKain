@@ -22,11 +22,11 @@ import javax.swing.JTextField;
  *
  * @author asus
  */
-public class tambahAdmin {
+public class MenuTambahAdmin {
     
-    public tambahAdmin(){
+    public MenuTambahAdmin(){
         JFrame f = new JFrame();
-        f.setSize(700, 900);
+        f.setSize(700, 700);
         JLabel title = new JLabel ("Tambah Admin");
         title.setBounds(250, 30, 300, 100);
         title.setFont(new Font("Sans", Font.BOLD, 28));
@@ -59,7 +59,7 @@ public class tambahAdmin {
         JLabel admin_pass = new JLabel("Password");
         admin_pass.setBounds(250, 360, 125, 25);
         JTextField field_pass = new JTextField();
-        field_email.setBounds(250, 390, 200, 25);
+        field_pass.setBounds(250, 390, 200, 25);
         f.add(admin_pass);
         f.add(field_pass);
         
@@ -122,7 +122,7 @@ public class tambahAdmin {
     
     
     public static void main(String args[]) {
-        new tambahAdmin();
+        new MenuTambahAdmin();
         
     }
     
