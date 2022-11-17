@@ -421,6 +421,7 @@ public class Sql {
     }
 
     public ArrayList<Keranjang> getKeranjang(int id_user) {
+        conn.connect();
         String query = "SELECT * FROM keranjang WHERE id_user='" + id_user + "'";
         ArrayList<Keranjang> listKeranjang = new ArrayList<>();
         try {
@@ -436,6 +437,25 @@ public class Sql {
             e.printStackTrace();
         }
         return listKeranjang;
+    }
+
+    public KainCustom getKainCustomWithId_Kain(String id_kain) {
+        conn.connect();
+        String query = "SELECT * FROM kain_custom WHERE id_kain='" + id_kain + "'";
+        KainCustom curkain = new KainCustom();
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            curkain.setId_kain(rs.getString("id_kain"));
+            curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+            curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+            curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+            curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+            return curkain;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 
     public ChatRoom getSQLChatRoom(int id_user) {
