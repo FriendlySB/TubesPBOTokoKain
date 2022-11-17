@@ -352,6 +352,7 @@ public class Sql {
 
     public ArrayList<Transaksi> getSQLListTransaksi(int id_User) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
+        conn.connect();
         String query = "SELECT * FROM transaksi WHERE id_user='" + id_User + "'";
         try {
             Statement stmt = conn.con.createStatement();
@@ -377,14 +378,14 @@ public class Sql {
 
     public ArrayList<Transaksi> getAllTransaksi() {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
-        String query = "SELECT * FROM transaksi";
+        conn.connect();
+        String query = "SELECT * FROM `transaksi`";
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 Transaksi curTransaksi = new Transaksi();
                 curTransaksi.setId_transaksi(rs.getInt("id_transaksi"));
-//                curTransaksi.set(rs.getInt("id_user"));
                 curTransaksi.setProgress(Progress.valueOf(rs.getString("progress")));
                 curTransaksi.setTipeBayar(TipeBayar.valueOf(rs.getString("tipe_bayar")));
                 curTransaksi.setTipe_pengiriman(rs.getInt("tipe_pengiriman"));
