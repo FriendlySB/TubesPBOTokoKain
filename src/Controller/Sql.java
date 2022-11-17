@@ -352,6 +352,7 @@ public class Sql {
 
     public ArrayList<Transaksi> getSQLListTransaksi(int id_User) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
+        conn.connect();
         String query = "SELECT * FROM transaksi WHERE id_user='" + id_User + "'";
         try {
             Statement stmt = conn.con.createStatement();
@@ -366,6 +367,31 @@ public class Sql {
                 curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
                 curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
                 curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
+                listTransaksi.add(curTransaksi);
+            }
+            return listTransaksi;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    public ArrayList<Transaksi> getAllTransaksi() {
+        ArrayList<Transaksi> listTransaksi = new ArrayList<>();
+        conn.connect();
+        String query = "SELECT * FROM `transaksi`";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                Transaksi curTransaksi = new Transaksi();
+                curTransaksi.setId_transaksi(rs.getInt("id_transaksi"));
+                curTransaksi.setProgress(Progress.valueOf(rs.getString("progress")));
+                curTransaksi.setTipeBayar(TipeBayar.valueOf(rs.getString("tipe_bayar")));
+                curTransaksi.setTipe_pengiriman(rs.getInt("tipe_pengiriman"));
+                curTransaksi.setAlamat(rs.getString("alamat"));
+                curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
+                curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
                 listTransaksi.add(curTransaksi);
             }
             return listTransaksi;
@@ -823,8 +849,8 @@ public class Sql {
         }
         return id;
     }
-    
-    public int countStockKain(String id_kain){
+
+    public int countStockKain(String id_kain) {
         String query = "SELECT stok FROM kain_toko WHERE id_kain = '" + id_kain + "'";
         int stock = 0;
         try {
