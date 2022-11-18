@@ -57,8 +57,8 @@ public class MenuLogin {
         login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = inputUsername.getText();
-                String password = new String(inputPassword.getPassword());
+                String username = inputUsername.getText().trim();
+                String password = new String(inputPassword.getPassword()).trim();
                 String warning = "Terdapat input yang masih kosong";
                 if (username.equals("") || password.equals("")) {
                     JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
