@@ -83,6 +83,12 @@ public class Controller implements TipePengiriman {
         return motif;
     }
 
+    public int getHargaKainToko(kain_toko kain) {
+        return kain.getBahan().getHarga_bahan() + 
+                kain.getWarna().getHarga_warna() + 
+                kain.getMotif().getHarga_motif();
+    }
+    
     public boolean cekStokKain(String id_kain, int jumlahDibeli) {
         Sql sql = new Sql();
         int stokKain = sql.countStockKain(id_kain);
@@ -151,6 +157,32 @@ public class Controller implements TipePengiriman {
         String progress = getProgress(transaksi.getProgress());
         int totalBayar = transaksi.getTotal_bayar();
         Object[] data = {id, waktu, tipeBayar, tipePengiriman, progress, totalBayar};
+        return data;
+    }
+    
+    public Object[] createIsiTableDetailTransaksi(DetailTransaksi detail, int nomor) {
+        int no = nomor + 1;
+        Kain kain = detail.getKain();
+        String id = kain.getId_kain();
+        String nama = "";
+        int harga = 0;
+        int quantity = detail.getQuantity();
+        int totalHarga = 0;
+        
+        if(kain instanceof kain_toko){
+            kain_toko kainToko = (kain_toko) kain;
+            nama = "Kain " + kainToko.getBahan().getNama_bahan() + " " 
+                    + kainToko.getWarna().getNama_warna() + " " 
+                    + kainToko.getMotif().getNama_motif();
+            harga = getHargaKainToko(kainToko);
+            totalHarga = quantity * harga;
+        } else {
+            KainCustom kainCustom = (KainCustom) kain;
+            nama = getNamaKainCustom(kain.getId_kain());
+            harga = kainCustom.getHarga_kain_custom();
+            totalHarga = quantity * harga;
+        }
+        Object[] data = {no, id, nama, harga, quantity, totalHarga};
         return data;
     }
 }
