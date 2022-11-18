@@ -283,7 +283,7 @@ public class Sql {
                     currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
 
-                    currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(currentCust);
                 } else if (enumVal == TipeUser.ADMIN) {
@@ -299,11 +299,11 @@ public class Sql {
                     try {
                         Statement stmt2 = conn.con.createStatement();
                         ResultSet rs2 = stmt2.executeQuery(query2);
-                        curAdmin.setId_admin(rs2.getInt("id_admin"));
+                        //curAdmin.setId_admin(rs2.getInt("id_admin"));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    curAdmin.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //curAdmin.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(curAdmin);
                 } else if (enumVal == TipeUser.OWNER) {
@@ -374,6 +374,7 @@ public class Sql {
                 curTransaksi.setAlamat(rs.getString("alamat"));
                 curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
                 curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
+                curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
                 listTransaksi.add(curTransaksi);
             }
             return listTransaksi;
