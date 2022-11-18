@@ -25,7 +25,6 @@ public class MenuBeliKain {
         User curUser = CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
         frame.setSize(600,400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -76,7 +75,8 @@ public class MenuBeliKain {
                         frame.dispose();
                         new MenuBeliKain();
                     } else {
-                        JOptionPane.showMessageDialog(null, "Maaf, stok " + controller.getNamaKain(idKain) + " sudah habis",
+                        JOptionPane.showMessageDialog(null, "Maaf, stok " + controller.getNamaKain(idKain) + 
+                                " kami tidak dapat mencukupi permintaan Anda",
                                "Peringatan", JOptionPane.WARNING_MESSAGE); 
                     }
                 }
@@ -120,15 +120,16 @@ public class MenuBeliKain {
                     JOptionPane.showMessageDialog(null, "Mohon lengkapi data kain custom Anda", 
                             "Peringatan", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    String idKain = controller.createIDKainCustom(sql.countIDKainCustom());
+                    String idKain = controller.createIDKainCustom();
                     KainCustom kain = new KainCustom(inputBahanCustom.getText(),
                         inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
                     sql.insertKain(kain,idKain);
                     sql.insertKeranjang(curUser,idKain,Integer.parseInt(inputJumlahCustom.getText()));
                     JOptionPane.showMessageDialog(null, "Kain telah ditambahkan ke cart Anda", 
                                "Message", JOptionPane.INFORMATION_MESSAGE);
-                }
-                
+                    frame.dispose();
+                    new MenuBeliKain();
+                } 
             }
         });
         
@@ -155,9 +156,16 @@ public class MenuBeliKain {
         mb.add(mainMenu);
         
         frame.add(tp);
-        //frame.add(panelKainCustom);
         frame.add(judul);
         frame.setJMenuBar(mb);
+        
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MainMenuUser();
+            }
+        });
     }
     
     public static void main(String args[]) {

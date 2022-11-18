@@ -16,8 +16,13 @@ public class Controller implements TipePengiriman {
 
     }
 
-    public String createIDKainCustom(int noKain) {
-        String id = "CUSTOM-" + String.valueOf(noKain);
+    public String createIDKainCustom() {
+        Sql sql = new Sql();
+        String lastKain = sql.getIDKainCustomBottom();
+        if(lastKain.equals("")){
+            return "CUSTOM-1";
+        }
+        String id = "CUSTOM-" + String.valueOf(Integer.valueOf(lastKain.split("-")[1]) + 1);
         return id;
     }
 

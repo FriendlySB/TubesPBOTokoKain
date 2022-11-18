@@ -95,7 +95,7 @@ public class Sql {
     public ArrayList<String> getAllIDKain() {
         ArrayList<String> listIDKain = new ArrayList();
         conn.connect();
-        String query = "SELECT * FROM kain";
+        String query = "SELECT * FROM kain_toko";
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
@@ -884,6 +884,22 @@ public class Sql {
             e.printStackTrace();
         }
         return stock;
+    }
+    
+    public String getIDKainCustomBottom() {
+        String query = "SELECT id_kain FROM kain_custom ORDER BY id_kain DESC LIMIT 1";
+        String id = "";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                id = rs.getString("id_kain");
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return id;
     }
     
 }
