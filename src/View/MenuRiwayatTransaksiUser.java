@@ -12,12 +12,14 @@ import Model.User;
 import Model.Transaksi;
 import Controller.Sql;
 import Controller.Controller;
+import Model.Customer;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class MenuRiwayatTransaksiUser {
@@ -26,50 +28,51 @@ public class MenuRiwayatTransaksiUser {
     Controller controller = new Controller();
     
     public MenuRiwayatTransaksiUser() {
-        User curUser = CurrentUser.getInstance().getUser();
+        Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
         frame.setSize(1000,400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         frame.setTitle("Menu Riwayat Transaksi");
         
         //Tabel Transaksi
         DefaultTableModel tableModel = new DefaultTableModel();
-        JTable tableTransaksi = new JTable(tableModel);
+        JTable table = new JTable(tableModel);
         tableModel.addColumn("ID Transaksi");
         tableModel.addColumn("Waktu Transaksi");
         tableModel.addColumn("Tipe Bayar");
         tableModel.addColumn("Tipe Pengiriman");
         tableModel.addColumn("Progress");
         tableModel.addColumn("Total Bayar");
-        JScrollPane scrollPane = new JScrollPane(tableTransaksi);
-        scrollPane.setPreferredSize(new Dimension(500, 150));
+        table.getColumnModel().getColumn(0).setPreferredWidth(5);
+        DefaultTableCellRenderer cellRenderer = new DefaultTableCellRenderer();
+        cellRenderer.setHorizontalAlignment(JLabel.CENTER);
+        table.getColumnModel().getColumn(0).setCellRenderer(cellRenderer);
+        JScrollPane scrollPane = new JScrollPane(table);
         
-        ArrayList<Transaksi>listTransaksi = new ArrayList<>(sql.getSQLListTransaksi(curUser.getId_user()));
-        
-        //Back ke main menu jika belum ada transaksi
-        if(listTransaksi.size() < 1){
-            JOptionPane.showMessageDialog(null, "Riwayat transaksi Anda masih kosong!", 
-                            "Peringatan", JOptionPane.WARNING_MESSAGE);
-            frame.dispose();
-        }
+        ArrayList<Transaksi>listTransaksi = new ArrayList<>(customer.getTransaksi());
         for(int i = listTransaksi.size() - 1; i >= 0; i--){
             tableModel.addRow(controller.createIsiTableTransaksi(listTransaksi.get(i)));
         }
         JMenuBar mb = new JMenuBar();  
         JButton menuCart = new JButton("Cart");
         JButton mainMenu = new JButton("Main Menu");
+        mainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                frame.dispose();
+                new MainMenuUser();
+            }
+        });
         JButton lihatDetail = new JButton("Lihat Detail");
-        
         lihatDetail.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                if(tableTransaksi.getSelectionModel().isSelectionEmpty()){
+                if(table.getSelectionModel().isSelectionEmpty()){
                     JOptionPane.showMessageDialog(null, "Mohon mengklik transaksi yang akan dilihat detailnya", 
                             "Peringatan", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    int id_transaksi = (int)tableTransaksi.getValueAt(tableTransaksi.getSelectedRow(), 0);
+                    int id_transaksi = (int)table.getValueAt(table.getSelectedRow(), 0);
                     new MenuLihatDetailTransaksi(id_transaksi);
                 }
             }
@@ -81,6 +84,12 @@ public class MenuRiwayatTransaksiUser {
         
         frame.add(scrollPane);
         frame.setJMenuBar(mb);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                new MainMenuUser();
+            }
+        });
     }
     
     public static void main(String[] args) {

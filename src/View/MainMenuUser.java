@@ -20,7 +20,6 @@ public class MainMenuUser {
         Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -36,12 +35,29 @@ public class MainMenuUser {
 
         JButton menuBeliKain = new JButton("Beli Kain");
         menuBeliKain.setBounds(150, 100, 300, 50);
-        menuBeliKain.addActionListener(e -> {
-            new MenuBeliKain();
+        menuBeliKain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MenuBeliKain();
+            }
         });
 
-        JButton menuCekTransaksi = new JButton("Transaksi");
+        JButton menuCekTransaksi = new JButton("Riwayat Transaksi");
         menuCekTransaksi.setBounds(150, 160, 300, 50);
+        menuCekTransaksi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                //Back ke main menu jika belum ada transaksi
+                if(customer.getTransaksi().size() < 1){
+                    JOptionPane.showMessageDialog(null, "Riwayat transaksi Anda masih kosong!",
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    frame.dispose();
+                    new MenuRiwayatTransaksiUser();
+                }
+            }
+        });
 
         JButton menuLihatProfile = new JButton("Profile");
         menuLihatProfile.setBounds(150, 220, 300, 50);
@@ -49,8 +65,17 @@ public class MainMenuUser {
             new MenuLihatProfile(customer);
         });
 
-        JButton menuLogout = new JButton("Log Out");
-        menuLogout.setBounds(150, 280, 300, 50);
+        JButton logout = new JButton("Log Out");
+        logout.setBounds(150, 280, 300, 50);
+        logout.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                JOptionPane.showMessageDialog(null, "Terima kasih telah menggunakan aplikasi kami",
+                        "Message", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose();
+                new MenuLogin();
+            }
+        });
 
         JMenuBar mb = new JMenuBar();
         JButton menuCart = new JButton("Cart");
@@ -64,8 +89,18 @@ public class MainMenuUser {
         panel.add(menuBeliKain);
         panel.add(menuCekTransaksi);
         panel.add(menuLihatProfile);
-        panel.add(menuLogout);
+        panel.add(logout);
         frame.setJMenuBar(mb);
         frame.add(panel);
+        
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showMessageDialog(null, "Terima kasih telah menggunakan aplikasi kami",
+                        "Message", JOptionPane.INFORMATION_MESSAGE);
+                frame.dispose();
+                new MenuLogin();
+            }
+        });
     }
 }

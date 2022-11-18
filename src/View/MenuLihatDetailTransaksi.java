@@ -57,6 +57,9 @@ public class MenuLihatDetailTransaksi {
         for(int i = 0; i < listDetail.size(); i++){
             tableModel.addRow(controller.createIsiTableDetailTransaksi(listDetail.get(i), i));
         }
+        tableModel.addRow(new Object[]{"","","","","",""});
+        Object[] lastRow = {"", "", "", "", "Subtotal", controller.hitungTotalDetailTransaksi(listDetail)};
+        tableModel.addRow(lastRow);
         frame.add(scrollPane);
     }
 }
