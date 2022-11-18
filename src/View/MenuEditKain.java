@@ -4,6 +4,10 @@ import javax.swing.*;
 import java.util.ArrayList;
 import Controller.Sql;
 import Model.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenuEditKain {
 
@@ -14,24 +18,28 @@ public class MenuEditKain {
         backMenu.setBounds(10, 210, 150, 40);
 
         JFrame frame = new JFrame();
-        frame.setTitle("Edit Data Kain");
+        frame.setTitle("Menu Edit Data Kain");
         frame.setSize(600, 300);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        JButton backToMainMenu = new JButton("Back to Menu");
+        backToMainMenu.setBounds(10, 210, 150, 40);
 
         JFrame subFrame = new JFrame();
         subFrame.setSize(500, 700);
         subFrame.setLocationRelativeTo(null);
         subFrame.setLayout(null);
-        subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        backMenu.addActionListener(b -> {
-            frame.dispose();
+        backToMainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent b) {
+                frame.dispose();
+                new MainMenuAdmin();
+            }
         });
-        frame.add(backMenu);
+        frame.add(backToMainMenu);
 
         JButton butBahan = new JButton("Bahan");
         butBahan.setBounds(10, 25, 150, 40);
@@ -59,7 +67,7 @@ public class MenuEditKain {
             int sizeX = 10;
             int sizeY = 25;
             for (int i = 0; i < listBahan.size(); i++) {
-                JLabel labHarga = new JLabel("harga :");
+                JLabel labHarga = new JLabel("Harga :");
                 labHarga.setBounds((sizeX + 120), sizeY, 50, 25);
                 listBahan.get(i).setBounds(sizeX, sizeY, 150, 25);
                 inpBahanHarga.get(i).setBounds((sizeX + 170), sizeY, 150, 25);
@@ -76,23 +84,37 @@ public class MenuEditKain {
                     con.deleteBahan(idDelete.get(final_i));
                     String temp = Integer.toString(idDelete.get(final_i));
                     con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     subFrame.dispose();
                 });
             }
-            JButton update = new JButton("update");
+            JButton update = new JButton("Update");
             update.setBounds(370, 620, 100, 25);
             subFrame.add(update);
             update.addActionListener(b -> {
                 for (int i = 0; i < inpBahanHarga.size(); i++) {
                     int temp = Integer.parseInt(inpBahanHarga.get(i).getText());
                     con.UpdateBahan(bahanData.get(i).getId_bahan(), temp);
-                    JOptionPane.showOptionDialog(null, "berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-                    subFrame.dispose();
+                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    subFrame.dispose(); 
                 }
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
         }
         );
 
@@ -137,23 +159,37 @@ public class MenuEditKain {
                     con.deleteBahan(idDelete.get(final_i));
                     String temp = Integer.toString(idDelete.get(final_i));
                     con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     subFrame.dispose();
                 });
             }
-            JButton update = new JButton("update");
+            JButton update = new JButton("Update");
             update.setBounds(370, 620, 100, 25);
             subFrame.add(update);
             update.addActionListener(b -> {
                 for (int i = 0; i < inpWarnaHarga.size(); i++) {
                     int temp = Integer.parseInt(inpWarnaHarga.get(i).getText());
                     con.UpdateBahan(warnaData.get(i).getId_warna(), temp);
-                    JOptionPane.showOptionDialog(null, "berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     subFrame.dispose();
                 }
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
         });
 
         butWarna.setBounds(180, 25, 150, 40);
@@ -183,7 +219,7 @@ public class MenuEditKain {
             int sizeX = 10;
             int sizeY = 25;
             for (int i = 0; i < listMotif.size(); i++) {
-                JLabel labHarga = new JLabel("harga :");
+                JLabel labHarga = new JLabel("Harga :");
                 labHarga.setBounds((sizeX + 120), sizeY, 50, 25);
                 listMotif.get(i).setBounds(sizeX, sizeY, 150, 25);
                 inpMotifHarga.get(i).setBounds((sizeX + 170), sizeY, 150, 25);
@@ -200,26 +236,58 @@ public class MenuEditKain {
                     con.deleteBahan(idDelete.get(final_i));
                     String temp = Integer.toString(idDelete.get(final_i));
                     con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     subFrame.dispose();
                 });
             }
-            JButton update = new JButton("update");
+            JButton update = new JButton("Update");
             update.setBounds(370, 620, 100, 25);
             subFrame.add(update);
             update.addActionListener(b -> {
                 for (int i = 0; i < inpMotifHarga.size(); i++) {
                     int temp = Integer.parseInt(inpMotifHarga.get(i).getText());
                     con.UpdateBahan(motifData.get(i).getId_motif(), temp);
-                    JOptionPane.showOptionDialog(null, "berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                     subFrame.dispose();
                 }
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    subFrame.dispose();
+                    new MenuEditKain();
+                }
+            });
         });
         butMotif.setBounds(350, 25, 150, 40);
         frame.add(butMotif);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MainMenuAdmin();
+            }
+        });
+        
+        JButton butEditStokKain = new JButton("Edit Stok Kain");
+        butEditStokKain.setBounds(10, 85, 150, 40);
+        JButton butEditHargaKainCustom = new JButton("Edit Kain Custom");
+        butEditHargaKainCustom.setBounds(180, 85, 150, 40);
+        
+        frame.add(butEditStokKain);
+        frame.add(butEditHargaKainCustom);
+        
+        frame.setLayout(null);
+        frame.setVisible(true);
     }
 
     public static void main(String[] args) {

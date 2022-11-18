@@ -149,7 +149,7 @@ public class MenuBeliKain {
                     JOptionPane.showMessageDialog(null, "Mohon lengkapi data kain custom Anda", 
                             "Peringatan", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    String idKain = controller.createIDKainCustom();
+                    String idKain = controller.createIDKain();
                     KainCustom kain = new KainCustom(inputBahanCustom.getText(),
                         inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
                     sql.insertKain(kain,idKain);
