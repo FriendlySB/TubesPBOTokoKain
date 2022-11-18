@@ -131,7 +131,7 @@ public class Sql {
         }
         return null;
     }
-
+    
     public Kain getKain(String id_kain) {
         Controller controller = new Controller();
         conn.connect();
