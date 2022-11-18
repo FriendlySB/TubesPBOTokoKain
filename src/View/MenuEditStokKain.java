@@ -78,18 +78,18 @@ public class MenuEditStokKain {
         });
 
         JButton buttonAddToCartToko = new JButton("Update");
-        buttonAddToCartToko.setBounds(250, 150, 100, 40);
+        buttonAddToCartToko.setBounds(90, 150, 100, 40);
         buttonAddToCartToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 Sql sql = new Sql();
                 String id_kain = listIDKain.get(comboBoxKainToko.getSelectedIndex());
-                int stok = Integer.parseInt(inputJumlahKainToko.getText());
                 String warn = "Stok yang ingin di edit belum terisi";
                 
                 if(inputJumlahKainToko.getText().equals("")){
                      JOptionPane.showMessageDialog(null, warn , "Message",JOptionPane.WARNING_MESSAGE);
                 } else {
+                    int stok = Integer.parseInt(inputJumlahKainToko.getText());
                     sql.updateStokKain(id_kain, stok);
                     JOptionPane.showMessageDialog(null, "Update stok baru sukses!" , "Message",JOptionPane.INFORMATION_MESSAGE);
                 }
@@ -98,7 +98,7 @@ public class MenuEditStokKain {
         });
         
         JButton back = new JButton("Back");
-        buttonAddToCartToko.setBounds(370, 150, 100, 40);
+        back.setBounds(250, 150, 100, 40);
         back.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -116,6 +116,7 @@ public class MenuEditStokKain {
         f.add(labelJumlahKainToko);
         f.add(inputJumlahKainToko);
         f.add(buttonAddToCartToko);
+        f.add(back);
     }
 
     public static void main(String args[]) {
