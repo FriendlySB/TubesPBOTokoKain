@@ -910,4 +910,21 @@ public class Sql {
         return id;
     }
     
+    public static boolean updateStokKain(String id_kain, int stok) {
+        conn.connect();
+        String query = "UPDATE kain_toko set stok = ? where id_kain = ?" ;              
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, stok);
+            stmt.setString(2, id_kain);
+            
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    
 }
