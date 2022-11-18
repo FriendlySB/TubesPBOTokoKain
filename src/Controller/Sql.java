@@ -314,7 +314,7 @@ public class Sql {
                     curOwner.setEmail(rs.getString("email"));
                     curOwner.setPassword(rs.getString("password"));
                     curOwner.setTipeuser(enumVal);
-                    curOwner.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //curOwner.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(curOwner);
                 }
