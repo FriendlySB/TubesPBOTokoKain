@@ -282,6 +282,13 @@ public class MenuEditKain {
         butEditStokKain.setBounds(10, 85, 150, 40);
         JButton butEditHargaKainCustom = new JButton("Edit Kain Custom");
         butEditHargaKainCustom.setBounds(180, 85, 150, 40);
+        butEditStokKain.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent b) {
+                frame.dispose();
+                new MenuEditStokKain();
+            }
+        });
         
         frame.add(butEditStokKain);
         frame.add(butEditHargaKainCustom);
