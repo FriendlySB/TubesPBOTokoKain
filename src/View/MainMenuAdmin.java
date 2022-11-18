@@ -61,6 +61,13 @@ public class MainMenuAdmin {
 
         JButton menuLihatTransaksi = new JButton("Lihat Riwayat Transaksi Toko");
         menuLihatTransaksi.setBounds(150, 280, 300, 50);
+        menuLihatTransaksi.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MenuLihatRiwayatTransaksiAdmin();
+            }
+        });
 
         JButton menuLogout = new JButton("Log Out");
         menuLogout.setBounds(150, 340, 300, 50);

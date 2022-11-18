@@ -15,8 +15,18 @@ public class Controller implements TipePengiriman {
     public Controller() {
 
     }
-
-    public String createIDKainCustom() {
+    
+    //Contoh polymorphism
+    public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif){
+        Sql sql = new Sql();
+        String idKain = "";
+        idKain += String.valueOf(bahan.getId_bahan() + 1000) + "-";
+        idKain += String.valueOf(warna.getId_warna() + 2000) + "-";
+        idKain += String.valueOf(motif.getId_motif() + 3000);
+        return idKain;
+    }
+    
+    public String createIDKain() {
         Sql sql = new Sql();
         String lastKain = sql.getIDKainCustomBottom();
         if(lastKain.equals("")){
@@ -211,4 +221,16 @@ public class Controller implements TipePengiriman {
         }
         return false;
     }
+    
+    public boolean cekIDKainDuplikat(String id_kain){
+        Sql sql = new Sql();
+        ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
+        for(int i = 0; i < listIDKain.size(); i++){
+            if(id_kain.equals(listIDKain.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }
