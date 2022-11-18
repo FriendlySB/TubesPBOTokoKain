@@ -110,6 +110,7 @@ public class Sql {
     }
 
     public Kain getKain(String id_kain) {
+        Controller controller = new Controller();
         conn.connect();
         if (id_kain.contains("CUSTOM")) {
             String query = "SELECT * FROM kain_custom WHERE id_kain='" + id_kain + "'";
@@ -118,6 +119,7 @@ public class Sql {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 while (rs.next()) {
+                    curKain.setId_kain(rs.getString("id_kain"));
                     curKain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
                     curKain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
                     curKain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
@@ -129,13 +131,19 @@ public class Sql {
             }
         } else {
             String query = "SELECT * FROM kain_toko WHERE id_kain='" + id_kain + "'";
-            try {
+            try {;
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 kain_toko curKain = new kain_toko();
-                curKain.setBahan(getBahan(rs.getString("nama_bahan")));
-                curKain.setWarna(getWarna(rs.getString("nama_warna")));
-                curKain.setMotif(getMotif(rs.getString("nama_motif")));
+                while(rs.next()){
+                    String bahan = controller.getNamaBahan(id_kain);
+                    String warna = controller.getNamaWarna(id_kain);
+                    String motif = controller.getNamaMotif(id_kain);
+                    curKain.setId_kain(rs.getString("id_kain"));
+                    curKain.setBahan(getBahan(bahan));
+                    curKain.setWarna(getWarna(warna));
+                    curKain.setMotif(getMotif(motif));
+                }
                 return curKain;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -408,7 +416,6 @@ public class Sql {
             ArrayList<DetailTransaksi> listDetailTransaksi = new ArrayList<>();
             while (rs4.next()) {
                 DetailTransaksi curDetailTransaksi = new DetailTransaksi();
-                curDetailTransaksi.setDetail_transaksi(rs4.getInt("id_detail_transaksi"));
                 curDetailTransaksi.setQuantity(rs4.getInt("quantity"));
                 curDetailTransaksi.setKain(getKain(rs4.getString("id_kain")));
                 listDetailTransaksi.add(curDetailTransaksi);
