@@ -160,7 +160,8 @@ public class MenuEditKain {
         frame.add(butWarna);
 
         JButton butMotif = new JButton("Motif");
-        frame.dispose();
+        butMotif.addActionListener(c -> {
+            frame.dispose();
             subFrame.setVisible(true);
             ArrayList<JLabel> listMotif = new ArrayList();
             ArrayList<JButton> delete = new ArrayList();
@@ -216,7 +217,7 @@ public class MenuEditKain {
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
-
+        });
         butMotif.setBounds(350, 25, 150, 40);
         frame.add(butMotif);
     }
