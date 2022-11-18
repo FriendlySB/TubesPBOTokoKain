@@ -200,4 +200,15 @@ public class Controller implements TipePengiriman {
         }
         return total;
     }
+    
+    public boolean cekKainDuplikatKeranjang(int id_user, String id_kain){
+        Sql sql = new Sql();
+        ArrayList<Keranjang> cart = new ArrayList<>(sql.getKeranjang(id_user));
+        for(int i = 0; i < cart.size(); i++){
+            if(id_kain.equals(cart.get(i).getId_kain())){
+                return true;
+            }
+        }
+        return false;
+    }
 }

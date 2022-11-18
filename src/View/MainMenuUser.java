@@ -19,14 +19,14 @@ public class MainMenuUser {
     public MainMenuUser() {
         Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setSize(600, 400);
+        frame.setSize(600, 450);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Main Menu User");
 
         JPanel panel = new JPanel();
-        panel.setSize(600, 400);
+        panel.setSize(600, 450);
         panel.setLayout(null);
         panel.setVisible(true);
 

@@ -13,7 +13,9 @@ import Model.KainCustom;
 import Controller.Sql;
 import Controller.Controller;
 import Model.CurrentUser;
+import Model.Customer;
 import Model.User;
+import java.awt.event.ItemListener;
 import java.util.ArrayList;
 
 public class MenuBeliKain {
@@ -22,9 +24,9 @@ public class MenuBeliKain {
     ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
     
     public MenuBeliKain() {
-        User curUser = CurrentUser.getInstance().getUser();
+        Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setSize(600,400);
+        frame.setSize(600,350);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -58,8 +60,28 @@ public class MenuBeliKain {
         labelJumlahKainToko.setBounds(20, 80, 150, 25);
         JTextField inputJumlahKainToko = new JTextField();
         inputJumlahKainToko.setBounds(150, 80, 50, 25);
+        JLabel labelStok = new JLabel();
+        int stockKain = sql.countStockKain(listIDKain.get(0));
+        if(stockKain == 0){
+            labelStok.setText("Stok habis!");
+        } else {
+            labelStok.setText("Sisa " + stockKain);
+        }
+        labelStok.setBounds(205, 80, 150, 25);
+        comboBoxKainToko.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                int jumlah = sql.countStockKain(listIDKain.get(comboBoxKainToko.getSelectedIndex()));
+                if(jumlah == 0){
+                    labelStok.setText("Stok habis!");
+                } else {
+                    labelStok.setText("Sisa " + jumlah);
+                }
+            }
+        });
+        
         JButton buttonAddToCartToko = new JButton("Add to Cart");
-        buttonAddToCartToko.setBounds(250, 180, 100, 40);
+        buttonAddToCartToko.setBounds(250, 150, 100, 40);
         buttonAddToCartToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -68,17 +90,23 @@ public class MenuBeliKain {
                 } else {
                     String idKain = listIDKain.get(comboBoxKainToko.getSelectedIndex());
                     int quantity = Integer.parseInt(inputJumlahKainToko.getText());
-                    if(controller.cekStokKain(idKain, quantity) == true){
-                        sql.insertKeranjang(curUser,idKain,quantity);
+                    if(controller.cekKainDuplikatKeranjang(customer.getId_user(), idKain) == true){
+                        JOptionPane.showMessageDialog(null, "Kain tersebut sudah ada di keranjang Anda!",
+                                   "Peringatan", JOptionPane.WARNING_MESSAGE); 
+                    } else {
+                        if(controller.cekStokKain(idKain, quantity) == true){
+                        sql.insertKeranjang(customer,idKain,quantity);
                         JOptionPane.showMessageDialog(null, "Kain telah ditambahkan ke cart Anda", 
                                "Message", JOptionPane.INFORMATION_MESSAGE); 
                         frame.dispose();
                         new MenuBeliKain();
-                    } else {
-                        JOptionPane.showMessageDialog(null, "Maaf, stok " + controller.getNamaKain(idKain) + 
-                                " kami tidak dapat mencukupi permintaan Anda",
-                               "Peringatan", JOptionPane.WARNING_MESSAGE); 
+                        } else {
+                            JOptionPane.showMessageDialog(null, "Maaf, stok " + controller.getNamaKain(idKain) + 
+                                    " kami tidak dapat mencukupi permintaan Anda",
+                                   "Peringatan", JOptionPane.WARNING_MESSAGE); 
+                        }
                     }
+                    
                 }
             }
         });
@@ -88,6 +116,7 @@ public class MenuBeliKain {
         panelKainToko.add(comboBoxKainToko);
         panelKainToko.add(labelJumlahKainToko);
         panelKainToko.add(inputJumlahKainToko);
+        panelKainToko.add(labelStok);
         panelKainToko.add(buttonAddToCartToko);
         //Kain Custom
         JLabel labelBahanCustom = new JLabel("Input Bahan Custom");
@@ -107,7 +136,7 @@ public class MenuBeliKain {
         JTextField inputJumlahCustom = new JTextField();
         inputJumlahCustom.setBounds(180, 110, 150, 25);
         JButton buttonAddToCartCustom = new JButton("Add to Cart");
-        buttonAddToCartCustom.setBounds(250, 180, 100, 40);
+        buttonAddToCartCustom.setBounds(250, 150, 100, 40);
         buttonAddToCartCustom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -124,7 +153,7 @@ public class MenuBeliKain {
                     KainCustom kain = new KainCustom(inputBahanCustom.getText(),
                         inputWarnaCustom.getText(),inputMotifCustom.getText(),0,idKain);
                     sql.insertKain(kain,idKain);
-                    sql.insertKeranjang(curUser,idKain,Integer.parseInt(inputJumlahCustom.getText()));
+                    sql.insertKeranjang(customer,idKain,Integer.parseInt(inputJumlahCustom.getText()));
                     JOptionPane.showMessageDialog(null, "Kain telah ditambahkan ke cart Anda", 
                                "Message", JOptionPane.INFORMATION_MESSAGE);
                     frame.dispose();
@@ -151,6 +180,13 @@ public class MenuBeliKain {
         JMenuBar mb = new JMenuBar();  
         JButton menuCart = new JButton("Cart");
         JButton mainMenu = new JButton("Main Menu");
+        mainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                frame.dispose();
+                new MainMenuUser();
+            }
+        });
         mb.add(Box.createGlue());
         mb.add(menuCart);
         mb.add(mainMenu);
