@@ -83,7 +83,7 @@ public class Controller implements TipePengiriman {
         return motif;
     }
 
-    public int getHargaKainToko(kain_toko kain) {
+    public int hitungHargaKainToko(kain_toko kain) {
         return kain.getBahan().getHarga_bahan() + 
                 kain.getWarna().getHarga_warna() + 
                 kain.getMotif().getHarga_motif();
@@ -174,7 +174,7 @@ public class Controller implements TipePengiriman {
             nama = "Kain " + kainToko.getBahan().getNama_bahan() + " " 
                     + kainToko.getWarna().getNama_warna() + " " 
                     + kainToko.getMotif().getNama_motif();
-            harga = getHargaKainToko(kainToko);
+            harga = hitungHargaKainToko(kainToko);
             totalHarga = quantity * harga;
         } else {
             KainCustom kainCustom = (KainCustom) kain;
@@ -184,5 +184,20 @@ public class Controller implements TipePengiriman {
         }
         Object[] data = {no, id, nama, harga, quantity, totalHarga};
         return data;
+    }
+    
+    public int hitungTotalDetailTransaksi(ArrayList<DetailTransaksi> listDetail){
+        int total = 0;
+        for(int i = 0; i < listDetail.size(); i++){
+            Kain temp = listDetail.get(i).getKain();
+            if(temp instanceof kain_toko){
+                kain_toko kain = (kain_toko) temp;
+                total += hitungHargaKainToko(kain) * listDetail.get(i).getQuantity();
+            } else {
+                KainCustom kain = (KainCustom) temp;
+                total += kain.getHarga_kain_custom() * listDetail.get(i).getQuantity();
+            }
+        }
+        return total;
     }
 }
