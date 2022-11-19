@@ -964,5 +964,20 @@ public class Sql {
         }
     }
     
+    public static boolean updateStatusTransaksi(String newStats, int id_transaksi) {
+        conn.connect();
+        String query = "UPDATE transaksi set progress = ? where id_transaksi = ?" ;              
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setString(1, newStats);
+            stmt.setInt(2, id_transaksi);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
     
 }

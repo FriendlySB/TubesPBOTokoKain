@@ -78,6 +78,26 @@ public class MenuLihatRiwayatTransaksiAdmin {
                 }
             }
         });
+        
+        
+        JButton editStatus = new JButton("Edit Status Pesanan");
+        editStatus.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+               
+                if(table.getSelectionModel().isSelectionEmpty()){
+                    JOptionPane.showMessageDialog(null, "Mohon mengklik data yang ingin di ubah status pesanannya!", 
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    int id_transaksi = (int)table.getValueAt(table.getSelectedRow(), 0);
+                    new MenuEditStatusPesanan(id_transaksi);
+                    f.dispose();
+                }
+                
+            }
+        });
+        
+        mb.add(editStatus);
         mb.add(lihatDetail);
         mb.add(Box.createGlue());
         mb.add(mainMenu);
@@ -90,6 +110,8 @@ public class MenuLihatRiwayatTransaksiAdmin {
                 new MainMenuAdmin();
             }
         });
+        
+        
     }
 
     public static void main(String args[]) {
