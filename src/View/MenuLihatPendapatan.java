@@ -53,9 +53,10 @@ public class MenuLihatPendapatan {
         totalTransaksi.setFont(new Font("Sans", Font.CENTER_BASELINE, 20));
         frame.add(totalTransaksi);
 
-        JButton backMenu = new JButton("back to menu");
+        JButton backMenu = new JButton("Back to Menu");
         backMenu.addActionListener(b -> {
             frame.dispose();
+            new MainMenuAdmin();
         });
         backMenu.setBounds(25, 375, 150, 40);
         frame.add(backMenu);

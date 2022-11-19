@@ -12,6 +12,8 @@ import Model.TipeUser;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -89,11 +91,10 @@ public class MenuTambahAdmin {
                 String admin_pass = field_pass.getText();
                 String admin_address = "";
                 String admin_telp = "";
-                String warn = "Masih terdapat data yang belum di isi";
                 
                 if(admin_username.equals("") || admin_email.equals("") || admin_namaLengkap.equals("") ||
                         admin_pass.equals("")){
-                    JOptionPane.showMessageDialog(null, warn , "warn",JOptionPane.WARNING_MESSAGE);
+                    JOptionPane.showMessageDialog(null, "Terdapat data yang masih kosong!" , "Message",JOptionPane.WARNING_MESSAGE);
                 } else {
                     Sql sql = new Sql();
                     Customer customer = new Customer();
@@ -106,6 +107,9 @@ public class MenuTambahAdmin {
                     customer.setTipeuser(TipeUser.ADMIN);
                     
                     sql.insertNewUser(customer);
+                    JOptionPane.showMessageDialog(null, "Tambah admin baru berhasil!" , "Message",JOptionPane.INFORMATION_MESSAGE);
+                    f.dispose();
+                    new MenuTambahAdmin();
                 }
             }
         });
@@ -113,11 +117,19 @@ public class MenuTambahAdmin {
         JButton cancel = new JButton("Cancel");
         cancel.setBounds(360, 570, 80, 50);
         f.add(cancel);
-//        cancel.addActionListener(new ActionListener() {
-//            public void actionPerformed(ActionEvent e) {
-//                new MainMenuAdmin();
-//            }
-//        });
+        cancel.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                f.dispose();
+                new MainMenuAdmin();
+            }
+        });
+        f.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                f.dispose();
+                new MainMenuAdmin();
+            }
+        });
     }
     
     

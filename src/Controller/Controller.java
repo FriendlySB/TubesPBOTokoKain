@@ -15,8 +15,18 @@ public class Controller implements TipePengiriman {
     public Controller() {
 
     }
-
-    public String createIDKainCustom() {
+    
+    //Contoh polymorphism
+    public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif){
+        Sql sql = new Sql();
+        String idKain = "";
+        idKain += String.valueOf(bahan.getId_bahan() + 1000) + "-";
+        idKain += String.valueOf(warna.getId_warna() + 2000) + "-";
+        idKain += String.valueOf(motif.getId_motif() + 3000);
+        return idKain;
+    }
+    
+    public String createIDKain() {
         Sql sql = new Sql();
         String lastKain = sql.getIDKainCustomBottom();
         if(lastKain.equals("")){
@@ -83,7 +93,7 @@ public class Controller implements TipePengiriman {
         return motif;
     }
 
-    public int getHargaKainToko(kain_toko kain) {
+    public int hitungHargaKainToko(kain_toko kain) {
         return kain.getBahan().getHarga_bahan() + 
                 kain.getWarna().getHarga_warna() + 
                 kain.getMotif().getHarga_motif();
@@ -174,7 +184,7 @@ public class Controller implements TipePengiriman {
             nama = "Kain " + kainToko.getBahan().getNama_bahan() + " " 
                     + kainToko.getWarna().getNama_warna() + " " 
                     + kainToko.getMotif().getNama_motif();
-            harga = getHargaKainToko(kainToko);
+            harga = hitungHargaKainToko(kainToko);
             totalHarga = quantity * harga;
         } else {
             KainCustom kainCustom = (KainCustom) kain;
@@ -185,4 +195,42 @@ public class Controller implements TipePengiriman {
         Object[] data = {no, id, nama, harga, quantity, totalHarga};
         return data;
     }
+    
+    public int hitungTotalDetailTransaksi(ArrayList<DetailTransaksi> listDetail){
+        int total = 0;
+        for(int i = 0; i < listDetail.size(); i++){
+            Kain temp = listDetail.get(i).getKain();
+            if(temp instanceof kain_toko){
+                kain_toko kain = (kain_toko) temp;
+                total += hitungHargaKainToko(kain) * listDetail.get(i).getQuantity();
+            } else {
+                KainCustom kain = (KainCustom) temp;
+                total += kain.getHarga_kain_custom() * listDetail.get(i).getQuantity();
+            }
+        }
+        return total;
+    }
+    
+    public boolean cekKainDuplikatKeranjang(int id_user, String id_kain){
+        Sql sql = new Sql();
+        ArrayList<Keranjang> cart = new ArrayList<>(sql.getKeranjang(id_user));
+        for(int i = 0; i < cart.size(); i++){
+            if(id_kain.equals(cart.get(i).getId_kain())){
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean cekIDKainDuplikat(String id_kain){
+        Sql sql = new Sql();
+        ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
+        for(int i = 0; i < listIDKain.size(); i++){
+            if(id_kain.equals(listIDKain.get(i))){
+                return true;
+            }
+        }
+        return false;
+    }
+    
 }

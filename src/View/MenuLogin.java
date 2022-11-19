@@ -15,6 +15,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 /**
@@ -55,8 +57,8 @@ public class MenuLogin {
         login.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = inputUsername.getText();
-                String password = new String(inputPassword.getPassword());
+                String username = inputUsername.getText().trim();
+                String password = new String(inputPassword.getPassword()).trim();
                 String warning = "Terdapat input yang masih kosong";
                 if (username.equals("") || password.equals("")) {
                     JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -88,8 +90,8 @@ public class MenuLogin {
                         } else {
                             frame.dispose();
                             Admin admin = (Admin) users.get(i);
-                             CurrentUser.getInstance().setUser(admin);
-                            new MainMenuAdmin(admin);
+                            CurrentUser.getInstance().setUser(admin);
+                            new MainMenuAdmin();
                         }
                     } else {
                         JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);
@@ -125,6 +127,12 @@ public class MenuLogin {
             }
         });
         frame.add(createAccount);
-
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                JOptionPane.showMessageDialog(null, "Terima kasih!",
+                        "Message", JOptionPane.INFORMATION_MESSAGE);
+            }
+        });
     }
 }

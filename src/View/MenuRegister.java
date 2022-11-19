@@ -90,12 +90,12 @@ public class MenuRegister {
         register.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                String username = inputUsername.getText();
-                String namaLengkap = inputNamaLengkap.getText();
-                String email = inputEmail.getText();
-                String password = new String(inputPassword.getPassword());
-                String alamat = inputAlamat.getText();
-                String noTelepon = inputNoTelepon.getText();
+                String username = inputUsername.getText().trim();
+                String namaLengkap = inputNamaLengkap.getText().trim();
+                String email = inputEmail.getText().trim();
+                String password = new String(inputPassword.getPassword()).trim();
+                String alamat = inputAlamat.getText().trim();
+                String noTelepon = inputNoTelepon.getText().trim();
                 String warning = "Data belum lengkap";
                 if ("".equals(username) || "".equals(namaLengkap) || "".equals(email) || "".equals(password) || "".equals(alamat) || "".equals(noTelepon)) {
                     JOptionPane.showMessageDialog(null, warning, "Peringatan", JOptionPane.WARNING_MESSAGE);

@@ -135,7 +135,7 @@ public class Sql {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 kain_toko curKain = new kain_toko();
-                while (rs.next()) {
+                while(rs.next()){
                     String bahan = controller.getNamaBahan(id_kain);
                     String warna = controller.getNamaWarna(id_kain);
                     String motif = controller.getNamaMotif(id_kain);
@@ -283,7 +283,7 @@ public class Sql {
                     currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
 
-                    currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(currentCust);
                 } else if (enumVal == TipeUser.ADMIN) {
@@ -299,11 +299,11 @@ public class Sql {
                     try {
                         Statement stmt2 = conn.con.createStatement();
                         ResultSet rs2 = stmt2.executeQuery(query2);
-                        curAdmin.setId_admin(rs2.getInt("id_admin"));
+                        //curAdmin.setId_admin(rs2.getInt("id_admin"));
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
-                    curAdmin.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //curAdmin.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(curAdmin);
                 } else if (enumVal == TipeUser.OWNER) {
@@ -314,7 +314,7 @@ public class Sql {
                     curOwner.setEmail(rs.getString("email"));
                     curOwner.setPassword(rs.getString("password"));
                     curOwner.setTipeuser(enumVal);
-                    curOwner.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //curOwner.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(curOwner);
                 }
@@ -348,7 +348,7 @@ public class Sql {
                     currentCust.setNoTelpon(rs.getString("no_telpon"));
                     currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
-                    currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
+                    //currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
                     customers.add(currentCust);
                 }
             }
@@ -374,6 +374,7 @@ public class Sql {
                 curTransaksi.setAlamat(rs.getString("alamat"));
                 curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
                 curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
+                curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
                 listTransaksi.add(curTransaksi);
             }
             return listTransaksi;
@@ -427,6 +428,7 @@ public class Sql {
         return null;
     }
 
+
     public ArrayList<Keranjang> getKeranjang(int id_user) {
         conn.connect();
         String query = "SELECT * FROM keranjang WHERE id_user='" + id_user + "'";
@@ -453,19 +455,18 @@ public class Sql {
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-            while (rs.next()) {
-                curkain.setId_kain(rs.getString("id_kain"));
-                curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
-                curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
-                curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
-                curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+             while (rs.next()) {
+            curkain.setId_kain(rs.getString("id_kain"));
+            curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+            curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+            curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+            curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return curkain;
     }
-
     public ChatRoom getSQLChatRoom(int id_user) {
         String query = "SELECT * FROM chat_room WHERE id_user='" + id_user + "'";
         try {
@@ -764,7 +765,6 @@ public class Sql {
             return false;
         }
     }
-
     public boolean deleteKainKeranjang(String idKain, int idUser) {
         conn.connect();
         String query = "DELETE FROM keranjang where id_kain LIKE '%" + idKain + "%' && id_user LIKE '%" + idUser + "%';";
@@ -777,7 +777,6 @@ public class Sql {
             return false;
         }
     }
-
     public boolean deleteBahan(int id_bahan) {
         conn.connect();
         String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
@@ -905,7 +904,7 @@ public class Sql {
         }
         return stock;
     }
-
+    
     public String getIDKainCustomBottom() {
         String query = "SELECT id_kain FROM kain_custom ORDER BY id_kain DESC LIMIT 1";
         String id = "";
@@ -921,5 +920,22 @@ public class Sql {
         }
         return id;
     }
-
+    
+    public static boolean updateStokKain(String id_kain, int stok) {
+        conn.connect();
+        String query = "UPDATE kain_toko set stok = ? where id_kain = ?" ;              
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, stok);
+            stmt.setString(2, id_kain);
+            
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
+    
 }

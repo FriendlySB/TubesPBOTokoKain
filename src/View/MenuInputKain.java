@@ -1,13 +1,18 @@
 package View;
 
+import Controller.Controller;
 import javax.swing.*;
 import Controller.Sql;
 import Model.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 
 public class MenuInputKain {
 
-    JButton backMenu = new JButton("Back to menu");
+    JButton backMenu = new JButton("Back to Menu");
 
     public MenuInputKain() {
         backMenu.setBounds(10, 200, 150, 40);
@@ -19,6 +24,15 @@ public class MenuInputKain {
         subFrame.setSize(500, 600);
         backMenu.addActionListener(b -> {
             frame.dispose();
+        });
+        JButton backToMainMenu = new JButton("Back to Menu");
+        backToMainMenu.setBounds(10, 200, 150, 40);
+        backToMainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent b) {
+                frame.dispose();
+                new MainMenuAdmin();
+            }
         });
         frame.setSize(700, 300);
         frame.setTitle("Menu Input Kain");
@@ -38,7 +52,7 @@ public class MenuInputKain {
             JTextField inpBahan = new JTextField();
             labBahan.setBounds(10, 25, 200, 25);
             inpBahan.setBounds(220, 25, 200, 25);
-            JLabel labHarga = new JLabel("masukan harga bahan");
+            JLabel labHarga = new JLabel("Masukkan harga bahan");
             JTextField inpHarga = new JTextField();
             labHarga.setBounds(10, 55, 200, 25);
             inpHarga.setBounds(220, 55, 200, 25);
@@ -46,7 +60,7 @@ public class MenuInputKain {
             subFrame.add(inpBahan);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
-            JLabel labWarna = new JLabel("pilihan warna: ");
+            JLabel labWarna = new JLabel("Pilihan warna: ");
             labWarna.setBounds(10, 85, 100, 25);
             subFrame.add(labWarna);
             ArrayList<JRadioButton> tomWarna = new ArrayList();
@@ -68,7 +82,7 @@ public class MenuInputKain {
                 tempY += 30;
             }
 
-            JLabel labMotif = new JLabel("pilihan motif: ");
+            JLabel labMotif = new JLabel("Pilihan motif: ");
             labMotif.setBounds(10, 225, 100, 25);
             subFrame.add(labMotif);
             ArrayList<JRadioButton> tomMotif = new ArrayList();
@@ -99,7 +113,7 @@ public class MenuInputKain {
                 int idBahan = tempo.getId_bahan() + 1;
                 BahanKain bahan = new BahanKain(idBahan, inpBahan.getText(), harga);
                 con.insertBahan(bahan);
-                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                int input = JOptionPane.showOptionDialog(null, "Berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idMotif = new ArrayList();
                     ArrayList<String> idWarna = new ArrayList();
@@ -151,10 +165,20 @@ public class MenuInputKain {
             subFrame.add(add);
             backMenu.setBounds(10, 450, 150, 40);
             subFrame.add(backMenu);
-            backMenu.addActionListener(b -> {
-                subFrame.dispose();
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuInputKain();
+                }
             });
-            subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    frame.dispose();
+                    new MenuInputKain();
+                }
+            });
         });
         JButton bWarna = new JButton("Warna");
 
@@ -166,11 +190,11 @@ public class MenuInputKain {
             frame.dispose();
             subFrame.setVisible(true);
             subFrame.setTitle("Tambah Warna");
-            JLabel labWarna = new JLabel("Masukan nama Warna");
+            JLabel labWarna = new JLabel("Masukan nama warna");
             JTextField inpWarna = new JTextField();
             labWarna.setBounds(10, 25, 200, 25);
             inpWarna.setBounds(220, 25, 200, 25);
-            JLabel labHarga = new JLabel("masukan harga Warna");
+            JLabel labHarga = new JLabel("Masukkan harga warna");
             JTextField inpHarga = new JTextField();
             labHarga.setBounds(10, 55, 200, 25);
             inpHarga.setBounds(220, 55, 200, 25);
@@ -178,7 +202,7 @@ public class MenuInputKain {
             subFrame.add(inpWarna);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
-            JLabel labBahan = new JLabel("pilihan bahan: ");
+            JLabel labBahan = new JLabel("Pilihan bahan: ");
             labBahan.setBounds(10, 85, 100, 25);
             subFrame.add(labBahan);
             ArrayList<JRadioButton> tomBahan = new ArrayList();
@@ -200,7 +224,7 @@ public class MenuInputKain {
                 tempY += 30;
             }
 
-            JLabel labMotif = new JLabel("pilihan motif: ");
+            JLabel labMotif = new JLabel("Pilihan motif: ");
             labMotif.setBounds(10, 225, 100, 25);
             subFrame.add(labMotif);
             ArrayList<JRadioButton> tomMotif = new ArrayList();
@@ -231,7 +255,7 @@ public class MenuInputKain {
                 int idWarna = tempo.getId_warna() + 1;
                 WarnaKain warna = new WarnaKain(idWarna, inpWarna.getText(), harga);
                 con.insertWarna(warna);
-                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                int input = JOptionPane.showOptionDialog(null, "Berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idMotif = new ArrayList();
                     ArrayList<String> idBahan = new ArrayList();
@@ -284,10 +308,20 @@ public class MenuInputKain {
             subFrame.add(add);
             backMenu.setBounds(10, 450, 150, 40);
             subFrame.add(backMenu);
-            backMenu.addActionListener(b -> {
-                subFrame.dispose();
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuInputKain();
+                }
             });
-            subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    frame.dispose();
+                    new MenuInputKain();
+                }
+            });
         });
         JButton bMotif = new JButton("Motif");
 
@@ -299,11 +333,11 @@ public class MenuInputKain {
             frame.dispose();
             subFrame.setVisible(true);
             subFrame.setTitle("Tambah Motif");
-            JLabel labMotif = new JLabel("Masukan nama Motif");
+            JLabel labMotif = new JLabel("Masukan nama motif");
             JTextField inpMotif = new JTextField();
             labMotif.setBounds(10, 25, 200, 25);
             inpMotif.setBounds(220, 25, 200, 25);
-            JLabel labHarga = new JLabel("masukan harga Motif");
+            JLabel labHarga = new JLabel("Masukkan harga motif");
             JTextField inpHarga = new JTextField();
             labHarga.setBounds(10, 55, 200, 25);
             inpHarga.setBounds(220, 55, 200, 25);
@@ -311,7 +345,7 @@ public class MenuInputKain {
             subFrame.add(inpMotif);
             subFrame.add(labHarga);
             subFrame.add(inpHarga);
-            JLabel labBahan = new JLabel("pilihan bahan: ");
+            JLabel labBahan = new JLabel("Pilihan bahan: ");
             labBahan.setBounds(10, 85, 100, 25);
             subFrame.add(labBahan);
             ArrayList<JRadioButton> tomBahan = new ArrayList();
@@ -333,7 +367,7 @@ public class MenuInputKain {
                 tempY += 30;
             }
 
-            JLabel labWarna = new JLabel("pilihan warna: ");
+            JLabel labWarna = new JLabel("Pilihan warna: ");
             labWarna.setBounds(10, 225, 100, 25);
             subFrame.add(labWarna);
             ArrayList<JRadioButton> tomWarna = new ArrayList();
@@ -363,7 +397,7 @@ public class MenuInputKain {
                 int idMotif = tempo.getId_motif() + 1;
                 MotifKain motif = new MotifKain(idMotif, inpMotif.getText(), harga);
                 con.insertMotif(motif);
-                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                int input = JOptionPane.showOptionDialog(null, "Berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idWarna = new ArrayList();
                     ArrayList<String> idBahan = new ArrayList();
@@ -416,22 +450,31 @@ public class MenuInputKain {
             subFrame.add(add);
             subFrame.add(backMenu);
             backMenu.setBounds(10, 450, 150, 40);
-            backMenu.addActionListener(b -> {
-                subFrame.dispose();
+            backMenu.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent b) {
+                    subFrame.dispose();
+                    new MenuInputKain();
+                }
             });
-            subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    frame.dispose();
+                    new MenuInputKain();
+                }
+            });
         });
-        JButton tomKain = new JButton("Tambah kombinasi kain");
+        JButton tomKain = new JButton("Tambah Kombinasi Kain");
         tomKain.setBounds(240, 120, 200, 50);
         frame.add(tomKain);
 
         tomKain.addActionListener(c -> {
             frame.dispose();
             subFrame.setSize(500, 700);
-            subFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
             subFrame.setVisible(true);
             subFrame.setTitle("Tambah Kombinasi Kain");
-            JLabel labBahan = new JLabel("pilihan bahan: ");
+            JLabel labBahan = new JLabel("Pilihan Bahan: ");
             labBahan.setBounds(10, 10, 100, 25);
             subFrame.add(labBahan);
             ArrayList<JRadioButton> tomBahan = new ArrayList();
@@ -452,7 +495,7 @@ public class MenuInputKain {
                 tempY += 30;
             }
 
-            JLabel labWarna = new JLabel("pilihan warna: ");
+            JLabel labWarna = new JLabel("Pilihan Warna: ");
             labWarna.setBounds(10, 165, 100, 25);
             subFrame.add(labWarna);
             ArrayList<JRadioButton> tomWarna = new ArrayList();
@@ -473,7 +516,7 @@ public class MenuInputKain {
                 subFrame.add(tomWarna.get(i));
                 tempY2 += 30;
             }
-            JLabel labMotif = new JLabel("pilihan motif: ");
+            JLabel labMotif = new JLabel("Pilihan Motif: ");
             labMotif.setBounds(10, 315, 100, 25);
             subFrame.add(labMotif);
             ArrayList<JRadioButton> tomMotif = new ArrayList();
@@ -498,7 +541,7 @@ public class MenuInputKain {
             add.setBounds(10, 620, 100, 25);
             subFrame.add(add);
             add.addActionListener(d -> {
-                int input = JOptionPane.showOptionDialog(null, "berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                int input = JOptionPane.showOptionDialog(null, "Berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
                 if (input == JOptionPane.OK_OPTION) {
                     ArrayList<String> idBahan = new ArrayList();
                     ArrayList<String> namaBahan = new ArrayList();
@@ -535,10 +578,21 @@ public class MenuInputKain {
                         for (int j = 0; j < idWarna.size(); j++) {
                             WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
                             for (int k = 0; k < idMotif.size(); k++) {
+                                Controller controller = new Controller();
                                 MotifKain tempMotif = con.getMotif(namaMotif.get(k));
-                                String idKain = idBahan.get(i) + "-" + idWarna.get(j) + "-" + idMotif.get(k);
+                                String idKain = controller.createIDKain(tempBahan, tempWarna, tempMotif);
                                 kain_toko tempKain = new kain_toko(tempMotif, tempWarna, tempBahan, 0, idKain);
-                                con.insertKain(tempKain, idKain);
+                                if(controller.cekIDKainDuplikat(idKain) == true){
+                                    JOptionPane.showMessageDialog(null, "Kain dengan ID " 
+                                    + idKain + " sudah terdata di database!", 
+                                    "Peringatan", JOptionPane.WARNING_MESSAGE);
+                                } else {
+                                    con.insertKain(tempKain, idKain);
+                                    JOptionPane.showMessageDialog(null, "Kain dengan ID " 
+                                    + idKain + " telah diinput ke database", 
+                                    "Message", JOptionPane.INFORMATION_MESSAGE);
+                                }
+                                
                             }
                         }
                     }
@@ -549,12 +603,25 @@ public class MenuInputKain {
             backMenu.setBounds(10, 450, 150, 40);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
+                new MenuInputKain();
+            });
+            subFrame.addWindowListener(new WindowAdapter() { 
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    frame.dispose();
+                    new MenuInputKain();
+                }
             });
         });
 
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.add(backMenu);
-
+        frame.add(backToMainMenu);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MainMenuAdmin();
+            }
+        });
         frame.setLayout(null);
         frame.setVisible(true);
     }
