@@ -72,7 +72,7 @@ public class MenuLihatKeranjang {
                             listKeranjangDipilih.add(listKeranjang.get(i));
                         }
                     }
-                    new MenuTransaksi(listKeranjangDipilih);
+                    //new MenuTransaksi(listKeranjangDipilih);
                 }
             });
             frame.setVisible(true);

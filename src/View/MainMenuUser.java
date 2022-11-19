@@ -80,7 +80,7 @@ public class MainMenuUser {
         JMenuBar mb = new JMenuBar();
         JButton menuCart = new JButton("Cart");
         menuCart.addActionListener(e -> {
-            //new MenuLihatKeranjang();
+            new MenuLihatKeranjang();
         });
         mb.add(Box.createGlue());
         mb.add(menuCart);
