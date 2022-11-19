@@ -280,13 +280,21 @@ public class MenuEditKain {
         
         JButton butEditStokKain = new JButton("Edit Stok Kain");
         butEditStokKain.setBounds(10, 85, 150, 40);
-        JButton butEditHargaKainCustom = new JButton("Edit Kain Custom");
-        butEditHargaKainCustom.setBounds(180, 85, 150, 40);
         butEditStokKain.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent b) {
                 frame.dispose();
                 new MenuEditStokKain();
+            }
+        });
+        
+        JButton butEditHargaKainCustom = new JButton("Edit Kain Custom");
+        butEditHargaKainCustom.setBounds(180, 85, 150, 40);
+        butEditHargaKainCustom.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent b) {
+                frame.dispose();
+                new MenuEditHargaKainCustom();
             }
         });
         

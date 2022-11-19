@@ -1,3 +1,4 @@
+
 /*
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
@@ -136,6 +137,29 @@ public class Sql {
         return listKain;
     }
 
+        public ArrayList<KainCustom> getAllKainCustom() {
+        ArrayList<KainCustom> listKain = new ArrayList();
+        conn.connect();
+        String query = "SELECT * FROM kain_custom";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                KainCustom kainCustom = new KainCustom();
+                kainCustom.setId_kain(rs.getString("id_kain"));
+                kainCustom.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+                kainCustom.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+                kainCustom.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+                kainCustom.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+                listKain.add(kainCustom);
+            }
+            return listKain;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }    
+    
     public Kain getKain(String id_kain) {
         Controller controller = new Controller();
         conn.connect();
@@ -964,6 +988,22 @@ public class Sql {
         }
     }
     
+        
+    public boolean updateHargaKainCustom(String id_kain, int harga) {
+        conn.connect();
+        String query = "UPDATE kain_custom set harga_kain_custom = ? where id_kain = ?";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, harga);
+            stmt.setString(2, id_kain);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
+    
     public static boolean updateStatusTransaksi(String newStats, int id_transaksi) {
         conn.connect();
         String query = "UPDATE transaksi set progress = ? where id_transaksi = ?" ;              
@@ -981,3 +1021,4 @@ public class Sql {
     
     
 }
+
