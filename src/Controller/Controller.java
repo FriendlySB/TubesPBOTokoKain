@@ -241,4 +241,12 @@ public class Controller implements TipePengiriman {
         return false;
     }
     
+    public String createMessagesForChat(){
+        String text = "";
+        for(int i = 0; i < 10; i++){
+            text += "Username   Waktu Pesan\nMessages\n\n";
+        }
+        return text;
+    }
+    
 }
