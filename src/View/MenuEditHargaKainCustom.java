@@ -42,7 +42,7 @@ public class MenuEditHargaKainCustom {
         if (kainCustomZeroPrice.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Semua Kain Custom telah diberikan harga", "Info", JOptionPane.INFORMATION_MESSAGE);
             frame.dispose();
-            new MainMenuAdmin();
+            new MenuEditKain();
         } else {
             String trueZeroKainCustom[] = new String[kainCustomZeroPrice.size()];
             for (int i = 0; i < trueZeroKainCustom.length; i++) {

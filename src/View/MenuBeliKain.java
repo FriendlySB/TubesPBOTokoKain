@@ -17,16 +17,18 @@ import Model.Customer;
 import Model.User;
 import java.awt.event.ItemListener;
 import java.util.ArrayList;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 
 public class MenuBeliKain {
     Sql sql = new Sql();
     Controller controller = new Controller();
-    ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
+    ArrayList<kain_toko> listKainToko = new ArrayList<>(sql.getAllKainToko());
     
     public MenuBeliKain() {
         Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setSize(600,350);
+        frame.setSize(600,400);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -50,46 +52,69 @@ public class MenuBeliKain {
         labelBeliKainToko.setBounds(20, 20, 250, 25);
         JLabel labelBeliKain = new JLabel("Pilih kain");
         labelBeliKain.setBounds(20, 50, 125, 25);
-        String arrNamaKain[] = new String[listIDKain.size()];
+        String arrNamaKain[] = new String[listKainToko.size()];
         for(int i = 0; i < arrNamaKain.length; i++){
-            arrNamaKain[i] = controller.getNamaKain(listIDKain.get(i));
+            arrNamaKain[i] = controller.getNamaKainToko(listKainToko.get(i));
         }
         JComboBox comboBoxKainToko = new JComboBox(arrNamaKain);
         comboBoxKainToko.setBounds(150, 50, 250, 25);
+        JLabel labelHargaKain = new JLabel("Harga Kain");
+        labelHargaKain.setBounds(20, 80, 150, 25);
+        int hargaKain = controller.hitungHargaKainToko(listKainToko.get(comboBoxKainToko.getSelectedIndex()));
+        JLabel labelHargaKainDisplay = new JLabel();
+        labelHargaKainDisplay.setText(String.valueOf(hargaKain));
+        labelHargaKainDisplay.setBounds(150, 80, 150, 25);
         JLabel labelJumlahKainToko = new JLabel("Input Jumlah Kain");
-        labelJumlahKainToko.setBounds(20, 80, 150, 25);
+        labelJumlahKainToko.setBounds(20, 110, 150, 25);
         SpinnerModel value =  new SpinnerNumberModel(0, 0, 99, 1); 
         JSpinner spinnerJumlahKainToko = new JSpinner(value);
-        spinnerJumlahKainToko.setBounds(150,80,50,25); 
+        spinnerJumlahKainToko.setBounds(150,110,50,25); 
         JLabel labelStok = new JLabel();
-        int stockKain = sql.countStockKain(listIDKain.get(0));
+        int stockKain = listKainToko.get(0).getStok();
         if(stockKain == 0){
             labelStok.setText("Stok habis!");
         } else {
             labelStok.setText("Sisa " + stockKain);
         }
-        labelStok.setBounds(205, 80, 150, 25);
+        labelStok.setBounds(205, 110, 150, 25);
+        JLabel labelHargaTotal = new JLabel("Harga Total");
+        labelHargaTotal.setBounds(20, 150, 150, 25);
+        JLabel labelHargaTotalDisplay = new JLabel("0");
+        labelHargaTotalDisplay.setBounds(150, 150, 150, 25);
+        
         comboBoxKainToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
-                int jumlah = sql.countStockKain(listIDKain.get(comboBoxKainToko.getSelectedIndex()));
+                int jumlah = listKainToko.get(comboBoxKainToko.getSelectedIndex()).getStok();
+                int hargaKain = controller.hitungHargaKainToko(listKainToko.get(comboBoxKainToko.getSelectedIndex()));
                 if(jumlah == 0){
                     labelStok.setText("Stok habis!");
                 } else {
                     labelStok.setText("Sisa " + jumlah);
                 }
+                labelHargaKainDisplay.setText(String.valueOf(hargaKain));
+            }
+        });
+        
+        spinnerJumlahKainToko.addChangeListener(new ChangeListener() {
+            @Override
+            public void stateChanged(ChangeEvent e) {
+                int hargaKain = controller.hitungHargaKainToko(listKainToko.get(comboBoxKainToko.getSelectedIndex()));
+                int jumlah = (Integer) spinnerJumlahKainToko.getValue();
+                int total = hargaKain * jumlah;
+                labelHargaTotalDisplay.setText(String.valueOf(total));
             }
         });
         
         JButton buttonAddToCartToko = new JButton("Add to Cart");
-        buttonAddToCartToko.setBounds(250, 150, 100, 40);
+        buttonAddToCartToko.setBounds(250, 180, 100, 40);
         buttonAddToCartToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 if((Integer) spinnerJumlahKainToko.getValue() == 0){
                     JOptionPane.showMessageDialog(null, "Mohon mengisi jumlah kain", "Peringatan", JOptionPane.WARNING_MESSAGE);
                 } else {
-                    String idKain = listIDKain.get(comboBoxKainToko.getSelectedIndex());
+                    String idKain = listKainToko.get(comboBoxKainToko.getSelectedIndex()).getId_kain();
                     int quantity = (Integer)spinnerJumlahKainToko.getValue();
                     if(controller.cekKainDuplikatKeranjang(customer.getId_user(), idKain) == true){
                         JOptionPane.showMessageDialog(null, "Kain tersebut sudah ada di keranjang Anda!",
@@ -111,12 +136,16 @@ public class MenuBeliKain {
                 }
             }
         });
+        panelKainToko.add(labelHargaKain);
+        panelKainToko.add(labelHargaKainDisplay);
         panelKainToko.add(spinnerJumlahKainToko);
         panelKainToko.add(labelBeliKainToko);
         panelKainToko.add(labelBeliKain);
         panelKainToko.add(comboBoxKainToko);
         panelKainToko.add(labelJumlahKainToko);
         panelKainToko.add(labelStok);
+        panelKainToko.add(labelHargaTotal);
+        panelKainToko.add(labelHargaTotalDisplay);
         panelKainToko.add(buttonAddToCartToko);
         //Kain Custom
         JLabel labelBahanCustom = new JLabel("Input Bahan Custom");
@@ -136,7 +165,7 @@ public class MenuBeliKain {
         JSpinner spinnerJumlahKainCustom = new JSpinner(value);
         spinnerJumlahKainCustom.setBounds(180,110,50,25);
         JButton buttonAddToCartCustom = new JButton("Add to Cart");
-        buttonAddToCartCustom.setBounds(250, 150, 100, 40);
+        buttonAddToCartCustom.setBounds(250, 180, 100, 40);
         buttonAddToCartCustom.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
@@ -178,7 +207,6 @@ public class MenuBeliKain {
         tp.add("Kain Custom",panelKainCustom); 
         
         JMenuBar mb = new JMenuBar();  
-        JButton menuCart = new JButton("Cart");
         JButton mainMenu = new JButton("Main Menu");
         mainMenu.addActionListener(new ActionListener() {
             @Override
@@ -188,7 +216,6 @@ public class MenuBeliKain {
             }
         });
         mb.add(Box.createGlue());
-        mb.add(menuCart);
         mb.add(mainMenu);
         
         frame.add(tp);
