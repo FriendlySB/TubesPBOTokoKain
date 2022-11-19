@@ -948,7 +948,7 @@ public class Sql {
         }
     }
     
-    public static boolean updateHargaKainCustom(String id_kain, int harga) {
+    public boolean updateHargaKainCustom(String id_kain, int harga) {
         conn.connect();
         String query = "UPDATE kain_custom set harga_kain_custom = ? where id_kain = ?";
         try {
