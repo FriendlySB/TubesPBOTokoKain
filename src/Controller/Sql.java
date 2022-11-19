@@ -108,6 +108,33 @@ public class Sql {
         }
         return listIDKain;
     }
+    
+    public ArrayList<kain_toko> getAllKainToko() {
+        ArrayList<kain_toko> listKain = new ArrayList();
+        Controller controller = new Controller();
+        conn.connect();
+        String query = "SELECT * FROM kain_toko";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                String id_kain = rs.getString("id_kain");
+                kain_toko curKain = new kain_toko();
+                String bahan = controller.getNamaBahan(id_kain);
+                String warna = controller.getNamaWarna(id_kain);
+                String motif = controller.getNamaMotif(id_kain);
+                curKain.setId_kain(rs.getString("id_kain"));
+                curKain.setBahan(getBahan(bahan));
+                curKain.setWarna(getWarna(warna));
+                curKain.setMotif(getMotif(motif));
+                curKain.setStok(rs.getInt("stok"));
+                listKain.add(curKain);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return listKain;
+    }
 
     public Kain getKain(String id_kain) {
         Controller controller = new Controller();

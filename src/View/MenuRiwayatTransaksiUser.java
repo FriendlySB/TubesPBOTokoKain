@@ -55,7 +55,6 @@ public class MenuRiwayatTransaksiUser {
             tableModel.addRow(controller.createIsiTableTransaksi(listTransaksi.get(i)));
         }
         JMenuBar mb = new JMenuBar();  
-        JButton menuCart = new JButton("Cart");
         JButton mainMenu = new JButton("Main Menu");
         mainMenu.addActionListener(new ActionListener() {
             @Override
@@ -79,7 +78,6 @@ public class MenuRiwayatTransaksiUser {
         });
         mb.add(lihatDetail);
         mb.add(Box.createGlue());
-        mb.add(menuCart);
         mb.add(mainMenu);
         
         frame.add(scrollPane);
