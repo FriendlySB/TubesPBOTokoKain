@@ -135,7 +135,7 @@ public class Sql {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 kain_toko curKain = new kain_toko();
-                while(rs.next()){
+                while (rs.next()) {
                     String bahan = controller.getNamaBahan(id_kain);
                     String warna = controller.getNamaWarna(id_kain);
                     String motif = controller.getNamaMotif(id_kain);
@@ -427,7 +427,6 @@ public class Sql {
         return null;
     }
 
-
     public ArrayList<Keranjang> getKeranjang(int id_user) {
         conn.connect();
         String query = "SELECT * FROM keranjang WHERE id_user='" + id_user + "'";
@@ -454,18 +453,19 @@ public class Sql {
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-             while (rs.next()) {
-            curkain.setId_kain(rs.getString("id_kain"));
-            curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
-            curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
-            curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
-            curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+            while (rs.next()) {
+                curkain.setId_kain(rs.getString("id_kain"));
+                curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+                curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+                curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+                curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return curkain;
     }
+
     public ChatRoom getSQLChatRoom(int id_user) {
         String query = "SELECT * FROM chat_room WHERE id_user='" + id_user + "'";
         try {
@@ -765,6 +765,19 @@ public class Sql {
         }
     }
 
+    public boolean deleteKainKeranjang(String idKain, int idUser) {
+        conn.connect();
+        String query = "DELETE FROM keranjang where id_kain LIKE '%" + idKain + "%' && id_user LIKE '%" + idUser + "%';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public boolean deleteBahan(int id_bahan) {
         conn.connect();
         String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
@@ -892,7 +905,7 @@ public class Sql {
         }
         return stock;
     }
-    
+
     public String getIDKainCustomBottom() {
         String query = "SELECT id_kain FROM kain_custom ORDER BY id_kain DESC LIMIT 1";
         String id = "";
@@ -908,5 +921,5 @@ public class Sql {
         }
         return id;
     }
-    
+
 }
