@@ -43,6 +43,14 @@ public class Controller implements TipePengiriman {
         nama += getNamaMotif(id_kain);
         return nama;
     }
+    
+    public String getNamaKainToko(kain_toko kain) {
+        String nama = "Kain ";
+        nama += kain.getBahan().getNama_bahan() + " ";
+        nama += kain.getWarna().getNama_warna() + " ";
+        nama += kain.getMotif().getNama_motif();
+        return nama;
+    }
 
     public String getNamaKainCustom(String id_kain) {
         Sql sql = new Sql();
