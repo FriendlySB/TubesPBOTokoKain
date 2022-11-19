@@ -8,7 +8,10 @@ package View;
 import Controller.Sql;
 import Model.KainCustom;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -52,12 +55,20 @@ public class MenuEditHargaKainCustom {
             kainCustoms.setBounds(50, 80, 250, 25);
             frame.add(kainCustoms);
 
-            JLabel username = new JLabel("---");
-            username.setBounds(155, 110, 75, 25);
+            JLabel username = new JLabel("Silahkan masukkan harga yang ingin diberikan : ");
+            username.setBounds(50, 150, 275, 25);
             JTextField inputUsername = new JTextField();
-            inputUsername.setBounds(155, 135, 175, 25);
+            inputUsername.setBounds(50, 175, 175, 25);
             frame.add(username);
             frame.add(inputUsername);
+
+            JButton setHarga = new JButton("Set");
+            setHarga.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent ae) {
+                    
+                }
+            });
         }
 
     }

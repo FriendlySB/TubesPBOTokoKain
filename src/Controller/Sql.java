@@ -947,5 +947,20 @@ public class Sql {
             return (false);
         }
     }
+    
+    public static boolean updateHargaKainCustom(String id_kain, int harga) {
+        conn.connect();
+        String query = "UPDATE kain_custom set harga_kain_custom = ? where id_kain = ?";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, harga);
+            stmt.setString(2, id_kain);
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
 
 }
