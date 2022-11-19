@@ -765,7 +765,18 @@ public class Sql {
             return false;
         }
     }
-
+    public boolean deleteKainKeranjang(String idKain, int idUser) {
+        conn.connect();
+        String query = "DELETE FROM keranjang where id_kain LIKE '%" + idKain + "%' && id_user LIKE '%" + idUser + "%';";
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.executeUpdate(query);
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
     public boolean deleteBahan(int id_bahan) {
         conn.connect();
         String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
