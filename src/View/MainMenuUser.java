@@ -37,7 +37,7 @@ public class MainMenuUser {
         panel.setLayout(null);
         panel.setVisible(true);
 
-        JLabel judul = new JLabel("Selamat Datang di Toko Kain XYZ, "+ customer.getUsername());
+        JLabel judul = new JLabel("Selamat Datang di Toko Kain XYZ, " + customer.getUsername());
         judul.setBounds(180, 60, 300, 50);
 
         JButton menuBeliKain = new JButton("Beli Kain");
@@ -71,12 +71,8 @@ public class MainMenuUser {
         menuLihatProfile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if (customer.getKeranjang().isEmpty()) {
-                    JOptionPane.showMessageDialog(null, "Keranjang Kosong", "Peringatan", JOptionPane.WARNING_MESSAGE);
-                } else {
-                    frame.dispose();
-                    new MenuLihatKeranjang();
-                }
+                frame.dispose();
+                new MenuLihatProfile();
             }
         });
 
@@ -105,7 +101,12 @@ public class MainMenuUser {
         JMenuBar mb = new JMenuBar();
         JButton menuCart = new JButton("Cart");
         menuCart.addActionListener(e -> {
-            new MenuLihatKeranjang();
+            if (customer.getKeranjang().isEmpty()) {
+                JOptionPane.showMessageDialog(null, "Keranjang Kosong", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            } else {
+                frame.dispose();
+                new MenuLihatKeranjang();
+            }
         });
         mb.add(Box.createGlue());
         mb.add(menuCart);
