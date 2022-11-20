@@ -3,21 +3,22 @@ package View;
 import javax.swing.*;
 import Controller.Sql;
 import Model.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenuEditUser {
 
     public MenuEditUser(Customer customer) {
         Sql con = new Sql();
         JFrame frame = new JFrame();
-        frame.setTitle("Edit Data Profil");
+        frame.setTitle("Menu Edit Data Profile");
         frame.setSize(700, 600);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel labUser = new JLabel("username: ");
+        JLabel labUser = new JLabel("Username: ");
         labUser.setBounds(20, 20, 70, 25);
         frame.add(labUser);
 
@@ -49,7 +50,7 @@ public class MenuEditUser {
         email.setBounds(110, 115, 200, 25);
         frame.add(email);
 
-        JLabel labTelfon = new JLabel("No. Telfon: ");
+        JLabel labTelfon = new JLabel("No. Telepon: ");
         labTelfon.setBounds(20, 145, 100, 25);
         frame.add(labTelfon);
 
@@ -64,15 +65,25 @@ public class MenuEditUser {
                     customer.getTransaksi(), customer.getId_user(), userName.getText(), namaLengkap.getText(), email.getText(),
                     customer.getPassword(), customer.getTipeuser());
             con.updateDataCustomer(editan);
+            JOptionPane.showMessageDialog(null, "Data Anda telah berhasil diupdate","Message",JOptionPane.INFORMATION_MESSAGE);
             frame.dispose();
+            new MenuLihatProfile();
         });
         frame.add(edit);
 
-        JButton backMenu = new JButton("back to menu");
+        JButton backMenu = new JButton("Back to Menu");
         backMenu.addActionListener(b -> {
             frame.dispose();
+            new MenuLihatProfile(); 
         });
         backMenu.setBounds(210, 200, 150, 40);
         frame.add(backMenu);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MenuLihatProfile(); 
+            }
+        });
     }
 }

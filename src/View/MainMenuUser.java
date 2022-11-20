@@ -65,7 +65,7 @@ public class MainMenuUser {
             @Override
             public void actionPerformed(ActionEvent e) {
                 frame.dispose();
-                new MenuLihatProfile(customer);
+                new MenuLihatProfile();
             }
         });
         
