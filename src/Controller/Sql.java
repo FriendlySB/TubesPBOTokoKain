@@ -110,7 +110,7 @@ public class Sql {
         }
         return listIDKain;
     }
-    
+
     public ArrayList<KainToko> getAllKainToko() {
         ArrayList<KainToko> listKain = new ArrayList();
         Controller controller = new Controller();
@@ -138,7 +138,7 @@ public class Sql {
         return listKain;
     }
 
-        public ArrayList<KainCustom> getAllKainCustom() {
+    public ArrayList<KainCustom> getAllKainCustom() {
         ArrayList<KainCustom> listKain = new ArrayList();
         conn.connect();
         String query = "SELECT * FROM kain_custom";
@@ -159,8 +159,8 @@ public class Sql {
             e.printStackTrace();
         }
         return null;
-    }    
-    
+    }
+
     public Kain getKain(String id_kain) {
         Controller controller = new Controller();
         conn.connect();
@@ -187,7 +187,7 @@ public class Sql {
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
                 KainToko curKain = new KainToko();
-                while(rs.next()){
+                while (rs.next()) {
                     String bahan = controller.getNamaBahan(id_kain);
                     String warna = controller.getNamaWarna(id_kain);
                     String motif = controller.getNamaMotif(id_kain);
@@ -336,7 +336,6 @@ public class Sql {
                     currentCust.setTransaksi(getSQLListTransaksi(rs.getInt("id_user")));
 
                     //currentCust.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
-
                     users.add(currentCust);
                 } else if (enumVal == TipeUser.ADMIN) {
                     Admin curAdmin = new Admin();
@@ -346,12 +345,12 @@ public class Sql {
                     curAdmin.setEmail(rs.getString("email"));
                     curAdmin.setPassword(rs.getString("password"));
                     curAdmin.setTipeuser(enumVal);
-                    
+
                     String query2 = "SELECT * FROM admin WHERE id_user='" + rs.getInt("id_user") + "'";
                     try {
                         Statement stmt2 = conn.con.createStatement();
                         ResultSet rs2 = stmt2.executeQuery(query2);
-                        while(rs2.next()){
+                        while (rs2.next()) {
                             curAdmin.setTipeAdmin(rs2.getInt("tipe_admin"));
                         }
                     } catch (SQLException e) {
@@ -464,7 +463,7 @@ public class Sql {
                 String id = rs4.getString("id_kain");
                 int harga = rs4.getInt("harga");
                 String nama = rs4.getString("nama_kain");
-                curDetailTransaksi.setKain(new KainDibeli(id,nama,harga));
+                curDetailTransaksi.setKain(new KainDibeli(id, nama, harga));
                 listDetailTransaksi.add(curDetailTransaksi);
             }
             return listDetailTransaksi;
@@ -473,7 +472,6 @@ public class Sql {
         }
         return null;
     }
-
 
     public ArrayList<Keranjang> getKeranjang(int id_user) {
         conn.connect();
@@ -501,18 +499,19 @@ public class Sql {
         try {
             Statement stmt = conn.con.createStatement();
             ResultSet rs = stmt.executeQuery(query);
-             while (rs.next()) {
-            curkain.setId_kain(rs.getString("id_kain"));
-            curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
-            curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
-            curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
-            curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
+            while (rs.next()) {
+                curkain.setId_kain(rs.getString("id_kain"));
+                curkain.setBahan_kain_custom(rs.getString("nama_bahan_custom"));
+                curkain.setWarna_kain_custom(rs.getString("nama_warna_custom"));
+                curkain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
+                curkain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
         return curkain;
     }
+
     public ChatRoom getSQLChatRoom(int id_user) {
         String query = "SELECT * FROM chat_room WHERE id_user='" + id_user + "'";
         try {
@@ -579,7 +578,7 @@ public class Sql {
 //                }
                 stmt.executeUpdate();
             }
-            if(user instanceof Admin){
+            if (user instanceof Admin) {
                 Admin admin = (Admin) user;
                 stmt.setString(1, null);
                 stmt.setString(2, admin.getUsername());
@@ -614,19 +613,23 @@ public class Sql {
         }
     }
 
-    public static boolean insertTransaksi(Customer customer, int id_transaksi) {
+    public static boolean insertTransaksi(int idCustomer, Transaksi curTransaksi) {
         conn.connect();
-        String query = "INSERT INTO transaksi VALUES(?,?,CAST(? AS Progress),CAST(? AS TipeBayar),?,?,?,?)";
+        String query = "INSERT INTO transaksi VALUES(?,?,?,?,?,?,?,?)";
         try {
+            Controller control = new Controller();
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, id_transaksi);
-            stmt.setInt(2, customer.getId_user());
-            stmt.setString(3, customer.getTransaksi().get(id_transaksi).getProgress().toString());
-            stmt.setString(4, customer.getTransaksi().get(id_transaksi).getTipeBayar().toString());
-            stmt.setInt(5, customer.getTransaksi().get(id_transaksi).getTipe_pengiriman());
-            stmt.setString(6, customer.getTransaksi().get(id_transaksi).getAlamat());
-            stmt.setTimestamp(7, customer.getTransaksi().get(id_transaksi).getWaktu_transaksi());
-            stmt.setInt(8, customer.getTransaksi().get(id_transaksi).getTotal_bayar());
+            stmt.setInt(1, curTransaksi.getId_transaksi());
+            stmt.setInt(2, idCustomer);
+            stmt.setString(3, control.getProgress(curTransaksi.getProgress()));
+            stmt.setString(4, control.getTipeBayar(curTransaksi.getTipeBayar()));
+            stmt.setInt(5, curTransaksi.getTipe_pengiriman());
+            stmt.setString(6, curTransaksi.getAlamat());
+            stmt.setTimestamp(7, curTransaksi.getWaktu_transaksi());
+            stmt.setInt(8, curTransaksi.getTotal_bayar());
+            for (int i = 0; i < curTransaksi.getDetailTransaksi().size(); i++) {
+                insertDetailTransaksi(curTransaksi.getId_transaksi(), curTransaksi.getDetailTransaksi().get(i));
+            }
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -634,17 +637,39 @@ public class Sql {
             return (false);
         }
     }
+
+    public Transaksi getTransaksiBottom(int idUser) {
+        String query = "SELECT * FROM transaksi WHERE id_user='" + idUser + "' order by id_transaksi DESC limit 1";
+        Transaksi curTransaksi = new Transaksi();
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                curTransaksi.setId_transaksi(rs.getInt("id_transaksi"));
+                curTransaksi.setProgress(Progress.valueOf(rs.getString("progress")));
+                curTransaksi.setTipeBayar(TipeBayar.valueOf(rs.getString("tipe_bayar")));
+                curTransaksi.setTipe_pengiriman(rs.getInt("tipe_pengiriman"));
+                curTransaksi.setAlamat(rs.getString("alamat"));
+                curTransaksi.setWaktu_transaksi(rs.getTimestamp("waktu_transaksi"));
+                curTransaksi.setTotal_bayar(rs.getInt("total_bayar"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return curTransaksi;
+    }
     // Insert DetailTransaksi
 
-    public static boolean insertDetailTransaksi(Transaksi transaksi, int id_detail_transaksi) {
+    public static boolean insertDetailTransaksi(int id_transaksi, DetailTransaksi curDetail) {
         conn.connect();
-        String query = "INSERT INTO detail_transaksi VALUES(?,?,?,?)";
+        String query = "INSERT INTO detail_transaksi VALUES(?,?,?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            stmt.setInt(1, transaksi.getId_transaksi());
-            stmt.setInt(2, id_detail_transaksi);
-            stmt.setString(3, transaksi.getDetailTransaksi().get(id_detail_transaksi + 1).getKain().getId_kain());
-            stmt.setInt(4, transaksi.getDetailTransaksi().get(id_detail_transaksi + 1).getQuantity());
+            stmt.setInt(1, id_transaksi);
+            stmt.setString(2, curDetail.getKain().getId_kain());
+            stmt.setInt(3, curDetail.getQuantity());
+            stmt.setString(4, curDetail.getKain().getNama_kain());
+            stmt.setInt(5, curDetail.getKain().getHarga());
             stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
@@ -822,6 +847,7 @@ public class Sql {
             return false;
         }
     }
+
     public boolean deleteKainKeranjang(String idKain, int idUser) {
         conn.connect();
         String query = "DELETE FROM keranjang where id_kain LIKE '%" + idKain + "%' && id_user LIKE '%" + idUser + "%';";
@@ -834,6 +860,7 @@ public class Sql {
             return false;
         }
     }
+
     public boolean deleteBahan(int id_bahan) {
         conn.connect();
         String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
@@ -961,7 +988,7 @@ public class Sql {
         }
         return stock;
     }
-    
+
     public String getIDKainCustomBottom() {
         String query = "SELECT id_kain FROM kain_custom ORDER BY id_kain DESC LIMIT 1";
         String id = "";
@@ -977,15 +1004,15 @@ public class Sql {
         }
         return id;
     }
-    
+
     public static boolean updateStokKain(String id_kain, int stok) {
         conn.connect();
-        String query = "UPDATE kain_toko set stok = ? where id_kain = ?" ;              
+        String query = "UPDATE kain_toko set stok = ? where id_kain = ?";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, stok);
             stmt.setString(2, id_kain);
-            
+
             stmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -993,8 +1020,7 @@ public class Sql {
             return (false);
         }
     }
-    
-        
+
     public boolean updateHargaKainCustom(String id_kain, int harga) {
         conn.connect();
         String query = "UPDATE kain_custom set harga_kain_custom = ? where id_kain = ?";
@@ -1009,10 +1035,10 @@ public class Sql {
             return (false);
         }
     }
-    
+
     public static boolean updateStatusTransaksi(String newStats, int id_transaksi) {
         conn.connect();
-        String query = "UPDATE transaksi set progress = ? where id_transaksi = ?" ;              
+        String query = "UPDATE transaksi set progress = ? where id_transaksi = ?";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setString(1, newStats);
@@ -1024,8 +1050,8 @@ public class Sql {
             return (false);
         }
     }
-    
-    public String getUsernameByID(int id_user){
+
+    public String getUsernameByID(int id_user) {
         String username = "";
         String query = "SELECT username FROM users WHERE id_user='" + id_user + "'";
         try {
@@ -1040,7 +1066,7 @@ public class Sql {
         }
         return null;
     }
-    
+
     public ArrayList<Message> getMessage(int id_user) {
         String query = "SELECT * FROM message WHERE id_user='" + id_user + "'";
         try {
@@ -1061,10 +1087,10 @@ public class Sql {
         }
         return null;
     }
-    
-    public boolean insertMessage(int id_user, Message msg){
+
+    public boolean insertMessage(int id_user, Message msg) {
         conn.connect();
-        String query = "INSERT INTO message (id_user,id_pengirim,message) VALUES(?,?,?)" ;              
+        String query = "INSERT INTO message (id_user,id_pengirim,message) VALUES(?,?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, id_user);
@@ -1078,4 +1104,3 @@ public class Sql {
         }
     }
 }
-
