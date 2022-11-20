@@ -7,7 +7,9 @@ package View;
 
 import Model.CurrentUser;
 import Model.Customer;
+import Model.Keranjang;
 import Model.TipeBayar;
+import java.util.ArrayList;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -20,7 +22,7 @@ public class MenuPilihMetodePembayaran {
 
     Customer curCust = (Customer) CurrentUser.getInstance().getUser();
 
-    public MenuPilihMetodePembayaran(int kurir) {
+    public MenuPilihMetodePembayaran(ArrayList<Keranjang> listKeranjangDipilih,int kurir) {
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setLayout(null);
@@ -39,9 +41,5 @@ public class MenuPilihMetodePembayaran {
         }
 
         frame.setVisible(true);
-    }
-
-    public static void main(String[] args) {
-        new MenuPilihMetodePembayaran(3);
     }
 }
