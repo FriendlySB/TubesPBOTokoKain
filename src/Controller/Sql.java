@@ -328,7 +328,7 @@ public class Sql {
                     currentCust.setEmail(rs.getString("email"));
                     currentCust.setPassword(rs.getString("password"));
                     currentCust.setTipeuser(enumVal);
-
+                    currentCust.setMessage(getMessage(rs.getInt("id_user")));
                     currentCust.setAlamat(rs.getString("alamat"));
                     currentCust.setNoTelpon(rs.getString("no_telpon"));
                     currentCust.setKeranjang(getKeranjang(rs.getInt("id_user")));

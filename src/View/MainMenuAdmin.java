@@ -101,11 +101,25 @@ public class MainMenuAdmin implements TipeAdmin{
             }
         });
         pendapatanToko.setVisible(false);
+        JButton listChat = new JButton("Chat");
+        listChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MenuListChat();
+            }
+        });
+        listChat.setVisible(false);
         mb.add(Box.createGlue());
         mb.add(addAdmin);
         mb.add(pendapatanToko);
-
+        mb.add(listChat);
+        
+        if(admin.getTipeAdmin() == TipeAdmin.CS){
+            listChat.setVisible(true);
+        }
         if(admin.getTipeAdmin() == TipeAdmin.OWNER){
+            listChat.setVisible(true);
             addAdmin.setVisible(true);
             pendapatanToko.setVisible(true);
         }
