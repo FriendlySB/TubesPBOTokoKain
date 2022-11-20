@@ -659,7 +659,6 @@ public class Sql {
         return curTransaksi;
     }
     // Insert DetailTransaksi
-
     public static boolean insertDetailTransaksi(int id_transaksi, DetailTransaksi curDetail) {
         conn.connect();
         String query = "INSERT INTO detail_transaksi VALUES(?,?,?,?,?)";
