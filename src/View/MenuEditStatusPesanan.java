@@ -83,7 +83,7 @@ public class MenuEditStatusPesanan {
                     f.dispose();
                     new MenuLihatRiwayatTransaksiAdmin();
                     JOptionPane.showMessageDialog(null, "Update Status Pesanan Sukses", 
-                            "Peringatan", JOptionPane.INFORMATION_MESSAGE);
+                            "Message", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
         });

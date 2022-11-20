@@ -180,26 +180,13 @@ public class Controller implements TipePengiriman {
     
     public Object[] createIsiTableDetailTransaksi(DetailTransaksi detail, int nomor) {
         int no = nomor + 1;
-        Kain kain = detail.getKain();
+        KainDibeli kain = detail.getKain();
         String id = kain.getId_kain();
-        String nama = "";
-        int harga = 0;
+        String nama = kain.getNama_kain();
+        int harga = kain.getHarga();
         int quantity = detail.getQuantity();
-        int totalHarga = 0;
+        int totalHarga = harga * quantity;
         
-        if(kain instanceof KainToko){
-            KainToko kainToko = (KainToko) kain;
-            nama = "Kain " + kainToko.getBahan().getNama_bahan() + " " 
-                    + kainToko.getWarna().getNama_warna() + " " 
-                    + kainToko.getMotif().getNama_motif();
-            harga = hitungHargaKainToko(kainToko);
-            totalHarga = quantity * harga;
-        } else {
-            KainCustom kainCustom = (KainCustom) kain;
-            nama = getNamaKainCustom(kain.getId_kain());
-            harga = kainCustom.getHarga_kain_custom();
-            totalHarga = quantity * harga;
-        }
         Object[] data = {no, id, nama, harga, quantity, totalHarga};
         return data;
     }
@@ -207,14 +194,7 @@ public class Controller implements TipePengiriman {
     public int hitungTotalDetailTransaksi(ArrayList<DetailTransaksi> listDetail){
         int total = 0;
         for(int i = 0; i < listDetail.size(); i++){
-            Kain temp = listDetail.get(i).getKain();
-            if(temp instanceof KainToko){
-                KainToko kain = (KainToko) temp;
-                total += hitungHargaKainToko(kain) * listDetail.get(i).getQuantity();
-            } else {
-                KainCustom kain = (KainCustom) temp;
-                total += kain.getHarga_kain_custom() * listDetail.get(i).getQuantity();
-            }
+            total += listDetail.get(i).getQuantity() * listDetail.get(i).getKain().getHarga();
         }
         return total;
     }

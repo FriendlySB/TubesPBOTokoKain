@@ -81,11 +81,16 @@ public class MenuEditKain {
             for (int i = 0; i < delete.size(); i++) {
                 final int final_i = i;
                 delete.get(i).addActionListener(a -> {
-                    con.deleteBahan(idDelete.get(final_i));
-                    String temp = Integer.toString(idDelete.get(final_i));
-                    con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    if(con.deleteBahan(idDelete.get(final_i))){
+                        JOptionPane.showMessageDialog(null, "Delete bahan sukses!", 
+                            "Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Delete bahan gagal!", 
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    }
+                    
                     subFrame.dispose();
+                    new MenuEditKain();
                 });
             }
             JButton update = new JButton("Update");
@@ -157,11 +162,15 @@ public class MenuEditKain {
             for (int i = 0; i < delete.size(); i++) {
                 final int final_i = i;
                 delete.get(i).addActionListener(a -> {
-                    con.deleteBahan(idDelete.get(final_i));
-                    String temp = Integer.toString(idDelete.get(final_i));
-                    con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    if(con.deleteWarna(idDelete.get(final_i))){
+                        JOptionPane.showMessageDialog(null, "Delete warna sukses!", 
+                            "Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Delete warna gagal!", 
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    }
                     subFrame.dispose();
+                    new MenuEditKain();
                 });
             }
             JButton update = new JButton("Update");
@@ -235,11 +244,15 @@ public class MenuEditKain {
             for (int i = 0; i < delete.size(); i++) {
                 final int final_i = i;
                 delete.get(i).addActionListener(a -> {
-                    con.deleteBahan(idDelete.get(final_i));
-                    String temp = Integer.toString(idDelete.get(final_i));
-                    con.deleteKain(temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil didelete", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                    if(con.deleteMotif(idDelete.get(final_i))){
+                        JOptionPane.showMessageDialog(null, "Delete motif sukses!", 
+                            "Message", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(null, "Delete motif gagal!", 
+                            "Peringatan", JOptionPane.WARNING_MESSAGE);
+                    }
                     subFrame.dispose();
+                    new MenuEditKain();
                 });
             }
             JButton update = new JButton("Update");

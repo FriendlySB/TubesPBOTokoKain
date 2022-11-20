@@ -17,7 +17,10 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JSpinner;
 import javax.swing.JTextField;
+import javax.swing.SpinnerModel;
+import javax.swing.SpinnerNumberModel;
 
 /**
  *
@@ -58,21 +61,14 @@ public class MenuEditStokKain {
         
         JLabel labelJumlahKainToko = new JLabel("Input jumlah stok baru");
         labelJumlahKainToko.setBounds(20, 110, 150, 25);
-        JTextField inputJumlahKainToko = new JTextField();
-        inputJumlahKainToko.setBounds(150, 110, 50, 25);
-        JLabel labelStok = new JLabel();
-        int stockKain = sql.countStockKain(listIDKain.get(0));
-        if (stockKain == 0) {
-            labelStok.setText("Stok habis!");
-        } else {
-            labelStok.setText("Sisa " + stockKain);
-        }
-        labelStok.setBounds(205, 80, 150, 25);
+        SpinnerModel value =  new SpinnerNumberModel(0, 0, 99, 1); 
+        JSpinner spinnerStokBaru = new JSpinner(value);
+        spinnerStokBaru.setBounds(150, 110, 50, 25);
+        
         comboBoxKainToko.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent ae) {
                 int jumlah = sql.countStockKain(listIDKain.get(comboBoxKainToko.getSelectedIndex()));
-                
                 old_dataKain1.setText(String.valueOf(jumlah));
             }
         });
@@ -84,17 +80,11 @@ public class MenuEditStokKain {
             public void actionPerformed(ActionEvent ae) {
                 Sql sql = new Sql();
                 String id_kain = listIDKain.get(comboBoxKainToko.getSelectedIndex());
-                String warn = "Stok yang ingin di edit belum terisi";
-                
-                if(inputJumlahKainToko.getText().equals("")){
-                     JOptionPane.showMessageDialog(null, warn , "Message",JOptionPane.WARNING_MESSAGE);
-                } else {
-                    int stok = Integer.parseInt(inputJumlahKainToko.getText());
-                    sql.updateStokKain(id_kain, stok);
-                    JOptionPane.showMessageDialog(null, "Update stok baru sukses!" , "Message",JOptionPane.INFORMATION_MESSAGE);
-                }
+                int quantity = (Integer)spinnerStokBaru.getValue();
+                sql.updateStokKain(id_kain, quantity);
+                old_dataKain1.setText(String.valueOf(quantity));
+                JOptionPane.showMessageDialog(null, "Update stok baru sukses!" , "Message",JOptionPane.INFORMATION_MESSAGE);
             }
-
         });
         
         JButton back = new JButton("Back");
@@ -114,7 +104,7 @@ public class MenuEditStokKain {
         f.add(old_dataKain);
         f.add(old_dataKain1);
         f.add(labelJumlahKainToko);
-        f.add(inputJumlahKainToko);
+        f.add(spinnerStokBaru);
         f.add(buttonAddToCartToko);
         f.add(back);
     }

@@ -479,8 +479,10 @@ public class MenuInputKain {
             subFrame.add(labBahan);
             ArrayList<JRadioButton> tomBahan = new ArrayList();
             ArrayList<BahanKain> bahanKain = con.getAllBahan();
+            ButtonGroup groupBahan = new ButtonGroup();
             for (int i = 0; i < bahanKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(bahanKain.get(i).getNama_bahan());
+                groupBahan.add(tempTom);
                 tomBahan.add(tempTom);
             }
             int tempX = 10;
@@ -494,15 +496,16 @@ public class MenuInputKain {
                 subFrame.add(tomBahan.get(i));
                 tempY += 30;
             }
-
+            
             JLabel labWarna = new JLabel("Pilihan Warna: ");
             labWarna.setBounds(10, 165, 100, 25);
             subFrame.add(labWarna);
             ArrayList<JRadioButton> tomWarna = new ArrayList();
             ArrayList<WarnaKain> warnaKain = con.getAllWarna();
-
+            ButtonGroup groupWarna = new ButtonGroup();
             for (int i = 0; i < warnaKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(warnaKain.get(i).getNama_warna());
+                groupWarna.add(tempTom);
                 tomWarna.add(tempTom);
             }
             int tempX2 = 10;
@@ -521,9 +524,10 @@ public class MenuInputKain {
             subFrame.add(labMotif);
             ArrayList<JRadioButton> tomMotif = new ArrayList();
             ArrayList<MotifKain> motifKain = con.getAllMotif();
-
+            ButtonGroup groupMotif = new ButtonGroup();
             for (int i = 0; i < motifKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(motifKain.get(i).getNama_motif());
+                groupMotif.add(tempTom);
                 tomMotif.add(tempTom);
             }
             int tempX3 = 10;
@@ -541,59 +545,56 @@ public class MenuInputKain {
             add.setBounds(10, 620, 100, 25);
             subFrame.add(add);
             add.addActionListener(d -> {
-                int input = JOptionPane.showOptionDialog(null, "Berhasil ditambah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-                if (input == JOptionPane.OK_OPTION) {
-                    ArrayList<String> idBahan = new ArrayList();
-                    ArrayList<String> namaBahan = new ArrayList();
-                    ArrayList<String> idWarna = new ArrayList();
-                    ArrayList<String> namaWarna = new ArrayList();
-                    ArrayList<String> idMotif = new ArrayList();
-                    ArrayList<String> namaMotif = new ArrayList();
-                    for (int i = 0; i < bahanKain.size(); i++) {
-                        if (tomBahan.get(i).isSelected()) {
-                            BahanKain temp = con.getBahan(tomBahan.get(i).getText());
-                            namaBahan.add(temp.getNama_bahan());
-                            String idToAdd = Integer.toString(temp.getId_bahan());
-                            idBahan.add(idToAdd);
-                        }
+                ArrayList<String> idBahan = new ArrayList();
+                ArrayList<String> namaBahan = new ArrayList();
+                ArrayList<String> idWarna = new ArrayList();
+                ArrayList<String> namaWarna = new ArrayList();
+                ArrayList<String> idMotif = new ArrayList();
+                ArrayList<String> namaMotif = new ArrayList();
+                for (int i = 0; i < bahanKain.size(); i++) {
+                    if (tomBahan.get(i).isSelected()) {
+                        BahanKain temp = con.getBahan(tomBahan.get(i).getText());
+                        namaBahan.add(temp.getNama_bahan());
+                        String idToAdd = Integer.toString(temp.getId_bahan());
+                        idBahan.add(idToAdd);
                     }
-                    for (int i = 0; i < motifKain.size(); i++) {
-                        if (tomMotif.get(i).isSelected()) {
-                            MotifKain temp = con.getMotif(tomMotif.get(i).getText());
-                            namaMotif.add(temp.getNama_motif());
-                            String idToAdd = Integer.toString(temp.getId_motif());
-                            idMotif.add(idToAdd);
-                        }
+                }
+                for (int i = 0; i < motifKain.size(); i++) {
+                    if (tomMotif.get(i).isSelected()) {
+                        MotifKain temp = con.getMotif(tomMotif.get(i).getText());
+                        namaMotif.add(temp.getNama_motif());
+                        String idToAdd = Integer.toString(temp.getId_motif());
+                        idMotif.add(idToAdd);
                     }
-                    for (int i = 0; i < warnaKain.size(); i++) {
-                        if (tomWarna.get(i).isSelected()) {
-                            WarnaKain temp = con.getWarna(tomWarna.get(i).getText());
-                            namaWarna.add(temp.getNama_warna());
-                            String idToAdd = Integer.toString(temp.getId_warna());
-                            idWarna.add(idToAdd);
-                        }
+                }
+                for (int i = 0; i < warnaKain.size(); i++) {
+                    if (tomWarna.get(i).isSelected()) {
+                        WarnaKain temp = con.getWarna(tomWarna.get(i).getText());
+                        namaWarna.add(temp.getNama_warna());
+                        String idToAdd = Integer.toString(temp.getId_warna());
+                        idWarna.add(idToAdd);
                     }
-                    for (int i = 0; i < idBahan.size(); i++) {
-                        BahanKain tempBahan = con.getBahan(namaBahan.get(i));
-                        for (int j = 0; j < idWarna.size(); j++) {
-                            WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
-                            for (int k = 0; k < idMotif.size(); k++) {
-                                Controller controller = new Controller();
-                                MotifKain tempMotif = con.getMotif(namaMotif.get(k));
-                                String idKain = controller.createIDKain(tempBahan, tempWarna, tempMotif);
-                                KainToko tempKain = new KainToko(tempMotif, tempWarna, tempBahan, 0, idKain);
-                                if(controller.cekIDKainDuplikat(idKain) == true){
-                                    JOptionPane.showMessageDialog(null, "Kain dengan ID " 
-                                    + idKain + " sudah terdata di database!", 
-                                    "Peringatan", JOptionPane.WARNING_MESSAGE);
-                                } else {
-                                    con.insertKain(tempKain, idKain);
-                                    JOptionPane.showMessageDialog(null, "Kain dengan ID " 
-                                    + idKain + " telah diinput ke database", 
-                                    "Message", JOptionPane.INFORMATION_MESSAGE);
-                                }
-                                
+                }
+                for (int i = 0; i < idBahan.size(); i++) {
+                    BahanKain tempBahan = con.getBahan(namaBahan.get(i));
+                    for (int j = 0; j < idWarna.size(); j++) {
+                        WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
+                        for (int k = 0; k < idMotif.size(); k++) {
+                            Controller controller = new Controller();
+                            MotifKain tempMotif = con.getMotif(namaMotif.get(k));
+                            String idKain = controller.createIDKain(tempBahan, tempWarna, tempMotif);
+                            KainToko tempKain = new KainToko(tempMotif, tempWarna, tempBahan, 0, idKain);
+                            if(controller.cekIDKainDuplikat(idKain) == true){
+                                JOptionPane.showMessageDialog(null, "Kain dengan ID " 
+                                + idKain + " sudah terdata di database!", 
+                                "Peringatan", JOptionPane.WARNING_MESSAGE);
+                            } else {
+                                con.insertKain(tempKain, idKain);
+                                JOptionPane.showMessageDialog(null, "Kain dengan ID " 
+                                + idKain + " telah diinput ke database", 
+                                "Message", JOptionPane.INFORMATION_MESSAGE);
                             }
+
                         }
                     }
                 }
