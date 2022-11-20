@@ -7,9 +7,11 @@ package View;
 
 import Model.CurrentUser;
 import Model.Customer;
+import Model.Keranjang;
 import Model.TipePengiriman;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
@@ -25,7 +27,7 @@ public class MenuPilihAlamatMetodePengiriman {
 
     Customer curCust = (Customer) CurrentUser.getInstance().getUser();
 
-    public MenuPilihAlamatMetodePengiriman() {
+    public MenuPilihAlamatMetodePengiriman(ArrayList<Keranjang> listKeranjangDipilih) {
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setLayout(null);
@@ -86,19 +88,15 @@ public class MenuPilihAlamatMetodePengiriman {
                 int konfirmasi = JOptionPane.showConfirmDialog(null, "Alamat : " + Alamat + "\nMetode Pengiriman : " + metodePengiriman, "Nota Pembelian", JOptionPane.OK_CANCEL_OPTION);
                 if (konfirmasi == JOptionPane.CANCEL_OPTION) {
                     frame.dispose();
-                    new MenuPilihAlamatMetodePengiriman();
+                    new MenuPilihAlamatMetodePengiriman(listKeranjangDipilih);
                 } else {
                     frame.dispose();
-                    new MenuPilihMetodePembayaran(metodePengiriman);
+                    new MenuPilihMetodePembayaran(listKeranjangDipilih,metodePengiriman);
                 }
             }
         });
         frame.add(buttonBayar);
         frame.setVisible(true);
 
-    }
-
-    public static void main(String[] args) {
-        new MenuPilihAlamatMetodePengiriman();
     }
 }

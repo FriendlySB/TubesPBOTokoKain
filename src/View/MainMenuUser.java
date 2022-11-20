@@ -30,7 +30,7 @@ public class MainMenuUser {
         panel.setLayout(null);
         panel.setVisible(true);
 
-        JLabel judul = new JLabel("Selamat Datang di Toko Kain, "+ customer.getUsername());
+        JLabel judul = new JLabel("Selamat Datang di Toko Kain, " + customer.getUsername());
         judul.setBounds(180, 20, 300, 50);
 
         JButton menuBeliKain = new JButton("Beli Kain");
@@ -49,7 +49,7 @@ public class MainMenuUser {
             @Override
             public void actionPerformed(ActionEvent e) {
                 //Back ke main menu jika belum ada transaksi
-                if(customer.getTransaksi().size() < 1){
+                if (customer.getTransaksi().size() < 1) {
                     JOptionPane.showMessageDialog(null, "Riwayat transaksi Anda masih kosong!",
                             "Peringatan", JOptionPane.WARNING_MESSAGE);
                 } else {
@@ -64,11 +64,15 @@ public class MainMenuUser {
         menuLihatProfile.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                frame.dispose();
-                new MenuLihatProfile();
+                if (customer.getKeranjang().isEmpty()) {
+                    JOptionPane.showMessageDialog(null, "Keranjang Kosong", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    frame.dispose();
+                    new MenuLihatKeranjang();
+                }
             }
         });
-        
+
         JButton menuChat = new JButton("Chat");
         menuChat.setBounds(150, 280, 300, 50);
         menuChat.addActionListener(new ActionListener() {
@@ -107,8 +111,8 @@ public class MainMenuUser {
         panel.add(logout);
         frame.setJMenuBar(mb);
         frame.add(panel);
-        
-        frame.addWindowListener(new WindowAdapter() { 
+
+        frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 JOptionPane.showMessageDialog(null, "Terima kasih telah menggunakan aplikasi kami",
