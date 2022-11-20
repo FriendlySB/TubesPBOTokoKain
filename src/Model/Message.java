@@ -1,19 +1,22 @@
 package Model;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class Message {
 
     private int id_message;
-    private String pesan;
-    private Date waktu;
+    private int id_pengirim;
+    private String message;
+    private Timestamp waktu;
 
     public Message() {
     }
-    
-    public Message(int id_message, String pesan, Date waktu) {
+
+    public Message(int id_message, int id_pengirim, String message, Timestamp waktu) {
         this.id_message = id_message;
-        this.pesan = pesan;
+        this.id_pengirim = id_pengirim;
+        this.message = message;
         this.waktu = waktu;
     }
 
@@ -25,20 +28,29 @@ public class Message {
         this.id_message = id_message;
     }
 
-    public String getPesan() {
-        return pesan;
+    public int getId_pengirim() {
+        return id_pengirim;
     }
 
-    public void setPesan(String pesan) {
-        this.pesan = pesan;
+    public void setId_pengirim(int id_pengirim) {
+        this.id_pengirim = id_pengirim;
     }
 
-    public Date getWaktu() {
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public Timestamp getWaktu() {
         return waktu;
     }
 
-    public void setWaktu(Date waktu) {
+    public void setWaktu(Timestamp waktu) {
         this.waktu = waktu;
     }
+    
     
 }

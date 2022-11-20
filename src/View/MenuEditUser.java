@@ -60,7 +60,7 @@ public class MenuEditUser {
         JButton edit = new JButton("Edit Data");
         edit.setBounds(10, 200, 150, 40);
         edit.addActionListener(e -> {
-            Customer editan = new Customer(alamat.getText(), telfon.getText(), customer.getChatroom(), customer.getKeranjang(),
+            Customer editan = new Customer(alamat.getText(), telfon.getText(), customer.getMessage(), customer.getKeranjang(),
                     customer.getTransaksi(), customer.getId_user(), userName.getText(), namaLengkap.getText(), email.getText(),
                     customer.getPassword(), customer.getTipeuser());
             con.updateDataCustomer(editan);

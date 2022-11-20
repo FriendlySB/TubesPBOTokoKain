@@ -5,23 +5,30 @@ import java.util.ArrayList;
 public class Customer extends User {
     private String alamat;
     private String noTelpon;
-    private ChatRoom chatroom;
+    private ArrayList<Message> message;
     private ArrayList<Keranjang> keranjang;
     private ArrayList<Transaksi> transaksi;
 
     public Customer() {
     }
 
-    public Customer(String alamat, String noTelpon, ChatRoom chatroom, ArrayList<Keranjang> keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
-        super(id_user, username, nama_lengkap, email, password, tipeuser);
+    public Customer(String alamat, String noTelpon, ArrayList<Message> message, ArrayList<Keranjang> keranjang, ArrayList<Transaksi> transaksi) {
         this.alamat = alamat;
         this.noTelpon = noTelpon;
-        this.chatroom = chatroom;
+        this.message = message;
         this.keranjang = keranjang;
         this.transaksi = transaksi;
     }
 
-  
+    public Customer(String alamat, String noTelpon, ArrayList<Message> message, ArrayList<Keranjang> keranjang, ArrayList<Transaksi> transaksi, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
+        super(id_user, username, nama_lengkap, email, password, tipeuser);
+        this.alamat = alamat;
+        this.noTelpon = noTelpon;
+        this.message = message;
+        this.keranjang = keranjang;
+        this.transaksi = transaksi;
+    }
+
     public String getAlamat() {
         return alamat;
     }
@@ -38,12 +45,12 @@ public class Customer extends User {
         this.noTelpon = noTelpon;
     }
 
-    public ChatRoom getChatroom() {
-        return chatroom;
+    public ArrayList<Message> getMessage() {
+        return message;
     }
 
-    public void setChatroom(ChatRoom chatroom) {
-        this.chatroom = chatroom;
+    public void setMessage(ArrayList<Message> message) {
+        this.message = message;
     }
 
     public ArrayList<Keranjang> getKeranjang() {
@@ -61,6 +68,6 @@ public class Customer extends User {
     public void setTransaksi(ArrayList<Transaksi> transaksi) {
         this.transaksi = transaksi;
     }
-    
+
     
 }

@@ -534,7 +534,7 @@ public class Sql {
             while (rs.next()) {
                 Message curMessage = new Message();
                 curMessage.setId_message(rs.getInt("id_message"));
-                curMessage.setPesan(rs.getString("pesan"));
+                curMessage.setMessage(rs.getString("pesan"));
                 curMessage.setWaktu(rs.getTimestamp("waktu"));
                 listMessage.add(curMessage);
             }
@@ -1021,6 +1021,57 @@ public class Sql {
         }
     }
     
+    public String getUsernameByID(int id_user){
+        String username = "";
+        String query = "SELECT username FROM users WHERE id_user='" + id_user + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            while (rs.next()) {
+                username = rs.getNString("username");
+            }
+            return username;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
     
+    public ArrayList<Message> getMessage(int id_user) {
+        String query = "SELECT * FROM message WHERE id_user='" + id_user + "'";
+        try {
+            Statement stmt = conn.con.createStatement();
+            ResultSet rs = stmt.executeQuery(query);
+            ArrayList<Message> listMessage = new ArrayList<>();
+            while (rs.next()) {
+                Message msg = new Message();
+                msg.setId_message(rs.getInt("id_message"));
+                msg.setId_pengirim(rs.getInt("id_pengirim"));
+                msg.setMessage(rs.getString("message"));
+                msg.setWaktu(rs.getTimestamp("waktu"));
+                listMessage.add(msg);
+            }
+            return listMessage;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+    
+    public boolean insertMessage(int id_user, Message msg){
+        conn.connect();
+        String query = "INSERT INTO message (id_user,id_pengirim,message) VALUES(?,?,?)" ;              
+        try {
+            PreparedStatement stmt = conn.con.prepareStatement(query);
+            stmt.setInt(1, id_user);
+            stmt.setInt(2, msg.getId_pengirim());
+            stmt.setString(3, msg.getMessage());
+            stmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return (false);
+        }
+    }
 }
 
