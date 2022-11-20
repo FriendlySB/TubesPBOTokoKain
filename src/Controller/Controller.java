@@ -44,7 +44,7 @@ public class Controller implements TipePengiriman {
         return nama;
     }
     
-    public String getNamaKainToko(kain_toko kain) {
+    public String getNamaKainToko(KainToko kain) {
         String nama = "Kain ";
         nama += kain.getBahan().getNama_bahan() + " ";
         nama += kain.getWarna().getNama_warna() + " ";
@@ -101,7 +101,7 @@ public class Controller implements TipePengiriman {
         return motif;
     }
 
-    public int hitungHargaKainToko(kain_toko kain) {
+    public int hitungHargaKainToko(KainToko kain) {
         return kain.getBahan().getHarga_bahan() + 
                 kain.getWarna().getHarga_warna() + 
                 kain.getMotif().getHarga_motif();
@@ -187,8 +187,8 @@ public class Controller implements TipePengiriman {
         int quantity = detail.getQuantity();
         int totalHarga = 0;
         
-        if(kain instanceof kain_toko){
-            kain_toko kainToko = (kain_toko) kain;
+        if(kain instanceof KainToko){
+            KainToko kainToko = (KainToko) kain;
             nama = "Kain " + kainToko.getBahan().getNama_bahan() + " " 
                     + kainToko.getWarna().getNama_warna() + " " 
                     + kainToko.getMotif().getNama_motif();
@@ -208,8 +208,8 @@ public class Controller implements TipePengiriman {
         int total = 0;
         for(int i = 0; i < listDetail.size(); i++){
             Kain temp = listDetail.get(i).getKain();
-            if(temp instanceof kain_toko){
-                kain_toko kain = (kain_toko) temp;
+            if(temp instanceof KainToko){
+                KainToko kain = (KainToko) temp;
                 total += hitungHargaKainToko(kain) * listDetail.get(i).getQuantity();
             } else {
                 KainCustom kain = (KainCustom) temp;

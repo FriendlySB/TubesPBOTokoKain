@@ -8,23 +8,26 @@ package View;
 import Controller.Sql;
 import Model.Admin;
 import Model.Customer;
+import Model.TipeAdmin;
 import Model.TipeUser;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.JTextField;
 
 /**
  *
  * @author asus
  */
-public class MenuTambahAdmin {
+public class MenuTambahAdmin implements TipeAdmin{
     
     public MenuTambahAdmin(){
         JFrame f = new JFrame();
@@ -65,19 +68,21 @@ public class MenuTambahAdmin {
         f.add(admin_pass);
         f.add(field_pass);
         
-//        JLabel admin_address = new JLabel("Alamat");
-//        admin_address.setBounds(250, 420, 125, 25);
-//        JTextField field_address = new JTextField();
-//        field_address.setBounds(250, 450, 200, 25);
-//        f.add(admin_address);
-//        f.add(field_address);
+        JLabel tipe_admin = new JLabel("Tipe Admin");
+        tipe_admin.setBounds(250, 430, 125, 25);
+        f.add(tipe_admin);
         
-//        JLabel admin_telp = new JLabel("no.telp");
-//        admin_telp.setBounds(250, 490, 125, 25);
-//        JTextField field_telp = new JTextField();
-//        field_telp.setBounds(250, 520, 200, 25);
-//        f.add(admin_telp);
-//        f.add(field_telp);
+        JRadioButton radioAdmin = new JRadioButton("Admin");
+        radioAdmin.setBounds(250, 460, 150, 25);
+        f.add(radioAdmin);
+        
+        JRadioButton radioCS = new JRadioButton("Customer Service");
+        radioCS.setBounds(250, 490, 150, 25);
+        f.add(radioCS);
+        
+        ButtonGroup radioTipeAdmin = new ButtonGroup();
+        radioTipeAdmin.add(radioAdmin);
+        radioTipeAdmin.add(radioCS);
         
         JButton add = new JButton("Add");
         add.setBounds(270, 570, 80, 50);
@@ -91,22 +96,30 @@ public class MenuTambahAdmin {
                 String admin_pass = field_pass.getText();
                 String admin_address = "";
                 String admin_telp = "";
+                int tipeAdmin = -1;
+                if(radioAdmin.isSelected()){
+                    tipeAdmin = TipeAdmin.ADMIN;
+                }
+                if(radioCS.isSelected()) {
+                    tipeAdmin = TipeAdmin.CS;
+                }
                 
                 if(admin_username.equals("") || admin_email.equals("") || admin_namaLengkap.equals("") ||
-                        admin_pass.equals("")){
+                        admin_pass.equals("")|| tipeAdmin == -1){
                     JOptionPane.showMessageDialog(null, "Terdapat data yang masih kosong!" , "Message",JOptionPane.WARNING_MESSAGE);
                 } else {
                     Sql sql = new Sql();
-                    Customer customer = new Customer();
-                    customer.setUsername(admin_username);
-                    customer.setNama_lengkap(admin_namaLengkap);
-                    customer.setEmail(admin_email);
-                    customer.setPassword(admin_pass);
-                    customer.setAlamat(admin_address);
-                    customer.setNoTelpon(admin_telp);
-                    customer.setTipeuser(TipeUser.ADMIN);
-                    
-                    sql.insertNewUser(customer);
+                    Admin admin = new Admin();
+                    admin.setUsername(admin_username);
+                    admin.setNama_lengkap(admin_namaLengkap);
+                    admin.setEmail(admin_email);
+                    admin.setPassword(admin_pass);
+                    admin.setTipeuser(TipeUser.ADMIN);
+                    admin.setTipeAdmin(tipeAdmin);
+                    System.out.println(admin.getTipeAdmin());
+                    sql.insertNewUser(admin);
+                    admin.setId_user(sql.getID_userBottom());
+                    sql.insertAdmin(admin);
                     JOptionPane.showMessageDialog(null, "Tambah admin baru berhasil!" , "Message",JOptionPane.INFORMATION_MESSAGE);
                     f.dispose();
                     new MenuTambahAdmin();

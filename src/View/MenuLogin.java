@@ -31,6 +31,7 @@ public class MenuLogin {
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         JLabel title = new JLabel("Login");
         title.setBounds(197, 50, 200, 50);

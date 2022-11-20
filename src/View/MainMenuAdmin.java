@@ -12,11 +12,12 @@ import java.util.Date;
 import Model.Admin;
 import Model.CurrentUser;
 import Model.Customer;
+import Model.TipeAdmin;
 import Model.TipeUser;
 import javax.swing.*;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
-public class MainMenuAdmin {
+public class MainMenuAdmin implements TipeAdmin{
 
     public MainMenuAdmin() {
         Admin admin = (Admin) CurrentUser.getInstance().getUser();
@@ -33,7 +34,7 @@ public class MainMenuAdmin {
         panel.setVisible(true);
 
         JLabel judul = new JLabel("" , SwingConstants.CENTER);
-        if(admin.getTipeuser().equals(TipeUser.OWNER)){
+        if(admin.getTipeAdmin() == TipeAdmin.OWNER){
             judul.setText("Selamat Datang di Toko Kain, Owner");
         } else {
             judul.setText("Selamat Datang di Toko Kain, Admin " + admin.getUsername());
@@ -104,7 +105,7 @@ public class MainMenuAdmin {
         mb.add(addAdmin);
         mb.add(pendapatanToko);
 
-        if(admin.getTipeuser().equals(TipeUser.OWNER)){
+        if(admin.getTipeAdmin() == TipeAdmin.OWNER){
             addAdmin.setVisible(true);
             pendapatanToko.setVisible(true);
         }

@@ -1,25 +1,28 @@
 package Model;
 
-public class Admin extends User {
+public class Admin extends User implements TipeAdmin {
 
-    private int id_admin;
+    private int tipeAdmin;
     private ChatRoom chatroom;
 
     public Admin() {
     }
 
-    public Admin(int id_admin, ChatRoom chatroom, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
+    public Admin(int tipeAdmin) {
+        this.tipeAdmin = tipeAdmin;
+    }
+
+    public Admin(int tipeAdmin, int id_user, String username, String nama_lengkap, String email, String password, TipeUser tipeuser) {
         super(id_user, username, nama_lengkap, email, password, tipeuser);
-        this.id_admin = id_admin;
-        this.chatroom = chatroom;
+        this.tipeAdmin = tipeAdmin;
     }
 
-    public int getId_admin() {
-        return id_admin;
+    public int getTipeAdmin() {
+        return tipeAdmin;
     }
 
-    public void setId_admin(int id_admin) {
-        this.id_admin = id_admin;
+    public void setTipeAdmin(int tipeAdmin) {
+        this.tipeAdmin = tipeAdmin;
     }
 
     public ChatRoom getChatroom() {
@@ -29,5 +32,7 @@ public class Admin extends User {
     public void setChatroom(ChatRoom chatroom) {
         this.chatroom = chatroom;
     }
+
+    
     
 }
