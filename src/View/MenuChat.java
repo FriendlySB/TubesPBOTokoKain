@@ -13,7 +13,9 @@ import Model.User;
 import Model.Transaksi;
 import Controller.Sql;
 import Controller.Controller;
+import Model.Admin;
 import Model.Customer;
+import Model.Message;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.text.SimpleDateFormat;
@@ -27,8 +29,9 @@ import javax.swing.table.DefaultTableModel;
 public class MenuChat {
     
     Controller controller = new Controller();
-    
-    public MenuChat() {
+    Sql sql = new Sql();
+    public MenuChat(int id_chat_user) {
+        User user = CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame("Menu Chat");
         frame.setSize(700, 500);
         frame.setVisible(true);
@@ -36,27 +39,55 @@ public class MenuChat {
         frame.setLocationRelativeTo(null);
         frame.setVisible(true);
         
-        JPanel panel = new JPanel();
-        JLabel label = new JLabel("Enter Message");
-        JTextField input = new JTextField(40);
-        JButton send = new JButton("Kirim");
-        JButton backToMenu = new JButton("Back");
-        panel.add(label);
-        panel.add(input);
-        panel.add(send);
-        panel.add(backToMenu);
-        
-        JTextArea messageArea = new JTextArea(controller.createMessagesForChat());
+        JTextArea messageArea = new JTextArea(controller.createMessagesForChat(user.getId_user()));
         JScrollPane scrollPane = new JScrollPane(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
+        JPanel panel = new JPanel();
+        JLabel label = new JLabel("Enter Message");
+        JTextField inputPesan = new JTextField(40);
+        JButton send = new JButton("Kirim");
+        send.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                Message msg = new Message();
+                if(inputPesan.getText().equals("")){
+                    JOptionPane.showMessageDialog(null, "Mohon mengisi pesan Anda!", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    msg.setMessage(inputPesan.getText());
+                    msg.setId_pengirim(user.getId_user());
+                    sql.insertMessage(id_chat_user, msg);
+                    JOptionPane.showMessageDialog(null, "Pesan telah terkirim", "Message", JOptionPane.INFORMATION_MESSAGE);
+                    messageArea.setText(controller.createMessagesForChat(user.getId_user()));
+                    inputPesan.setText("");
+                }
+            }
+        });
+        JButton backToMenu = new JButton("Back");
+        backToMenu.addActionListener(b -> {
+            frame.dispose();
+            if(user instanceof Admin){
+                
+            } else {
+                new MainMenuUser();
+            }
+        });
+        panel.add(label);
+        panel.add(inputPesan);
+        panel.add(send);
+        panel.add(backToMenu);
 
         frame.getContentPane().add(BorderLayout.SOUTH, panel);
         frame.getContentPane().add(BorderLayout.CENTER, scrollPane);
-        
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                if(user instanceof Admin){
+                    
+                } else {
+                    new MainMenuUser();
+                }
+            }
+        });
     }
-    
-    public static void main(String[] args) {
-        new MenuChat();
-    }
-
 }

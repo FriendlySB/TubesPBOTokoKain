@@ -19,14 +19,14 @@ public class MainMenuUser {
     public MainMenuUser() {
         Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setSize(600, 450);
+        frame.setSize(600, 500);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Main Menu User");
 
         JPanel panel = new JPanel();
-        panel.setSize(600, 450);
+        panel.setSize(600, 500);
         panel.setLayout(null);
         panel.setVisible(true);
 
@@ -61,12 +61,26 @@ public class MainMenuUser {
 
         JButton menuLihatProfile = new JButton("Profile");
         menuLihatProfile.setBounds(150, 220, 300, 50);
-        menuLihatProfile.addActionListener(e -> {
-            new MenuLihatProfile(customer);
+        menuLihatProfile.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MenuLihatProfile(customer);
+            }
+        });
+        
+        JButton menuChat = new JButton("Chat");
+        menuChat.setBounds(150, 280, 300, 50);
+        menuChat.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                frame.dispose();
+                new MenuChat(customer.getId_user());
+            }
         });
 
         JButton logout = new JButton("Log Out");
-        logout.setBounds(150, 280, 300, 50);
+        logout.setBounds(150, 340, 300, 50);
         logout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -89,6 +103,7 @@ public class MainMenuUser {
         panel.add(menuBeliKain);
         panel.add(menuCekTransaksi);
         panel.add(menuLihatProfile);
+        panel.add(menuChat);
         panel.add(logout);
         frame.setJMenuBar(mb);
         frame.add(panel);

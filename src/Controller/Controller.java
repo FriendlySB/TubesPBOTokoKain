@@ -241,10 +241,21 @@ public class Controller implements TipePengiriman {
         return false;
     }
     
-    public String createMessagesForChat(){
+    public String createMessagesForChat(int id_user){
+        Sql sql = new Sql();
         String text = "";
-        for(int i = 0; i < 10; i++){
-            text += "Username   Waktu Pesan\nMessages\n\n";
+        ArrayList<Message> listMessage = new ArrayList<>(sql.getMessage(id_user));
+        if(listMessage.isEmpty()){
+            return "Chat Anda masih kosong";
+        } else {
+            for(int i = 0; i < listMessage.size();i++){
+                Message msg = listMessage.get(i);
+                String pengirim = sql.getUsernameByID(msg.getId_pengirim());
+                String pesan = msg.getMessage();
+                String waktu = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss").format(msg.getWaktu());
+                text += pengirim + "    " + waktu + "\n";
+                text += pesan + "\n\n";
+            }
         }
         return text;
     }

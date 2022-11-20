@@ -126,7 +126,7 @@ public class MenuRegister {
                     } else {
                         Customer newCust = new Customer();
                         newCust.setAlamat(alamat);
-                        newCust.setChatroom(new ChatRoom());
+                        newCust.setMessage(new ArrayList<>());
                         newCust.setEmail(email);
                         newCust.setKeranjang(new ArrayList<>());
                         newCust.setNama_lengkap(namaLengkap);
