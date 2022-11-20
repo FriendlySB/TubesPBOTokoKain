@@ -13,6 +13,7 @@ import Model.Customer;
 import Model.DetailTransaksi;
 import Model.Kain;
 import Model.KainCustom;
+import Model.KainDibeli;
 import Model.Keranjang;
 import Model.Message;
 import Model.MotifKain;
@@ -460,7 +461,10 @@ public class Sql {
             while (rs4.next()) {
                 DetailTransaksi curDetailTransaksi = new DetailTransaksi();
                 curDetailTransaksi.setQuantity(rs4.getInt("quantity"));
-                curDetailTransaksi.setKain(getKain(rs4.getString("id_kain")));
+                String id = rs4.getString("id_kain");
+                int harga = rs4.getInt("harga");
+                String nama = rs4.getString("nama_kain");
+                curDetailTransaksi.setKain(new KainDibeli(id,nama,harga));
                 listDetailTransaksi.add(curDetailTransaksi);
             }
             return listDetailTransaksi;
@@ -810,7 +814,7 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             PreparedStatement stmt2 = conn.con.prepareStatement(query);
-            stmt.executeUpdate(query);
+            //stmt.executeUpdate(query);
             stmt2.executeUpdate(query2);
             return true;
         } catch (SQLException e) {
@@ -884,7 +888,7 @@ public class Sql {
         }
     }
 
-    public boolean deletemotif(int id_motif) {
+    public boolean deleteMotif(int id_motif) {
         conn.connect();
         String query = "DELETE FROM motif where id_motif ='" + id_motif + "';";
         try {
