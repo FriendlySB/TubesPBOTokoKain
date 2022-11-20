@@ -10,6 +10,8 @@ import Model.KainToko;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -87,13 +89,12 @@ public class MenuLihatKeranjang {
                 }
             });
         }
-
-    }
-
-    public static void main(String[] args) {
-        Sql con = new Sql();
-        ArrayList<User> daftarUser = con.getAllUsers();
-        CurrentUser.getInstance().setUser(daftarUser.get(0));
-        new MenuLihatKeranjang();
+        frame.addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MainMenuUser();
+            }
+        });
     }
 }
