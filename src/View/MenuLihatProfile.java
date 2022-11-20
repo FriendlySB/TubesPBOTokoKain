@@ -3,20 +3,22 @@ package View;
 import javax.swing.*;
 import Controller.Sql;
 import Model.*;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 public class MenuLihatProfile {
 
-    public MenuLihatProfile(Customer customer) {
+    public MenuLihatProfile() {
+        Customer customer = (Customer) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setTitle("Data Profil");
+        frame.setTitle("Menu Data Profile");
         frame.setSize(600, 300);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-        JLabel labUser = new JLabel("username: ");
+        JLabel labUser = new JLabel("Username: ");
         labUser.setBounds(20, 20, 70, 25);
         frame.add(labUser);
 
@@ -29,7 +31,7 @@ public class MenuLihatProfile {
         frame.add(namaLengkap);
 
         JLabel userName = new JLabel(customer.getUsername());
-        userName.setBounds(110, 20, 100, 25);
+        userName.setBounds(120, 20, 100, 25);
         frame.add(userName);
 
         JLabel labAlamat = new JLabel("Alamat: ");
@@ -37,7 +39,7 @@ public class MenuLihatProfile {
         frame.add(labAlamat);
 
         JLabel alamat = new JLabel(customer.getAlamat());
-        alamat.setBounds(110, 85, 70, 25);
+        alamat.setBounds(120, 85, 70, 25);
         frame.add(alamat);
 
         JLabel labEmail = new JLabel("Email :");
@@ -45,15 +47,15 @@ public class MenuLihatProfile {
         frame.add(labEmail);
 
         JLabel email = new JLabel(customer.getEmail());
-        email.setBounds(110, 115, 200, 25);
+        email.setBounds(120, 115, 200, 25);
         frame.add(email);
 
-        JLabel labTelfon = new JLabel("No. Telfon: ");
+        JLabel labTelfon = new JLabel("No. Telepon: ");
         labTelfon.setBounds(20, 145, 100, 25);
         frame.add(labTelfon);
 
         JLabel telfon = new JLabel(customer.getNoTelpon());
-        telfon.setBounds(110, 145, 100, 25);
+        telfon.setBounds(120, 145, 100, 25);
         frame.add(telfon);
         
         JButton edit = new JButton("Edit Data");
@@ -64,20 +66,28 @@ public class MenuLihatProfile {
         });
         frame.add(edit);
 
-        JButton backMenu = new JButton("back to menu");
+        JButton backMenu = new JButton("Back to Menu");
         backMenu.addActionListener(b -> {
             frame.dispose();
+            new MainMenuUser(); 
         });
         backMenu.setBounds(210, 200, 150, 40);
         frame.add(backMenu);
         
-        JButton pass = new JButton("ganti password");
+        JButton pass = new JButton("Ganti password");
         pass.addActionListener(c -> {
             frame.dispose();
-            new GantiPassword(customer);
+            new MenuGantiPassword(customer);
         });
         pass.setBounds(410, 200, 150, 40);
         frame.add(pass);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MainMenuUser(); 
+            }
+        });
     }
 
 }
