@@ -11,21 +11,19 @@ public class Transaksi implements TipePengiriman {
     private int total_bayar;
     private Progress progress;
     private TipeBayar tipeBayar;
-    private TipePengiriman tipePengiriman;
     private ArrayList<DetailTransaksi> detailTransaksi;
     private Timestamp waktu_transaksi;
-    
+
     public Transaksi() {
     }
 
-    public Transaksi(int id_transaksi, int tipe_pengiriman, String alamat, int total_bayar, Progress progress, TipeBayar tipeBayar, TipePengiriman tipePengiriman, ArrayList<DetailTransaksi> detailTransaksi, Timestamp waktu_transaksi) {
+    public Transaksi(int id_transaksi, int tipe_pengiriman, String alamat, int total_bayar, Progress progress, TipeBayar tipeBayar, ArrayList<DetailTransaksi> detailTransaksi, Timestamp waktu_transaksi) {
         this.id_transaksi = id_transaksi;
         this.tipe_pengiriman = tipe_pengiriman;
         this.alamat = alamat;
         this.total_bayar = total_bayar;
         this.progress = progress;
         this.tipeBayar = tipeBayar;
-        this.tipePengiriman = tipePengiriman;
         this.detailTransaksi = detailTransaksi;
         this.waktu_transaksi = waktu_transaksi;
     }
@@ -37,8 +35,6 @@ public class Transaksi implements TipePengiriman {
     public void setWaktu_transaksi(Timestamp waktu_transaksi) {
         this.waktu_transaksi = waktu_transaksi;
     }
-
-   
 
     public int getId_transaksi() {
         return id_transaksi;
@@ -88,13 +84,7 @@ public class Transaksi implements TipePengiriman {
         this.tipeBayar = tipeBayar;
     }
 
-    public TipePengiriman getTipePengiriman() {
-        return tipePengiriman;
-    }
-
-    public void setTipePengiriman(TipePengiriman tipePengiriman) {
-        this.tipePengiriman = tipePengiriman;
-    }
+    
 
     public ArrayList<DetailTransaksi> getDetailTransaksi() {
         return detailTransaksi;
