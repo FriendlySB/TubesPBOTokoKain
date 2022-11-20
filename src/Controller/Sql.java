@@ -899,7 +899,7 @@ public class Sql {
 
     public boolean UpdateMotif(int id_motif, int change) {
         conn.connect();
-        String query = "UPDATE bahan SET harga_motif = ? WHERE id_motif = '" + id_motif + "';";
+        String query = "UPDATE motif SET harga_motif = ? WHERE id_motif = '" + id_motif + "';";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, change);

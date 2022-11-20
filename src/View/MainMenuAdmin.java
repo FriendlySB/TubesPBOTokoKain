@@ -22,24 +22,31 @@ public class MainMenuAdmin implements TipeAdmin{
     public MainMenuAdmin() {
         Admin admin = (Admin) CurrentUser.getInstance().getUser();
         JFrame frame = new JFrame();
-        frame.setSize(600, 500);
+        frame.setSize(600, 450);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
         frame.setTitle("Main Menu Admin");
+        
+        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
+        JLabel logo = new JLabel();
+        logo.setIcon(iconFoto);
+        logo.setBounds(150, 10, 300, 50);
+        frame.add(logo);
 
         JPanel panel = new JPanel();
-        panel.setSize(600, 500);
+        panel.setSize(600, 450);
         panel.setLayout(null);
         panel.setVisible(true);
 
         JLabel judul = new JLabel("" , SwingConstants.CENTER);
         if(admin.getTipeAdmin() == TipeAdmin.OWNER){
-            judul.setText("Selamat Datang di Toko Kain, Owner");
+            judul.setText("Selamat Datang di Toko Kain XYZ, Owner");
         } else {
-            judul.setText("Selamat Datang di Toko Kain, Admin " + admin.getUsername());
+            judul.setText("Selamat Datang di Toko Kain XYZ, Admin " + admin.getUsername());
         }
-        judul.setBounds(160, 20, 300, 50);
+        judul.setBounds(160, 60, 300, 50);
 
         JButton menuInputKain = new JButton("Input Kain");
         menuInputKain.setBounds(150, 100, 300, 50);
@@ -57,11 +64,8 @@ public class MainMenuAdmin implements TipeAdmin{
             new MenuEditKain();
         });
 
-        JButton menuEditProgressPesanan = new JButton("Edit Status Pesanan");
-        menuEditProgressPesanan.setBounds(150, 220, 300, 50);
-
         JButton menuLihatTransaksi = new JButton("Lihat Riwayat Transaksi Toko");
-        menuLihatTransaksi.setBounds(150, 280, 300, 50);
+        menuLihatTransaksi.setBounds(150, 220, 300, 50);
         menuLihatTransaksi.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -71,7 +75,7 @@ public class MainMenuAdmin implements TipeAdmin{
         });
 
         JButton menuLogout = new JButton("Log Out");
-        menuLogout.setBounds(150, 340, 300, 50);
+        menuLogout.setBounds(150, 280, 300, 50);
         menuLogout.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -127,7 +131,6 @@ public class MainMenuAdmin implements TipeAdmin{
         panel.add(judul);
         panel.add(menuInputKain);
         panel.add(menuEditKain);
-        panel.add(menuEditProgressPesanan);
         panel.add(menuLihatTransaksi);
         panel.add(menuLogout);
         frame.add(panel);

@@ -12,11 +12,13 @@ import Model.TipeUser;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -36,11 +38,19 @@ public class MenuRegister {
         frame.setLayout(null);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         JLabel title = new JLabel("Register");
         title.setBounds(225, 50, 200, 50);
         title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
+        
+        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
+        JLabel logo = new JLabel();
+        logo.setIcon(iconFoto);
+        logo.setBounds(150, 10, 300, 50);
+        frame.add(logo);
 
         JLabel username = new JLabel("Username");
         username.setBounds(90, 110, 75, 25);
