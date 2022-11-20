@@ -35,11 +35,9 @@ public class MenuChat {
         JFrame frame = new JFrame("Menu Chat");
         frame.setSize(700, 500);
         frame.setVisible(true);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setLocationRelativeTo(null);
-        frame.setVisible(true);
         
-        JTextArea messageArea = new JTextArea(controller.createMessagesForChat(user.getId_user()));
+        JTextArea messageArea = new JTextArea(controller.createMessagesForChat(id_chat_user));
         JScrollPane scrollPane = new JScrollPane(messageArea);
         scrollPane.setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_ALWAYS);
         JPanel panel = new JPanel();
@@ -57,7 +55,7 @@ public class MenuChat {
                     msg.setId_pengirim(user.getId_user());
                     sql.insertMessage(id_chat_user, msg);
                     JOptionPane.showMessageDialog(null, "Pesan telah terkirim", "Message", JOptionPane.INFORMATION_MESSAGE);
-                    messageArea.setText(controller.createMessagesForChat(user.getId_user()));
+                    messageArea.setText(controller.createMessagesForChat(id_chat_user));
                     inputPesan.setText("");
                 }
             }
@@ -65,11 +63,9 @@ public class MenuChat {
         JButton backToMenu = new JButton("Back");
         backToMenu.addActionListener(b -> {
             frame.dispose();
-            if(user instanceof Admin){
-                
-            } else {
+            if(user instanceof Customer){
                 new MainMenuUser();
-            }
+            } 
         });
         panel.add(label);
         panel.add(inputPesan);
@@ -82,11 +78,9 @@ public class MenuChat {
             @Override
             public void windowClosing(WindowEvent e) {
                 frame.dispose();
-                if(user instanceof Admin){
-                    
-                } else {
+                if(user instanceof Customer){
                     new MainMenuUser();
-                }
+                }    
             }
         });
     }

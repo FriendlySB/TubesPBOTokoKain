@@ -260,4 +260,20 @@ public class Controller implements TipePengiriman {
         return text;
     }
     
+    public ArrayList<Customer> getCustomerFromUser(ArrayList<User> listUser){
+        ArrayList<Customer> listCustomer = new ArrayList<>();
+        for(int i = 0; i < listUser.size(); i++){
+            if(listUser.get(i) instanceof Customer){
+                listCustomer.add((Customer)listUser.get(i));
+            }
+        }
+        return listCustomer;
+    }
+    
+    public Message getLastMessage(ArrayList<Message> listMessage){
+        if(listMessage.size() == 0){
+            return null;
+        }
+        return listMessage.get(listMessage.size() - 1);
+    }
 }
