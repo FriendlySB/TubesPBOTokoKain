@@ -9,14 +9,14 @@ package Model;
  *
  * @author lenovo
  */
-public class kain_toko extends Kain{
+public class KainToko extends Kain{
 
     private MotifKain motif;
     private WarnaKain warna;
     private BahanKain bahan;
     private int stok;
 
-    public kain_toko(MotifKain motif, WarnaKain warna, BahanKain bahan, int stok, String id_kain) {
+    public KainToko(MotifKain motif, WarnaKain warna, BahanKain bahan, int stok, String id_kain) {
         super(id_kain);
         this.motif = motif;
         this.warna = warna;
@@ -24,7 +24,7 @@ public class kain_toko extends Kain{
         this.stok = stok;
     }
 
-    public kain_toko() {
+    public KainToko() {
     }
 
     public MotifKain getMotif() {

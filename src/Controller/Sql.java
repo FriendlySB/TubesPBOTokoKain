@@ -26,7 +26,7 @@ import Model.User;
 import Model.TipeUser;
 import Model.Transaksi;
 import Model.WarnaKain;
-import Model.kain_toko;
+import Model.KainToko;
 import java.sql.PreparedStatement;
 
 public class Sql {
@@ -110,8 +110,8 @@ public class Sql {
         return listIDKain;
     }
     
-    public ArrayList<kain_toko> getAllKainToko() {
-        ArrayList<kain_toko> listKain = new ArrayList();
+    public ArrayList<KainToko> getAllKainToko() {
+        ArrayList<KainToko> listKain = new ArrayList();
         Controller controller = new Controller();
         conn.connect();
         String query = "SELECT * FROM kain_toko";
@@ -120,7 +120,7 @@ public class Sql {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 String id_kain = rs.getString("id_kain");
-                kain_toko curKain = new kain_toko();
+                KainToko curKain = new KainToko();
                 String bahan = controller.getNamaBahan(id_kain);
                 String warna = controller.getNamaWarna(id_kain);
                 String motif = controller.getNamaMotif(id_kain);
@@ -185,7 +185,7 @@ public class Sql {
             try {;
                 Statement stmt = conn.con.createStatement();
                 ResultSet rs = stmt.executeQuery(query);
-                kain_toko curKain = new kain_toko();
+                KainToko curKain = new KainToko();
                 while(rs.next()){
                     String bahan = controller.getNamaBahan(id_kain);
                     String warna = controller.getNamaWarna(id_kain);
@@ -345,29 +345,20 @@ public class Sql {
                     curAdmin.setEmail(rs.getString("email"));
                     curAdmin.setPassword(rs.getString("password"));
                     curAdmin.setTipeuser(enumVal);
-
+                    
                     String query2 = "SELECT * FROM admin WHERE id_user='" + rs.getInt("id_user") + "'";
                     try {
                         Statement stmt2 = conn.con.createStatement();
                         ResultSet rs2 = stmt2.executeQuery(query2);
-                        //curAdmin.setId_admin(rs2.getInt("id_admin"));
+                        while(rs2.next()){
+                            curAdmin.setTipeAdmin(rs2.getInt("tipe_admin"));
+                        }
                     } catch (SQLException e) {
                         e.printStackTrace();
                     }
                     //curAdmin.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
 
                     users.add(curAdmin);
-                } else if (enumVal == TipeUser.OWNER) {
-                    Admin curOwner = new Admin();
-                    curOwner.setId_user(rs.getInt("id_user"));
-                    curOwner.setUsername(rs.getString("username"));
-                    curOwner.setNama_lengkap(rs.getString("nama_lengkap"));
-                    curOwner.setEmail(rs.getString("email"));
-                    curOwner.setPassword(rs.getString("password"));
-                    curOwner.setTipeuser(enumVal);
-                    //curOwner.setChatroom(getSQLChatRoom(rs.getInt("id_user")));
-
-                    users.add(curOwner);
                 }
             }
         } catch (SQLException e) {
@@ -584,7 +575,18 @@ public class Sql {
 //                }
                 stmt.executeUpdate();
             }
-
+            if(user instanceof Admin){
+                Admin admin = (Admin) user;
+                stmt.setString(1, null);
+                stmt.setString(2, admin.getUsername());
+                stmt.setString(3, admin.getNama_lengkap());
+                stmt.setString(4, admin.getEmail());
+                stmt.setString(5, admin.getPassword());
+                stmt.setString(6, "");
+                stmt.setString(7, "");
+                stmt.setString(8, admin.getTipeuser().toString());
+                stmt.executeUpdate();
+            }
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -703,14 +705,14 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setString(1, id_kain);
             stmt.executeUpdate();
-            if (kain instanceof kain_toko) {
+            if (kain instanceof KainToko) {
                 Statement stmtForreigKeyOff = conn.con.createStatement();
                 stmtForreigKeyOff.execute("SET FOREIGN_KEY_CHECKS=0");
                 stmtForreigKeyOff.close();
                 String query2 = "INSERT INTO kain_toko VALUES(?,?,?,?,?);";
                 try {
                     PreparedStatement stmt2 = conn.con.prepareStatement(query2);
-                    kain_toko curKain = (kain_toko) kain;
+                    KainToko curKain = (KainToko) kain;
                     stmt2.setString(1, id_kain);
                     stmt2.setInt(2, curKain.getBahan().getId_bahan());
                     stmt2.setInt(3, curKain.getWarna().getId_warna());
@@ -909,14 +911,14 @@ public class Sql {
         }
     }
 
-    public boolean insertAdmin() {
+    public boolean insertAdmin(Admin admin) {
         conn.connect();
-        String query = "INSERT INTO admin (id_user) VALUES (?)";
+        String query = "INSERT INTO admin VALUES (?,?)";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
-            int id = getID_userBottom();
-            stmt.setInt(1, id);
-            stmt.executeUpdate(query);
+            stmt.setInt(1, admin.getId_user());
+            stmt.setInt(2, admin.getTipeAdmin());
+            stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();

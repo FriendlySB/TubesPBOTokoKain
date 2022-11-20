@@ -8,7 +8,7 @@ import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import javax.swing.*;
 import Model.Kain;
-import Model.kain_toko;
+import Model.KainToko;
 import Model.KainCustom;
 import Controller.Sql;
 import Controller.Controller;
@@ -23,7 +23,7 @@ import javax.swing.event.ChangeListener;
 public class MenuBeliKain {
     Sql sql = new Sql();
     Controller controller = new Controller();
-    ArrayList<kain_toko> listKainToko = new ArrayList<>(sql.getAllKainToko());
+    ArrayList<KainToko> listKainToko = new ArrayList<>(sql.getAllKainToko());
     
     public MenuBeliKain() {
         Customer customer = (Customer) CurrentUser.getInstance().getUser();

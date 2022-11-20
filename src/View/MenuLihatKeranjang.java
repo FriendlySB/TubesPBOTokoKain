@@ -6,7 +6,7 @@ import Model.CurrentUser;
 import Model.Kain;
 import Model.Keranjang;
 import Model.User;
-import Model.kain_toko;
+import Model.KainToko;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
