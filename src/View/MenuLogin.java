@@ -39,7 +39,7 @@ public class MenuLogin {
         title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
         
-        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        String pathLogo = "logo_toko.png";
         ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
         JLabel logo = new JLabel();
         logo.setIcon(iconFoto);

@@ -17,6 +17,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -36,7 +38,6 @@ public class MenuRegister {
         JFrame frame = new JFrame("Register");
         frame.setSize(600, 475);
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
         frame.setLocationRelativeTo(null);
 
@@ -45,7 +46,7 @@ public class MenuRegister {
         title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
         
-        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        String pathLogo = "logo_toko.png";
         ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
         JLabel logo = new JLabel();
         logo.setIcon(iconFoto);
@@ -187,6 +188,11 @@ public class MenuRegister {
             }
         });
         frame.add(haveAccount);
-
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+               new MenuLogin();
+            }
+        });
     }
 }
