@@ -15,9 +15,59 @@ public class Controller implements TipePengiriman {
     public Controller() {
 
     }
-    
+
+    public int totalBiayaPengiriman(int tipePengiriman, ArrayList<Keranjang> listKeranjang) {
+        int totalKG = hitungTotalBeratKeranjang(listKeranjang);
+        int totalHarga = 0;
+        switch (tipePengiriman) {
+            case JNE:
+                totalHarga = totalKG * 3000;
+                break;
+            case GOJEK:
+                totalHarga = totalKG * 2000;
+                break;
+            case JNT:
+                totalHarga = totalKG * 4000;
+                break;
+            case PEGAWAI:
+                totalHarga = totalKG * 1000;
+                break;
+        }
+        return totalHarga;
+    }
+
+    public int hitungTotalBeratKeranjang(ArrayList<Keranjang> listKeranjang) {
+        int total = 0;
+        for (int i = 0; i < listKeranjang.size(); i++) {
+            total += listKeranjang.get(i).getQuantity();
+        }
+        return total;
+    }
+
+    public KainDibeli ubahKainKeranjangMenjadiKainDibeli(Keranjang curKeranjang) {
+        Sql sql = new Sql();
+        Kain curKain = sql.getKain(curKeranjang.getId_kain());
+        KainDibeli curKainDibeli = new KainDibeli();
+
+        curKainDibeli.setId_kain(curKeranjang.getId_kain());
+        if (curKain instanceof KainCustom) {
+            KainCustom curKainCustom = (KainCustom) curKain;
+            curKainDibeli.setNama_kain(getNamaKainCustom(curKainCustom.getId_kain()));
+            curKainDibeli.setHarga(curKainCustom.getHarga_kain_custom());
+        } else if (curKain instanceof KainToko) {
+            KainToko curKainToko = (KainToko) curKain;
+            curKainDibeli.setNama_kain(getNamaKainToko(curKainToko));
+            curKainDibeli.setHarga(totalHargaKainToko(curKainToko));
+        }
+        return curKainDibeli;
+    }
+
+    public int totalHargaKainToko(KainToko curKainToko) {
+        return curKainToko.getBahan().getHarga_bahan() + curKainToko.getWarna().getHarga_warna() + curKainToko.getMotif().getHarga_motif();
+    }
+
     //Contoh polymorphism
-    public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif){
+    public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif) {
         Sql sql = new Sql();
         String idKain = "";
         idKain += String.valueOf(bahan.getId_bahan() + 1000) + "-";
@@ -25,11 +75,11 @@ public class Controller implements TipePengiriman {
         idKain += String.valueOf(motif.getId_motif() + 3000);
         return idKain;
     }
-    
+
     public String createIDKain() {
         Sql sql = new Sql();
         String lastKain = sql.getIDKainCustomBottom();
-        if(lastKain.equals("")){
+        if (lastKain.equals("")) {
             return "CUSTOM-1";
         }
         String id = "CUSTOM-" + String.valueOf(Integer.valueOf(lastKain.split("-")[1]) + 1);
@@ -43,7 +93,7 @@ public class Controller implements TipePengiriman {
         nama += getNamaMotif(id_kain);
         return nama;
     }
-    
+
     public String getNamaKainToko(KainToko kain) {
         String nama = "Kain ";
         nama += kain.getBahan().getNama_bahan() + " ";
@@ -56,7 +106,7 @@ public class Controller implements TipePengiriman {
         Sql sql = new Sql();
         KainCustom curKain = sql.getKainCustomWithId_Kain(id_kain);
         String nama = "Kain ";
-        nama += curKain.getBahan_kain_custom()+" ";
+        nama += curKain.getBahan_kain_custom() + " ";
         nama += curKain.getWarna_kain_custom() + " ";
         nama += curKain.getMotif_kain_custom();
         return nama;
@@ -102,11 +152,19 @@ public class Controller implements TipePengiriman {
     }
 
     public int hitungHargaKainToko(KainToko kain) {
-        return kain.getBahan().getHarga_bahan() + 
-                kain.getWarna().getHarga_warna() + 
-                kain.getMotif().getHarga_motif();
+        return kain.getBahan().getHarga_bahan()
+                + kain.getWarna().getHarga_warna()
+                + kain.getMotif().getHarga_motif();
     }
-    
+
+    public void kurangiStokToko(Keranjang keranjang) {
+        Sql sql = new Sql();
+        if (sql.getKain(keranjang.getId_kain()) instanceof KainToko) {
+            int totalStok = sql.countStockKain(keranjang.getId_kain()) - 1;
+            sql.updateStokKain(keranjang.getId_kain(), totalStok);
+        }
+    }
+
     public boolean cekStokKain(String id_kain, int jumlahDibeli) {
         Sql sql = new Sql();
         int stokKain = sql.countStockKain(id_kain);
@@ -177,7 +235,7 @@ public class Controller implements TipePengiriman {
         Object[] data = {id, waktu, tipeBayar, tipePengiriman, progress, totalBayar};
         return data;
     }
-    
+
     public Object[] createIsiTableDetailTransaksi(DetailTransaksi detail, int nomor) {
         int no = nomor + 1;
         KainDibeli kain = detail.getKain();
@@ -186,49 +244,49 @@ public class Controller implements TipePengiriman {
         int harga = kain.getHarga();
         int quantity = detail.getQuantity();
         int totalHarga = harga * quantity;
-        
+
         Object[] data = {no, id, nama, harga, quantity, totalHarga};
         return data;
     }
-    
-    public int hitungTotalDetailTransaksi(ArrayList<DetailTransaksi> listDetail){
+
+    public int hitungTotalDetailTransaksi(ArrayList<DetailTransaksi> listDetail) {
         int total = 0;
-        for(int i = 0; i < listDetail.size(); i++){
+        for (int i = 0; i < listDetail.size(); i++) {
             total += listDetail.get(i).getQuantity() * listDetail.get(i).getKain().getHarga();
         }
         return total;
     }
-    
-    public boolean cekKainDuplikatKeranjang(int id_user, String id_kain){
+
+    public boolean cekKainDuplikatKeranjang(int id_user, String id_kain) {
         Sql sql = new Sql();
         ArrayList<Keranjang> cart = new ArrayList<>(sql.getKeranjang(id_user));
-        for(int i = 0; i < cart.size(); i++){
-            if(id_kain.equals(cart.get(i).getId_kain())){
+        for (int i = 0; i < cart.size(); i++) {
+            if (id_kain.equals(cart.get(i).getId_kain())) {
                 return true;
             }
         }
         return false;
     }
-    
-    public boolean cekIDKainDuplikat(String id_kain){
+
+    public boolean cekIDKainDuplikat(String id_kain) {
         Sql sql = new Sql();
         ArrayList<String> listIDKain = new ArrayList<>(sql.getAllIDKain());
-        for(int i = 0; i < listIDKain.size(); i++){
-            if(id_kain.equals(listIDKain.get(i))){
+        for (int i = 0; i < listIDKain.size(); i++) {
+            if (id_kain.equals(listIDKain.get(i))) {
                 return true;
             }
         }
         return false;
     }
-    
-    public String createMessagesForChat(int id_user){
+
+    public String createMessagesForChat(int id_user) {
         Sql sql = new Sql();
         String text = "";
         ArrayList<Message> listMessage = new ArrayList<>(sql.getMessage(id_user));
-        if(listMessage.isEmpty()){
+        if (listMessage.isEmpty()) {
             return "Chat Anda masih kosong";
         } else {
-            for(int i = 0; i < listMessage.size();i++){
+            for (int i = 0; i < listMessage.size(); i++) {
                 Message msg = listMessage.get(i);
                 String pengirim = sql.getUsernameByID(msg.getId_pengirim());
                 String pesan = msg.getMessage();
@@ -239,19 +297,19 @@ public class Controller implements TipePengiriman {
         }
         return text;
     }
-    
-    public ArrayList<Customer> getCustomerFromUser(ArrayList<User> listUser){
+
+    public ArrayList<Customer> getCustomerFromUser(ArrayList<User> listUser) {
         ArrayList<Customer> listCustomer = new ArrayList<>();
-        for(int i = 0; i < listUser.size(); i++){
-            if(listUser.get(i) instanceof Customer){
-                listCustomer.add((Customer)listUser.get(i));
+        for (int i = 0; i < listUser.size(); i++) {
+            if (listUser.get(i) instanceof Customer) {
+                listCustomer.add((Customer) listUser.get(i));
             }
         }
         return listCustomer;
     }
-    
-    public Message getLastMessage(ArrayList<Message> listMessage){
-        if(listMessage.size() == 0){
+
+    public Message getLastMessage(ArrayList<Message> listMessage) {
+        if (listMessage.size() == 0) {
             return null;
         }
         return listMessage.get(listMessage.size() - 1);
