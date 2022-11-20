@@ -94,10 +94,11 @@ public class MenuEditKain {
             update.addActionListener(b -> {
                 for (int i = 0; i < inpBahanHarga.size(); i++) {
                     int temp = Integer.parseInt(inpBahanHarga.get(i).getText());
-                    con.UpdateBahan(bahanData.get(i).getId_bahan(), temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-                    subFrame.dispose(); 
+                    con.UpdateBahan(bahanData.get(i).getId_bahan(), temp); 
                 }
+                JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                subFrame.dispose();
+                new MenuEditKain();
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
@@ -169,10 +170,11 @@ public class MenuEditKain {
             update.addActionListener(b -> {
                 for (int i = 0; i < inpWarnaHarga.size(); i++) {
                     int temp = Integer.parseInt(inpWarnaHarga.get(i).getText());
-                    con.UpdateBahan(warnaData.get(i).getId_warna(), temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-                    subFrame.dispose();
+                    con.UpdateWarna(warnaData.get(i).getId_warna(), temp);
                 }
+                JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                subFrame.dispose();
+                new MenuEditKain();
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);
@@ -246,10 +248,11 @@ public class MenuEditKain {
             update.addActionListener(b -> {
                 for (int i = 0; i < inpMotifHarga.size(); i++) {
                     int temp = Integer.parseInt(inpMotifHarga.get(i).getText());
-                    con.UpdateBahan(motifData.get(i).getId_motif(), temp);
-                    JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
-                    subFrame.dispose();
+                    con.UpdateMotif(motifData.get(i).getId_motif(), temp);
                 }
+                JOptionPane.showOptionDialog(null, "Berhasil diubah", "Berhasil", JOptionPane.OK_CANCEL_OPTION, JOptionPane.INFORMATION_MESSAGE, null, null, null);
+                subFrame.dispose();
+                new MenuEditKain();
             });
             backMenu.setBounds(10, 620, 200, 25);
             subFrame.add(backMenu);

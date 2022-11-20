@@ -11,6 +11,7 @@ import Model.*;
 import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
@@ -37,7 +38,13 @@ public class MenuLogin {
         title.setBounds(197, 50, 200, 50);
         title.setFont(new Font("Sans", Font.CENTER_BASELINE, 32));
         frame.add(title);
-
+        
+        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
+        JLabel logo = new JLabel();
+        logo.setIcon(iconFoto);
+        logo.setBounds(100, 10, 300, 50);
+        frame.add(logo);
         JLabel username = new JLabel("Username");
         username.setBounds(155, 110, 75, 25);
         JTextField inputUsername = new JTextField();

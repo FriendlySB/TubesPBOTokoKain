@@ -25,13 +25,20 @@ public class MainMenuUser {
         frame.setVisible(true);
         frame.setTitle("Main Menu User");
 
+        String pathLogo = "D:\\AA\\ITHB\\Sem 3\\PBO\\TubesPBOTokoKain\\logo_toko.png";
+        ImageIcon iconFoto = new ImageIcon(new ImageIcon(pathLogo).getImage().getScaledInstance(300, 50, Image.SCALE_DEFAULT));
+        JLabel logo = new JLabel();
+        logo.setIcon(iconFoto);
+        logo.setBounds(150, 10, 300, 50);
+        frame.add(logo);
+
         JPanel panel = new JPanel();
         panel.setSize(600, 500);
         panel.setLayout(null);
         panel.setVisible(true);
 
-        JLabel judul = new JLabel("Selamat Datang di Toko Kain, " + customer.getUsername());
-        judul.setBounds(180, 20, 300, 50);
+        JLabel judul = new JLabel("Selamat Datang di Toko Kain XYZ, "+ customer.getUsername());
+        judul.setBounds(180, 60, 300, 50);
 
         JButton menuBeliKain = new JButton("Beli Kain");
         menuBeliKain.setBounds(150, 100, 300, 50);
