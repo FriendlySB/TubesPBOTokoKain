@@ -621,16 +621,16 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, curTransaksi.getId_transaksi());
             stmt.setInt(2, idCustomer);
-            stmt.setString(3, control.getProgress(curTransaksi.getProgress()));
-            stmt.setString(4, control.getTipeBayar(curTransaksi.getTipeBayar()));
+            stmt.setString(3, String.valueOf(curTransaksi.getProgress()));
+            stmt.setString(4, String.valueOf(curTransaksi.getTipeBayar()));
             stmt.setInt(5, curTransaksi.getTipe_pengiriman());
             stmt.setString(6, curTransaksi.getAlamat());
             stmt.setTimestamp(7, curTransaksi.getWaktu_transaksi());
             stmt.setInt(8, curTransaksi.getTotal_bayar());
+            stmt.executeUpdate();
             for (int i = 0; i < curTransaksi.getDetailTransaksi().size(); i++) {
                 insertDetailTransaksi(curTransaksi.getId_transaksi(), curTransaksi.getDetailTransaksi().get(i));
             }
-            stmt.executeUpdate();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();

@@ -76,6 +76,7 @@ public class MenuPilihMetodePembayaran {
                 sql.insertTransaksi(CurrentUser.getInstance().getUser().getId_user(),curTransaksi);
             }
         });
+        frame.add(buttonPilihMetodePembayaran);
         frame.setVisible(true);
     }
 }
