@@ -231,7 +231,5 @@ public class MenuBeliKain {
         });
     }
 
-    public static void main(String args[]) {
-        new MenuBeliKain();
-    }
+    
 }

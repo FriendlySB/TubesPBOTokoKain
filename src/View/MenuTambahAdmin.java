@@ -145,9 +145,4 @@ public class MenuTambahAdmin implements TipeAdmin{
     }
     
     
-    public static void main(String args[]) {
-        new MenuTambahAdmin();
-        
-    }
-    
 }
