@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package View;
 
 import Controller.Controller;
@@ -43,10 +38,10 @@ public class MenuPilihMetodePembayaran {
         labelTipeBayar.setBounds(10, 30, 150, 30);
         JComboBox comboTipeBayar = new JComboBox();
         comboTipeBayar.setBounds(160, 30, 200, 30);
-        if (kurir == 3) {
-            comboTipeBayar.addItem(TipeBayar.COD);
-        } else {
+        if (kurir == TipePengiriman.PICKUP) {
             comboTipeBayar.addItem(TipeBayar.CASH);
+        } else {
+            comboTipeBayar.addItem(TipeBayar.COD);
             comboTipeBayar.addItem(TipeBayar.GOPAY);
             comboTipeBayar.addItem(TipeBayar.OVO);
             comboTipeBayar.addItem(TipeBayar.TRANSFER);
@@ -74,6 +69,9 @@ public class MenuPilihMetodePembayaran {
                 int totalBayar = totalBiayaPengiriman + controller.hitungTotalDetailTransaksi(listDetailTransaksi);
                 Transaksi curTransaksi = new Transaksi(idTransaksi, kurir, alamat, totalBayar, Progress.DIBUAT, tipeBayar, listDetailTransaksi, timestamp2);
                 sql.insertTransaksi(CurrentUser.getInstance().getUser().getId_user(), curTransaksi);
+                for (int i = 0; i < listKeranjangDipilih.size(); i++) {
+                    sql.deleteKainKeranjang(listKeranjangDipilih.get(i).getKain().getId_kain(), CurrentUser.getInstance().getUser().getId_user());
+                }
                 frame.dispose();
                 new MainMenuUser();
             }
