@@ -82,8 +82,6 @@ public class MenuRiwayatTransaksiUser {
         });
     }
     
-    public static void main(String[] args) {
-        new MenuRiwayatTransaksiUser();
-    }
+    
     
 }

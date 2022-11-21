@@ -105,7 +105,5 @@ public class MenuEditStatusPesanan {
         });      
     }
     
-    public static void main(String args[]) {
-
-    }
+    
 }

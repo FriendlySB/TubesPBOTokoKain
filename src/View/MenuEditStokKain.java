@@ -106,8 +106,5 @@ public class MenuEditStokKain {
         f.add(back);
     }
 
-    public static void main(String args[]) {
-        new MenuEditStokKain();
-
-    }
+   
 }

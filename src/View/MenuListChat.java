@@ -83,7 +83,4 @@ public class MenuListChat {
         });
     }   
     
-    public static void main(String[] args) {
-        new MenuListChat();
-    }
 }
