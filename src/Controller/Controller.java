@@ -321,4 +321,42 @@ public class Controller implements TipePengiriman {
         }
         return listMessage.get(listMessage.size() - 1);
     }
+    
+    public Transaksi getTransaksiByID(ArrayList<Transaksi> listTransaksi, int id_transaksi){
+        Transaksi transaksi = null;
+        for(int i = 0; i < listTransaksi.size(); i++){
+            if(listTransaksi.get(i).getId_transaksi() == id_transaksi){
+                transaksi = listTransaksi.get(i);
+            }
+        }
+        return transaksi;
+    }
+    
+    public int totalBiayaPengirimanTransaksi(int tipePengiriman, ArrayList<DetailTransaksi> listDetail) {
+        int totalKG = hitungTotalBeratTransaksi(listDetail);
+        int totalHarga = 0;
+        switch (tipePengiriman) {
+            case JNE:
+                totalHarga = totalKG * 3000;
+                break;
+            case GOJEK:
+                totalHarga = totalKG * 2000;
+                break;
+            case JNT:
+                totalHarga = totalKG * 4000;
+                break;
+            case PEGAWAI:
+                totalHarga = totalKG * 1000;
+                break;
+        }
+        return totalHarga;
+    }
+
+    public int hitungTotalBeratTransaksi(ArrayList<DetailTransaksi> listDetail) {
+        int total = 0;
+        for (int i = 0; i < listDetail.size(); i++) {
+            total += listDetail.get(i).getQuantity();
+        }
+        return total;
+    }
 }
