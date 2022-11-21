@@ -195,7 +195,7 @@ public class Controller implements TipePengiriman {
             return "OVO";
         }
         if (tipe.equals(TipeBayar.TRANSFER)) {
-            return "TransferBank";
+            return "Transfer Bank";
         }
         return "Unknown";
     }

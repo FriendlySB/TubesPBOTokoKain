@@ -62,7 +62,7 @@ public class MenuLihatProfile {
         edit.setBounds(10, 200, 150, 40);
         edit.addActionListener(e -> {
             frame.dispose();
-            new MenuEditUser(customer);
+            new MenuEditUser();
         });
         frame.add(edit);
 

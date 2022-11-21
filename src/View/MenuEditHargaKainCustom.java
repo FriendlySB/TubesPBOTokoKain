@@ -10,6 +10,8 @@ import Model.KainCustom;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -28,8 +30,8 @@ public class MenuEditHargaKainCustom {
         JFrame frame = new JFrame("Edit Harga Kain Custom");
         frame.setSize(420, 350);
         frame.setLayout(null);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setVisible(true);
+        frame.setLocationRelativeTo(null);
 
         Sql db = new Sql();
         ArrayList<KainCustom> listKainCustom = db.getAllKainCustom();
@@ -97,7 +99,13 @@ public class MenuEditHargaKainCustom {
             });
             setHarga.setBounds(220, 245, 115, 35);
             frame.add(setHarga);
-
+            frame.addWindowListener(new WindowAdapter() {
+                @Override
+                public void windowClosing(WindowEvent e) {
+                    frame.dispose();
+                    new MainMenuUser();
+                }
+            });
         }
     }
 

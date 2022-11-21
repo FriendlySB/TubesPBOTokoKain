@@ -8,18 +8,19 @@ import java.awt.event.WindowEvent;
 
 public class MenuEditUser {
 
-    public MenuEditUser(Customer customer) {
+    public MenuEditUser() {
+        Customer customer = (Customer) CurrentUser.getInstance().getUser();
         Sql con = new Sql();
         JFrame frame = new JFrame();
         frame.setTitle("Menu Edit Data Profile");
-        frame.setSize(700, 600);
+        frame.setSize(400, 300);
 
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
 
         JLabel labUser = new JLabel("Username: ");
-        labUser.setBounds(20, 20, 70, 25);
+        labUser.setBounds(20, 25, 100, 25);
         frame.add(labUser);
 
         JLabel labNama = new JLabel("Nama Lengkap: ");
@@ -31,7 +32,7 @@ public class MenuEditUser {
         frame.add(namaLengkap);
 
         JTextField userName = new JTextField(customer.getUsername());
-        userName.setBounds(110, 20, 100, 25);
+        userName.setBounds(120, 25, 100, 25);
         frame.add(userName);
 
         JLabel labAlamat = new JLabel("Alamat: ");
@@ -39,7 +40,7 @@ public class MenuEditUser {
         frame.add(labAlamat);
 
         JTextField alamat = new JTextField(customer.getAlamat());
-        alamat.setBounds(110, 85, 70, 25);
+        alamat.setBounds(120, 85, 70, 25);
         frame.add(alamat);
 
         JLabel labEmail = new JLabel("Email :");
@@ -47,7 +48,7 @@ public class MenuEditUser {
         frame.add(labEmail);
 
         JTextField email = new JTextField(customer.getEmail());
-        email.setBounds(110, 115, 200, 25);
+        email.setBounds(120, 115, 200, 25);
         frame.add(email);
 
         JLabel labTelfon = new JLabel("No. Telepon: ");
@@ -55,7 +56,7 @@ public class MenuEditUser {
         frame.add(labTelfon);
 
         JTextField telfon = new JTextField(customer.getNoTelpon());
-        telfon.setBounds(110, 145, 100, 25);
+        telfon.setBounds(120, 145, 100, 25);
         frame.add(telfon);
 
         JButton edit = new JButton("Edit Data");
@@ -66,6 +67,7 @@ public class MenuEditUser {
                     customer.getPassword(), customer.getTipeuser());
             con.updateDataCustomer(editan);
             JOptionPane.showMessageDialog(null, "Data Anda telah berhasil diupdate","Message",JOptionPane.INFORMATION_MESSAGE);
+            CurrentUser.getInstance().setUser(editan);
             frame.dispose();
             new MenuLihatProfile();
         });

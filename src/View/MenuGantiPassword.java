@@ -12,7 +12,7 @@ public class MenuGantiPassword {
         Sql con = new Sql();
         JFrame frame = new JFrame();
         frame.setTitle("Menu Ganti Password");
-        frame.setSize(400, 150);
+        frame.setSize(400, 200);
         frame.setLocationRelativeTo(null);
         frame.setLayout(null);
         frame.setVisible(true);
@@ -21,29 +21,31 @@ public class MenuGantiPassword {
         labOld.setBounds(10, 20, 150, 25);
         frame.add(labOld);
 
-        JTextField oldPass = new JTextField();
-        oldPass.setBounds(160, 20, 100, 25);
+        JPasswordField oldPass = new JPasswordField();
+        oldPass.setBounds(180, 20, 100, 25);
         frame.add(oldPass);
 
         JLabel labNew = new JLabel("Masukkan password baru");
         labNew.setBounds(10, 55, 150, 25);
         frame.add(labNew);
 
-        JTextField newPass = new JTextField();
-        newPass.setBounds(160, 55, 100, 25);
+        JPasswordField newPass = new JPasswordField();
+        newPass.setBounds(180, 55, 100, 25);
         frame.add(newPass);
 
         JButton submit = new JButton("Ganti password");
-        submit.setBounds(160, 85, 200, 25);
+        submit.setBounds(100, 100, 200, 25);
         frame.add(submit);
 
         submit.addActionListener(e -> {
-            if (!customer.getPassword().equals(oldPass.getText())) {
+            if (!customer.getPassword().equals(new String(oldPass.getPassword()).trim())) {
                 JOptionPane.showMessageDialog(null, "Gagal mengganti password Anda, password salah","Peringatan", JOptionPane.WARNING_MESSAGE);
-            } else if (customer.getPassword().equals(newPass.getText())) {
+            } else if (customer.getPassword().equals(new String(newPass.getPassword()).trim())) {
                 JOptionPane.showMessageDialog(null, "Gagal mengganti password Anda, password baru tidak bisa sama dengan password lama","Peringatan", JOptionPane.WARNING_MESSAGE);
-            } else if (customer.getPassword().equals(oldPass.getText())) {
-                con.updatePassword(oldPass.getText(), newPass.getText(), customer.getId_user());
+            } else if (customer.getPassword().equals(new String(oldPass.getPassword()).trim())) {
+                String oldP = new String(oldPass.getPassword()).trim();
+                String newP = new String(newPass.getPassword()).trim();
+                con.updatePassword(oldP, newP, customer.getId_user());
                 JOptionPane.showMessageDialog(null, "Password telah berhasil diganti","Message",JOptionPane.INFORMATION_MESSAGE);
                 frame.dispose();
                 new MenuLihatProfile();
