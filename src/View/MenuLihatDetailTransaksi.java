@@ -58,7 +58,10 @@ public class MenuLihatDetailTransaksi {
             tableModel.addRow(controller.createIsiTableDetailTransaksi(listDetail.get(i), i));
         }
         tableModel.addRow(new Object[]{"","","","","",""});
-        Object[] lastRow = {"", "", "", "", "Subtotal", controller.hitungTotalDetailTransaksi(listDetail)};
+        Transaksi transaksi = controller.getTransaksiByID(sql.getAllTransaksi(), id_transaksi);
+        int ongkir = controller.totalBiayaPengirimanTransaksi(transaksi.getTipe_pengiriman(), transaksi.getDetailTransaksi());
+        tableModel.addRow(new Object[]{"","","","","Ongkir",ongkir});
+        Object[] lastRow = {"", "", "", "", "Subtotal", (ongkir + controller.hitungTotalDetailTransaksi(listDetail))};
         tableModel.addRow(lastRow);
         frame.add(scrollPane);
     }
