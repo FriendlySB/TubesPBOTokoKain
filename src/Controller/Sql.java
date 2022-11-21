@@ -51,6 +51,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listBahan;
     }
 
@@ -71,6 +72,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listWarna;
     }
 
@@ -91,6 +93,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listMotif;
     }
 
@@ -108,6 +111,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listIDKain;
     }
 
@@ -135,6 +139,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listKain;
     }
 
@@ -154,10 +159,12 @@ public class Sql {
                 kainCustom.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
                 listKain.add(kainCustom);
             }
+            conn.disconnect();
             return listKain;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -177,6 +184,7 @@ public class Sql {
                     curKain.setMotif_kain_custom(rs.getString("nama_motif_custom"));
                     curKain.setHarga_kain_custom(rs.getInt("harga_kain_custom"));
                 }
+                conn.disconnect();
                 return curKain;
             } catch (SQLException e) {
                 e.printStackTrace();
@@ -196,11 +204,13 @@ public class Sql {
                     curKain.setWarna(getWarna(warna));
                     curKain.setMotif(getMotif(motif));
                 }
+                conn.disconnect();
                 return curKain;
             } catch (SQLException e) {
                 e.printStackTrace();
             }
         }
+        conn.disconnect();
         return null;
     }
 
@@ -218,6 +228,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curBahan;
     }
 
@@ -235,6 +246,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curBahan;
     }
 
@@ -253,6 +265,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curWarna;
     }
 
@@ -271,6 +284,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curWarna;
     }
 
@@ -289,6 +303,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curMotif;
     }
 
@@ -307,6 +322,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curMotif;
     }
 
@@ -364,6 +380,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return (users);
     }
 
@@ -397,6 +414,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return (customers);
     }
 
@@ -419,10 +437,12 @@ public class Sql {
                 curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
                 listTransaksi.add(curTransaksi);
             }
+            conn.disconnect();
             return listTransaksi;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -445,10 +465,12 @@ public class Sql {
                 curTransaksi.setDetailTransaksi(getSQLDetailTransaksi(rs.getInt("id_transaksi")));
                 listTransaksi.add(curTransaksi);
             }
+            conn.disconnect();
             return listTransaksi;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -467,10 +489,12 @@ public class Sql {
                 curDetailTransaksi.setKain(new KainDibeli(id, nama, harga));
                 listDetailTransaksi.add(curDetailTransaksi);
             }
+            conn.disconnect();
             return listDetailTransaksi;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -490,6 +514,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listKeranjang;
     }
 
@@ -510,6 +535,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curkain;
     }
 
@@ -522,10 +548,12 @@ public class Sql {
             curChatRoom.setId_chat_room(rs.getInt("id_chat_room"));
             curChatRoom.setNama_room(rs.getString("nama_room"));
             curChatRoom.setMessage(getSQLListMessage(rs.getInt("id_chat_room"), id_user));
+            conn.disconnect();
             return curChatRoom;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -545,6 +573,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return listMessage;
     }
 
@@ -564,19 +593,6 @@ public class Sql {
                 stmt.setString(6, curCust.getAlamat());
                 stmt.setString(7, curCust.getNoTelpon());
                 stmt.setString(8, curCust.getTipeuser().toString());
-//                String query2 = "INSERT INTO keranjang VALUES(?,?)"; 
-//                try {//bagian ini dicomment sementara agar tidak error ketika menjalankan registrasi
-//                    PreparedStatement stmt2 = conn.con.prepareStatement(query2);
-//                    stmt2.setInt(1, curCust.getId_user());
-//                    stmt2.setInt(2, curCust.getKeranjang().getId_keranjang());
-//                    for (int i = 0; i < curCust.getKeranjang().getDetailKeranjang().size(); i++) {
-//                        insertDetailKeranjang(curCust.getKeranjang(), i);
-//                    }
-//                    stmt2.executeUpdate();
-//                } catch (SQLException e) {
-//                    e.printStackTrace();
-//                    return (false);
-//                }
                 stmt.executeUpdate();
             }
             if (user instanceof Admin) {
@@ -591,9 +607,11 @@ public class Sql {
                 stmt.setString(8, admin.getTipeuser().toString());
                 stmt.executeUpdate();
             }
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -607,9 +625,11 @@ public class Sql {
             stmt.setString(2, id_kain);
             stmt.setInt(3, jumlahKain);
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -632,9 +652,11 @@ public class Sql {
             for (int i = 0; i < curTransaksi.getDetailTransaksi().size(); i++) {
                 insertDetailTransaksi(curTransaksi.getId_transaksi(), curTransaksi.getDetailTransaksi().get(i));
             }
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -657,6 +679,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return curTransaksi;
     }
 
@@ -672,9 +695,11 @@ public class Sql {
             stmt.setString(4, curDetail.getKain().getNama_kain());
             stmt.setInt(5, curDetail.getKain().getHarga());
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -688,9 +713,11 @@ public class Sql {
             stmt.setString(2, curKain.getNama_bahan());
             stmt.setInt(3, curKain.getHarga_bahan());
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -704,9 +731,11 @@ public class Sql {
             stmt.setString(2, curKain.getNama_warna());
             stmt.setInt(3, curKain.getHarga_warna());
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -720,9 +749,11 @@ public class Sql {
             stmt.setString(2, curKain.getNama_motif());
             stmt.setInt(3, curKain.getHarga_motif());
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -752,9 +783,11 @@ public class Sql {
                     Statement stmtForreigKeyOn = conn.con.createStatement();
                     stmtForreigKeyOn.execute("SET FOREIGN_KEY_CHECKS=1");
                     stmtForreigKeyOn.close();
+                    conn.disconnect();
                     return (true);
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    conn.disconnect();
                     return (false);
                 }
             } else if (kain instanceof KainCustom) {
@@ -768,16 +801,20 @@ public class Sql {
                     stmt2.setString(4, curKain.getMotif_kain_custom());
                     stmt2.setInt(5, curKain.getHarga_kain_custom());
                     stmt2.executeUpdate();
+                    conn.disconnect();
                     return (true);
                 } catch (SQLException e) {
                     e.printStackTrace();
+                    conn.disconnect();
                     return (false);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
+        conn.disconnect();
         return (false);
     }
 
@@ -793,9 +830,11 @@ public class Sql {
             stmt.setString(4, customer.getAlamat());
             stmt.setString(5, customer.getNoTelpon());
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -807,9 +846,11 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setString(1, newPass);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
 
@@ -825,9 +866,11 @@ public class Sql {
             while (rs.next()) {
                 result = rs.getInt("jumlah");
             }
+            conn.disconnect();
             return result + 1;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return -1;
         }
 
@@ -840,11 +883,12 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             PreparedStatement stmt2 = conn.con.prepareStatement(query);
-            //stmt.executeUpdate(query);
             stmt2.executeUpdate(query2);
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -855,9 +899,11 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.executeUpdate(query);
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -868,9 +914,11 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.executeUpdate(query);
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -882,9 +930,11 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, change);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -895,9 +945,11 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.executeUpdate(query);
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -909,9 +961,11 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, change);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -922,9 +976,11 @@ public class Sql {
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.executeUpdate(query);
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -936,9 +992,11 @@ public class Sql {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             stmt.setInt(1, change);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return false;
         }
     }
@@ -951,9 +1009,11 @@ public class Sql {
             stmt.setInt(1, admin.getId_user());
             stmt.setInt(2, admin.getTipeAdmin());
             stmt.executeUpdate();
+            conn.disconnect();
             return (true);
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -971,6 +1031,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return id;
     }
 
@@ -987,6 +1048,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return stock;
     }
 
@@ -1003,6 +1065,7 @@ public class Sql {
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return id;
     }
 
@@ -1015,9 +1078,11 @@ public class Sql {
             stmt.setString(2, id_kain);
 
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -1030,9 +1095,11 @@ public class Sql {
             stmt.setInt(1, harga);
             stmt.setString(2, id_kain);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -1045,9 +1112,11 @@ public class Sql {
             stmt.setString(1, newStats);
             stmt.setInt(2, id_transaksi);
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
@@ -1061,10 +1130,12 @@ public class Sql {
             while (rs.next()) {
                 username = rs.getNString("username");
             }
+            conn.disconnect();
             return username;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -1082,10 +1153,12 @@ public class Sql {
                 msg.setWaktu(rs.getTimestamp("waktu"));
                 listMessage.add(msg);
             }
+            conn.disconnect();
             return listMessage;
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        conn.disconnect();
         return null;
     }
 
@@ -1098,9 +1171,11 @@ public class Sql {
             stmt.setInt(2, msg.getId_pengirim());
             stmt.setString(3, msg.getMessage());
             stmt.executeUpdate();
+            conn.disconnect();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
+            conn.disconnect();
             return (false);
         }
     }
