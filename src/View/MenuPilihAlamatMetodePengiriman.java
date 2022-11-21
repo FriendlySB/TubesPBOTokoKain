@@ -59,21 +59,6 @@ public class MenuPilihAlamatMetodePengiriman {
         labelAmbilDiToko.setBounds(160, 90, 200, 30);
         labelAmbilDiToko.setVisible(false);
 
-        comboAlamat.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if ("Ambil Dari Data Pengguna".equals((String) comboAlamat.getSelectedItem())) {
-                    labelAlamatTulis.setVisible(false);
-                    alamatTulis.setVisible(false);
-                    labelAmbilDiToko.setVisible(false);
-                } else if ("Tulis Alamat Berbeda".equals((String) comboAlamat.getSelectedItem())) {
-                    labelAlamatTulis.setVisible(true);
-                    alamatTulis.setVisible(true);
-                } else if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
-                    labelAmbilDiToko.setVisible(true);
-                }
-            }
-        });
         frame.add(labelBandung);
         frame.add(comboBandung);
         frame.add(labelAlamat);
@@ -102,15 +87,57 @@ public class MenuPilihAlamatMetodePengiriman {
                 }
             }
         });
-        comboMetodePengiriman.addActionListener(new ActionListener() {
+        comboAlamat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
+                if ("Ambil Dari Data Pengguna".equals((String) comboAlamat.getSelectedItem())) {
+                    labelAlamatTulis.setVisible(false);
+                    alamatTulis.setVisible(false);
+                    labelAmbilDiToko.setVisible(false);
+                    comboMetodePengiriman.removeAllItems();
+                    for (int i = 0; i < tipePengiriman.length; i++) {
+                        comboMetodePengiriman.addItem(tipePengiriman[i]);
+                    }
+                    if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
+                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    }
+                    if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
+                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    }
+                } else if ("Tulis Alamat Berbeda".equals((String) comboAlamat.getSelectedItem())) {
+                    labelAlamatTulis.setVisible(true);
+                    alamatTulis.setVisible(true);
+                    comboMetodePengiriman.removeAllItems();
+                    for (int i = 0; i < tipePengiriman.length; i++) {
+                        comboMetodePengiriman.addItem(tipePengiriman[i]);
+                    }
+                    if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
+                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    }
+                    if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
+                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    }
+                } else if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
                     comboMetodePengiriman.removeAllItems();
                     comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    labelAmbilDiToko.setVisible(true);
                 }
+
             }
         });
+//        comboMetodePengiriman.addActionListener(new ActionListener() {
+//            @Override
+//            public void actionPerformed(ActionEvent e) {
+//                if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
+//                    comboMetodePengiriman.removeAllItems();
+//                    comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+//                } 
+//            }
+//        });
         frame.add(labelMetodePengiriman);
         frame.add(comboMetodePengiriman);
 

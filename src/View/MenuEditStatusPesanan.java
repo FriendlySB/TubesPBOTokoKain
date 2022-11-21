@@ -13,6 +13,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
+import javax.swing.ButtonGroup;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -59,6 +60,12 @@ public class MenuEditStatusPesanan {
         JButton update = new JButton("Update");
         update.setBounds(175, 100, 80, 40);
         f.add(update);
+        
+        ButtonGroup radioGroup = new ButtonGroup();
+        radioGroup.add(dibuat);
+        radioGroup.add(dikirim);
+        radioGroup.add(dikemas);
+        radioGroup.add(selesai);
         
         update.addActionListener(new ActionListener() {
             @Override
