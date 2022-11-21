@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class MenuLihatKeranjang {
-    
+
     public MenuLihatKeranjang() {
         Controller control = new Controller();
         Sql database = new Sql();
@@ -87,6 +87,9 @@ public class MenuLihatKeranjang {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     boolean hasilHapus = database.deleteKainKeranjang(listKeranjang.get(final_i).getKain().getId_kain(), CurrentUser.getInstance().getUser().getId_user());
+                    if (listKeranjang.get(final_i).getKain() instanceof KainCustom) {
+                        database.deleteKain(listKeranjang.get(final_i).getKain().getId_kain());
+                    }
                     if (hasilHapus) {
                         JOptionPane.showMessageDialog(null, "Kain Berhasil Dihapus Dari Keranjang", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         frame.dispose();
