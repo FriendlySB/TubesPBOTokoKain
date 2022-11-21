@@ -29,6 +29,10 @@ public class MenuLihatKeranjang {
         ArrayList<Keranjang> listKeranjang = database.getKeranjang(curUser.getId_user());
         ArrayList<JCheckBox> checkBoxKeranjang = new ArrayList<>();
         ArrayList<JButton> listButtonX = new ArrayList<>();
+        if (listKeranjang.isEmpty()) {
+            JOptionPane.showMessageDialog(null, "Keranjang Kosong", "Peringatan", JOptionPane.WARNING_MESSAGE);
+            new MenuLihatKeranjang();
+        }
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setLayout(null);

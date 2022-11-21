@@ -213,6 +213,9 @@ public class Controller implements TipePengiriman {
         if (tipePengiriman == PEGAWAI) {
             return "Pegawai";
         }
+        if (tipePengiriman == PICKUP) {
+            return "Pickup";
+        }
         return "Unknown";
     }
 

@@ -43,26 +43,32 @@ public class MenuPilihAlamatMetodePengiriman {
         comboBandung.setBounds(160, 10, 150, 30);
         JLabel labelAlamat = new JLabel("Pilih Pengambilan Alamat");
         labelAlamat.setBounds(10, 50, 150, 30);
-        String pilihanPengambilanAlamat[] = {"Ambil Dari Data Pengguna", "Tulis Alamat Berbeda", "Ambil Di Toko"};
-        JComboBox comboAlamat = new JComboBox(pilihanPengambilanAlamat);
+        JComboBox comboAlamat = new JComboBox();
         comboAlamat.setBounds(160, 50, 200, 30);
+        comboAlamat.addItem("Ambil Dari Data Pengguna");
+        comboAlamat.addItem("Tulis Alamat Berbeda");
         JLabel labelAlamatTulis = new JLabel("Alamat :");
         labelAlamatTulis.setBounds(10, 90, 150, 30);
         labelAlamatTulis.setVisible(false);
         JTextField alamatTulis = new JTextField();
         alamatTulis.setBounds(160, 90, 200, 30);
         alamatTulis.setVisible(false);
+        JLabel labelAmbilDiToko = new JLabel("Ambil Di Toko");
+        labelAmbilDiToko.setBounds(160, 90, 200, 30);
+        labelAmbilDiToko.setVisible(false);
+        
         comboAlamat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("Ambil Dari Data Pengguna".equals((String) comboAlamat.getSelectedItem())) {
                     labelAlamatTulis.setVisible(false);
                     alamatTulis.setVisible(false);
+                    labelAmbilDiToko.setVisible(false);
                 } else if ("Tulis Alamat Berbeda".equals((String) comboAlamat.getSelectedItem())) {
                     labelAlamatTulis.setVisible(true);
                     alamatTulis.setVisible(true);
                 } else if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
-                    labelAlamatTulis.setVisible(true);
+                    labelAmbilDiToko.setVisible(true);
                     alamatTulis.setVisible(true);
                 }
             }
@@ -86,9 +92,11 @@ public class MenuPilihAlamatMetodePengiriman {
                 if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
                     comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
                     comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    comboAlamat.addItem("Ambil Di Toko");
                 } else if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
                     comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
                     comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    comboAlamat.removeItem("Ambil Di Toko");
                 }
             }
         });
@@ -110,6 +118,8 @@ public class MenuPilihAlamatMetodePengiriman {
                     labelAlamatTulis.setVisible(true);
                     alamatTulis.setVisible(true);
                     Alamat = alamatTulis.getText();
+                }else if (comboAlamat.getSelectedIndex() == 2){
+                    Alamat="Ambil di toko";
                 }
                 int metodePengiriman = comboMetodePengiriman.getSelectedIndex();
                 int totalBiayaPengiriman = controller.totalBiayaPengiriman(metodePengiriman, listKeranjangDipilih);
