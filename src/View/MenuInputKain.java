@@ -479,10 +479,8 @@ public class MenuInputKain {
             subFrame.add(labBahan);
             ArrayList<JRadioButton> tomBahan = new ArrayList();
             ArrayList<BahanKain> bahanKain = con.getAllBahan();
-            ButtonGroup groupBahan = new ButtonGroup();
             for (int i = 0; i < bahanKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(bahanKain.get(i).getNama_bahan());
-                groupBahan.add(tempTom);
                 tomBahan.add(tempTom);
             }
             int tempX = 10;
@@ -502,10 +500,8 @@ public class MenuInputKain {
             subFrame.add(labWarna);
             ArrayList<JRadioButton> tomWarna = new ArrayList();
             ArrayList<WarnaKain> warnaKain = con.getAllWarna();
-            ButtonGroup groupWarna = new ButtonGroup();
             for (int i = 0; i < warnaKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(warnaKain.get(i).getNama_warna());
-                groupWarna.add(tempTom);
                 tomWarna.add(tempTom);
             }
             int tempX2 = 10;
@@ -524,10 +520,8 @@ public class MenuInputKain {
             subFrame.add(labMotif);
             ArrayList<JRadioButton> tomMotif = new ArrayList();
             ArrayList<MotifKain> motifKain = con.getAllMotif();
-            ButtonGroup groupMotif = new ButtonGroup();
             for (int i = 0; i < motifKain.size(); i++) {
                 JRadioButton tempTom = new JRadioButton(motifKain.get(i).getNama_motif());
-                groupMotif.add(tempTom);
                 tomMotif.add(tempTom);
             }
             int tempX3 = 10;
@@ -601,7 +595,7 @@ public class MenuInputKain {
             });
             subFrame.add(add);
             subFrame.add(backMenu);
-            backMenu.setBounds(10, 450, 150, 40);
+            backMenu.setBounds(10, 500, 150, 40);
             backMenu.addActionListener(b -> {
                 subFrame.dispose();
                 new MenuInputKain();
