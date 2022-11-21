@@ -7,7 +7,6 @@ package View;
 
 import Controller.Sql;
 import Model.Admin;
-import Model.Customer;
 import Model.TipeAdmin;
 import Model.TipeUser;
 import java.awt.Font;
