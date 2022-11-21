@@ -167,7 +167,7 @@ public class Controller implements TipePengiriman {
     public void kurangiStokToko(Keranjang keranjang) {
         Sql sql = new Sql();
         if (keranjang.getKain() instanceof KainToko) {
-            int totalStok = sql.countStockKain(keranjang.getKain().getId_kain()) - 1;
+            int totalStok = sql.countStockKain(keranjang.getKain().getId_kain()) - keranjang.getQuantity();
             sql.updateStokKain(keranjang.getKain().getId_kain(), totalStok);
         }
     }
