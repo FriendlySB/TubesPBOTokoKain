@@ -58,7 +58,7 @@ public class MenuPilihAlamatMetodePengiriman {
         JLabel labelAmbilDiToko = new JLabel("Ambil Di Toko");
         labelAmbilDiToko.setBounds(160, 90, 200, 30);
         labelAmbilDiToko.setVisible(false);
-        
+
         comboAlamat.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -102,6 +102,15 @@ public class MenuPilihAlamatMetodePengiriman {
                 }
             }
         });
+        comboMetodePengiriman.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
+                    comboMetodePengiriman.removeAllItems();
+                    comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                }
+            }
+        });
         frame.add(labelMetodePengiriman);
         frame.add(comboMetodePengiriman);
 
@@ -120,10 +129,22 @@ public class MenuPilihAlamatMetodePengiriman {
                     labelAlamatTulis.setVisible(true);
                     alamatTulis.setVisible(true);
                     Alamat = alamatTulis.getText();
-                }else if (comboAlamat.getSelectedIndex() == 2){
-                    Alamat="Ambil di toko";
+                } else if (comboAlamat.getSelectedIndex() == 2) {
+                    Alamat = "Ambil di toko";
                 }
-                int metodePengiriman = comboMetodePengiriman.getSelectedIndex();
+                String metode = (String) comboMetodePengiriman.getSelectedItem();
+                int metodePengiriman = -1;
+                if (metode.equals("Gojek")) {
+                    metodePengiriman = TipePengiriman.GOJEK;
+                } else if (metode.equals("JNE")) {
+                    metodePengiriman = TipePengiriman.JNE;
+                } else if (metode.equals("JNT")) {
+                    metodePengiriman = TipePengiriman.JNT;
+                } else if (metode.equals("Pegawai")) {
+                    metodePengiriman = TipePengiriman.PEGAWAI;
+                } else if (metode.equals("Pickup")) {
+                    metodePengiriman = TipePengiriman.PICKUP;
+                }
                 int totalBiayaPengiriman = controller.totalBiayaPengiriman(metodePengiriman, listKeranjangDipilih);
 
                 int konfirmasi = JOptionPane.showConfirmDialog(null, "Berada di :" + adaDi
@@ -143,7 +164,7 @@ public class MenuPilihAlamatMetodePengiriman {
         });
         frame.add(buttonPilihMetodePembayaran);
         frame.setVisible(true);
-        frame.addWindowListener(new WindowAdapter() { 
+        frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
                 frame.dispose();
