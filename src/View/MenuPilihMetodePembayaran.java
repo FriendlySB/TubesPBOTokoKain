@@ -38,13 +38,14 @@ public class MenuPilihMetodePembayaran {
         labelTipeBayar.setBounds(10, 30, 150, 30);
         JComboBox comboTipeBayar = new JComboBox();
         comboTipeBayar.setBounds(160, 30, 200, 30);
+        Controller control = new Controller();
+        comboTipeBayar.addItem(control.getTipeBayar(TipeBayar.GOPAY));
+        comboTipeBayar.addItem(control.getTipeBayar(TipeBayar.OVO));
+        comboTipeBayar.addItem(control.getTipeBayar(TipeBayar.TRANSFER));
         if (kurir == TipePengiriman.PICKUP) {
-            comboTipeBayar.addItem(TipeBayar.CASH);
-        } else {
-            comboTipeBayar.addItem(TipeBayar.COD);
-            comboTipeBayar.addItem(TipeBayar.GOPAY);
-            comboTipeBayar.addItem(TipeBayar.OVO);
-            comboTipeBayar.addItem(TipeBayar.TRANSFER);
+             comboTipeBayar.addItem(control.getTipeBayar(TipeBayar.CASH));
+        }else if (kurir == TipePengiriman.PEGAWAI) {
+             comboTipeBayar.addItem(control.getTipeBayar(TipeBayar.COD));
         }
         frame.add(labelTipeBayar);
         frame.add(comboTipeBayar);

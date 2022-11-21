@@ -27,7 +27,6 @@ import javax.swing.JTextField;
 public class MenuPilihAlamatMetodePengiriman {
 
     Customer curCust = (Customer) CurrentUser.getInstance().getUser();
-    ArrayList<String> daftarTipePengiriman = new ArrayList<>();
 
     public MenuPilihAlamatMetodePengiriman(ArrayList<Keranjang> listKeranjangDipilih) {
         Controller controller = new Controller();
@@ -44,7 +43,7 @@ public class MenuPilihAlamatMetodePengiriman {
         comboBandung.setBounds(160, 10, 150, 30);
         JLabel labelAlamat = new JLabel("Pilih Pengambilan Alamat");
         labelAlamat.setBounds(10, 50, 150, 30);
-        String pilihanPengambilanAlamat[] = {"Ambil Dari Data Pengguna", "Tulis Alamat Berbeda"};
+        String pilihanPengambilanAlamat[] = {"Ambil Dari Data Pengguna", "Tulis Alamat Berbeda", "Ambil Di Toko"};
         JComboBox comboAlamat = new JComboBox(pilihanPengambilanAlamat);
         comboAlamat.setBounds(160, 50, 200, 30);
         JLabel labelAlamatTulis = new JLabel("Alamat :");
@@ -62,6 +61,9 @@ public class MenuPilihAlamatMetodePengiriman {
                 } else if ("Tulis Alamat Berbeda".equals((String) comboAlamat.getSelectedItem())) {
                     labelAlamatTulis.setVisible(true);
                     alamatTulis.setVisible(true);
+                } else if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
+                    labelAlamatTulis.setVisible(true);
+                    alamatTulis.setVisible(true);
                 }
             }
         });
@@ -74,23 +76,19 @@ public class MenuPilihAlamatMetodePengiriman {
         //Pilih Metode pengiriman
         JLabel labelMetodePengiriman = new JLabel("Pilih Metode Pengiriman");
         labelMetodePengiriman.setBounds(10, 130, 150, 30);
-
-        for (int i = 0; i < 3; i++) {
-            daftarTipePengiriman.add(controller.getTipePengiriman(i));
-        }
-        String tipePengiriman[] = new String[daftarTipePengiriman.size()];
-        for (int i = 0; i < daftarTipePengiriman.size(); i++) {
-            tipePengiriman[i] = daftarTipePengiriman.get(i);
-        }
+        Controller control = new Controller();
+        String tipePengiriman[] = {control.getTipePengiriman(TipePengiriman.JNE), control.getTipePengiriman(TipePengiriman.GOJEK), control.getTipePengiriman(TipePengiriman.JNT)};
         JComboBox comboMetodePengiriman = new JComboBox(tipePengiriman);
         comboMetodePengiriman.setBounds(160, 130, 200, 30);
         comboBandung.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
-                    comboMetodePengiriman.addItem("PEGAWAI");
+                    comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                    comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                 } else if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
-                    comboMetodePengiriman.removeItem("PEGAWAI");
+                    comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
+                    comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                 }
             }
         });
