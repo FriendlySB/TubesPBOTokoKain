@@ -77,9 +77,9 @@ public class Controller implements TipePengiriman {
     public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif) {
         Sql sql = new Sql();
         String idKain = "";
-        idKain += String.valueOf(bahan.getId_bahan() + 1000) + "-";
-        idKain += String.valueOf(warna.getId_warna() + 2000) + "-";
-        idKain += String.valueOf(motif.getId_motif() + 3000);
+        idKain += String.valueOf(bahan.getId_bahan()) + "-";
+        idKain += String.valueOf(warna.getId_warna()) + "-";
+        idKain += String.valueOf(motif.getId_motif());
         return idKain;
     }
 
@@ -121,7 +121,7 @@ public class Controller implements TipePengiriman {
 
     public String getNamaBahan(String id_kain) {
         Sql sql = new Sql();
-        int id = Integer.parseInt(id_kain.split("-")[0]) - 1000;
+        int id = Integer.parseInt(id_kain.split("-")[0]);
         String bahan = "";
         ArrayList<BahanKain> listBahan = new ArrayList<>(sql.getAllBahan());
         for (int i = 0; i < listBahan.size(); i++) {
@@ -134,7 +134,7 @@ public class Controller implements TipePengiriman {
 
     public String getNamaWarna(String id_kain) {
         Sql sql = new Sql();
-        int id = Integer.parseInt(id_kain.split("-")[1]) - 2000;
+        int id = Integer.parseInt(id_kain.split("-")[1]);
         String warna = "";
         ArrayList<WarnaKain> listWarna = new ArrayList<>(sql.getAllWarna());
         for (int i = 0; i < listWarna.size(); i++) {
@@ -147,7 +147,7 @@ public class Controller implements TipePengiriman {
 
     public String getNamaMotif(String id_kain) {
         Sql sql = new Sql();
-        int id = Integer.parseInt(id_kain.split("-")[2]) - 3000;
+        int id = Integer.parseInt(id_kain.split("-")[2]);
         String motif = "";
         ArrayList<MotifKain> listMotif = new ArrayList<>(sql.getAllMotif());
         for (int i = 0; i < listMotif.size(); i++) {
