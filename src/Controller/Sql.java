@@ -32,10 +32,10 @@ import java.sql.PreparedStatement;
 
 public class Sql {
 
-    static DatabaseHandler conn = new DatabaseHandler();
-
+    //static DatabaseHandler conn = new DatabaseHandler();
     public ArrayList<BahanKain> getAllBahan() {
         ArrayList<BahanKain> listBahan = new ArrayList();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM bahan";
         try {
@@ -57,6 +57,7 @@ public class Sql {
 
     public ArrayList<WarnaKain> getAllWarna() {
         ArrayList<WarnaKain> listWarna = new ArrayList();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM warna";
         try {
@@ -78,6 +79,7 @@ public class Sql {
 
     public ArrayList<MotifKain> getAllMotif() {
         ArrayList<MotifKain> listMotif = new ArrayList();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM motif";
         try {
@@ -99,6 +101,7 @@ public class Sql {
 
     public ArrayList<String> getAllIDKain() {
         ArrayList<String> listIDKain = new ArrayList();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM kain_toko";
         try {
@@ -118,6 +121,7 @@ public class Sql {
     public ArrayList<KainToko> getAllKainToko() {
         ArrayList<KainToko> listKain = new ArrayList();
         Controller controller = new Controller();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM kain_toko";
         try {
@@ -145,6 +149,7 @@ public class Sql {
 
     public ArrayList<KainCustom> getAllKainCustom() {
         ArrayList<KainCustom> listKain = new ArrayList();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM kain_custom";
         try {
@@ -169,7 +174,9 @@ public class Sql {
     }
 
     public Kain getKain(String id_kain) {
+
         Controller controller = new Controller();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         if (id_kain.contains("CUSTOM")) {
             String query = "SELECT * FROM kain_custom WHERE id_kain='" + id_kain + "'";
@@ -215,6 +222,8 @@ public class Sql {
     }
 
     public BahanKain getBahan(String nama_bahan) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM bahan WHERE nama_bahan='" + nama_bahan + "'";
         BahanKain curBahan = new BahanKain();
         try {
@@ -233,6 +242,8 @@ public class Sql {
     }
 
     public BahanKain getBahanBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM bahan order by id_bahan DESC limit 1";
         BahanKain curBahan = new BahanKain();
         try {
@@ -251,6 +262,8 @@ public class Sql {
     }
 
     public WarnaKain getWarnaBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM warna order by id_warna DESC limit 1";
         WarnaKain curWarna = new WarnaKain();
         try {
@@ -270,6 +283,8 @@ public class Sql {
     }
 
     public WarnaKain getWarna(String namaWarna) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM warna WHERE nama_warna='" + namaWarna + "'";
         WarnaKain curWarna = new WarnaKain();
         try {
@@ -289,6 +304,8 @@ public class Sql {
     }
 
     public MotifKain getMotifBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM motif order by id_motif DESC limit 1";
         MotifKain curMotif = new MotifKain();
         try {
@@ -308,6 +325,8 @@ public class Sql {
     }
 
     public MotifKain getMotif(String nama_motif) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM motif WHERE nama_motif='" + nama_motif + "'";
         MotifKain curMotif = new MotifKain();
         try {
@@ -330,6 +349,7 @@ public class Sql {
     public ArrayList<User> getAllUsers() {
         ArrayList<User> users = new ArrayList<>();
 
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM users";
         try {
@@ -388,6 +408,7 @@ public class Sql {
     public ArrayList<Customer> getAllCustomers() {
         ArrayList<Customer> customers = new ArrayList<>();
 
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM users WHERE status = 'CUSTOMER'";
         try {
@@ -420,6 +441,7 @@ public class Sql {
 
     public ArrayList<Transaksi> getSQLListTransaksi(int id_User) {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM transaksi WHERE id_user='" + id_User + "'";
         try {
@@ -448,6 +470,7 @@ public class Sql {
 
     public ArrayList<Transaksi> getAllTransaksi() {
         ArrayList<Transaksi> listTransaksi = new ArrayList<>();
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM `transaksi`";
         try {
@@ -475,6 +498,8 @@ public class Sql {
     }
 
     public ArrayList<DetailTransaksi> getSQLDetailTransaksi(int id_transaksi) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query4 = "SELECT * FROM detail_transaksi WHERE id_transaksi='" + id_transaksi + "'";
         try {
             Statement stmt4 = conn.con.createStatement();
@@ -499,6 +524,7 @@ public class Sql {
     }
 
     public ArrayList<Keranjang> getKeranjang(int id_user) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM keranjang WHERE id_user='" + id_user + "'";
         ArrayList<Keranjang> listKeranjang = new ArrayList<>();
@@ -519,6 +545,7 @@ public class Sql {
     }
 
     public KainCustom getKainCustomWithId_Kain(String id_kain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT * FROM kain_custom WHERE id_kain='" + id_kain + "'";
         KainCustom curkain = new KainCustom();
@@ -540,6 +567,8 @@ public class Sql {
     }
 
     public ChatRoom getSQLChatRoom(int id_user) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM chat_room WHERE id_user='" + id_user + "'";
         try {
             Statement stmt = conn.con.createStatement();
@@ -558,6 +587,8 @@ public class Sql {
     }
 
     public ArrayList<Message> getSQLListMessage(int id_chat_room, int id_user) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         ArrayList<Message> listMessage = new ArrayList<>();
         String query = "SELECT * FROM message WHERE id_user='" + id_user + "'&& id_chat_room='" + id_chat_room + "'";
         try {
@@ -579,6 +610,7 @@ public class Sql {
 
     //Insert User
     public boolean insertNewUser(User user) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO users VALUES(?,?,?,?,?,?,?,?)";
         try {
@@ -617,6 +649,7 @@ public class Sql {
     }
 
     public static boolean insertKeranjang(User user, String id_kain, int jumlahKain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO keranjang VALUES(?,?,?)";
         try {
@@ -635,6 +668,7 @@ public class Sql {
     }
 
     public static boolean insertTransaksi(int idCustomer, Transaksi curTransaksi) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO transaksi VALUES(?,?,?,?,?,?,?,?)";
         try {
@@ -661,8 +695,10 @@ public class Sql {
         }
     }
 
-    public Transaksi getTransaksiBottom(int idUser) {
-        String query = "SELECT * FROM transaksi WHERE id_user='" + idUser + "' order by id_transaksi DESC limit 1";
+    public Transaksi getTransaksiBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
+        String query = "SELECT * FROM transaksi order by id_transaksi DESC limit 1";
         Transaksi curTransaksi = new Transaksi();
         try {
             Statement stmt = conn.con.createStatement();
@@ -685,6 +721,7 @@ public class Sql {
 
     // Insert DetailTransaksi
     public static boolean insertDetailTransaksi(int id_transaksi, DetailTransaksi curDetail) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO detail_transaksi VALUES(?,?,?,?,?)";
         try {
@@ -705,6 +742,7 @@ public class Sql {
     }
 
     public static boolean insertBahan(BahanKain curKain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO bahan VALUES(?,?,?)";
         try {
@@ -723,6 +761,7 @@ public class Sql {
     }
 
     public static boolean insertWarna(WarnaKain curKain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO warna VALUES(?,?,?)";
         try {
@@ -741,6 +780,7 @@ public class Sql {
     }
 
     public static boolean insertMotif(MotifKain curKain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO motif VALUES(?,?,?)";
         try {
@@ -760,6 +800,7 @@ public class Sql {
 
     // Insert Kain
     public static boolean insertKain(Kain kain, String id_kain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO kain VALUES(?)";
         try {
@@ -819,6 +860,7 @@ public class Sql {
     }
 
     public static boolean updateDataCustomer(Customer customer) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE users set username = ?,nama_lengkap = ?,email = ?,alamat = ?,no_telpon = ? "
                 + "where id_user = '" + customer.getId_user() + "';";
@@ -840,6 +882,7 @@ public class Sql {
     }
 
     public static boolean updatePassword(String oldPass, String newPass, int idUser) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "Update users set password = ? where password = '" + oldPass + "' AND id_user = '" + idUser + "';";
         try {
@@ -857,6 +900,7 @@ public class Sql {
     }
 
     public static int countIDKainCustom() {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "SELECT COUNT(id_kain) AS 'jumlah' FROM kain_custom";
         try {
@@ -877,6 +921,7 @@ public class Sql {
     }
 
     public boolean deleteKain(String idKain) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "DELETE FROM kain where id_kain LIKE '%" + idKain + "%';";
         String query2 = "DELETE FROM kain_toko where id_kain LIKE '%" + idKain + "%';";
@@ -894,6 +939,7 @@ public class Sql {
     }
 
     public boolean deleteKainKeranjang(String idKain, int idUser) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "DELETE FROM keranjang where id_kain LIKE '%" + idKain + "%' && id_user LIKE '%" + idUser + "%';";
         try {
@@ -909,6 +955,7 @@ public class Sql {
     }
 
     public boolean deleteBahan(int id_bahan) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "DELETE FROM bahan where id_bahan ='" + id_bahan + "';";
         try {
@@ -924,6 +971,7 @@ public class Sql {
     }
 
     public boolean UpdateBahan(int id_bahan, int change) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE bahan SET harga_bahan = ? WHERE id_bahan = '" + id_bahan + "';";
         try {
@@ -940,6 +988,7 @@ public class Sql {
     }
 
     public boolean deleteWarna(int id_warna) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "DELETE FROM warna where id_warna ='" + id_warna + "';";
         try {
@@ -955,6 +1004,7 @@ public class Sql {
     }
 
     public boolean UpdateWarna(int id_warna, int change) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE warna SET harga_warna = ? WHERE id_warna = '" + id_warna + "';";
         try {
@@ -971,6 +1021,7 @@ public class Sql {
     }
 
     public boolean deleteMotif(int id_motif) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "DELETE FROM motif where id_motif ='" + id_motif + "';";
         try {
@@ -986,6 +1037,7 @@ public class Sql {
     }
 
     public boolean UpdateMotif(int id_motif, int change) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE motif SET harga_motif = ? WHERE id_motif = '" + id_motif + "';";
         try {
@@ -1002,6 +1054,7 @@ public class Sql {
     }
 
     public boolean insertAdmin(Admin admin) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO admin VALUES (?,?)";
         try {
@@ -1019,6 +1072,8 @@ public class Sql {
     }
 
     public int getID_userBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM users ORDER BY id_user DESC LIMIT 1";
         int id = 0;
         try {
@@ -1036,6 +1091,8 @@ public class Sql {
     }
 
     public int countStockKain(String id_kain) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT stok FROM kain_toko WHERE id_kain = '" + id_kain + "'";
         int stock = 0;
         try {
@@ -1053,6 +1110,8 @@ public class Sql {
     }
 
     public String getIDKainCustomBottom() {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT id_kain FROM kain_custom ORDER BY id_kain DESC LIMIT 1";
         String id = "";
         try {
@@ -1070,6 +1129,7 @@ public class Sql {
     }
 
     public static boolean updateStokKain(String id_kain, int stok) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE kain_toko set stok = ? where id_kain = ?";
         try {
@@ -1088,6 +1148,7 @@ public class Sql {
     }
 
     public boolean updateHargaKainCustom(String id_kain, int harga) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE kain_custom set harga_kain_custom = ? where id_kain = ?";
         try {
@@ -1105,6 +1166,7 @@ public class Sql {
     }
 
     public static boolean updateStatusTransaksi(String newStats, int id_transaksi) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "UPDATE transaksi set progress = ? where id_transaksi = ?";
         try {
@@ -1122,6 +1184,8 @@ public class Sql {
     }
 
     public String getUsernameByID(int id_user) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String username = "";
         String query = "SELECT username FROM users WHERE id_user='" + id_user + "'";
         try {
@@ -1140,6 +1204,8 @@ public class Sql {
     }
 
     public ArrayList<Message> getMessage(int id_user) {
+        DatabaseHandler conn = new DatabaseHandler();
+        conn.connect();
         String query = "SELECT * FROM message WHERE id_user='" + id_user + "'";
         try {
             Statement stmt = conn.con.createStatement();
@@ -1163,6 +1229,7 @@ public class Sql {
     }
 
     public boolean insertMessage(int id_user, Message msg) {
+        DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
         String query = "INSERT INTO message (id_user,id_pengirim,message) VALUES(?,?,?)";
         try {

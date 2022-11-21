@@ -10,6 +10,8 @@ import Controller.Sql;
 import Model.Transaksi;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JFrame;
@@ -28,7 +30,7 @@ public class MenuEditStatusPesanan {
     ArrayList<Transaksi> listTransaksi = new ArrayList<>(sql.getAllTransaksi());
     
     public MenuEditStatusPesanan(int id_transaksi){
-        JFrame f = new JFrame();
+        JFrame f = new JFrame("Menu Edit Status Kain");
         f.setSize(500, 200);
         f.setVisible(true);
         f.setLocationRelativeTo(null);
@@ -86,11 +88,14 @@ public class MenuEditStatusPesanan {
                             "Message", JOptionPane.INFORMATION_MESSAGE);
                 }
             }
-        });
-                
-                
-                
-            
+        });       
+        f.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                f.dispose();
+                new MainMenuAdmin();
+            }
+        });      
     }
     
     public static void main(String args[]) {

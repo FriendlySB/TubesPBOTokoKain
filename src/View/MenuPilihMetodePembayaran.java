@@ -13,6 +13,8 @@ import Model.TipePengiriman;
 import Model.Transaksi;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -20,6 +22,7 @@ import javax.swing.JButton;
 import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -34,6 +37,8 @@ public class MenuPilihMetodePembayaran {
         frame.setSize(600, 400);
         frame.setLayout(null);
         frame.setTitle("Pilih Metode Pembayaran");
+        frame.setLocationRelativeTo(null);
+        
         JLabel labelTipeBayar = new JLabel("Pilih Metode Pembayaran");
         labelTipeBayar.setBounds(10, 30, 150, 30);
         JComboBox comboTipeBayar = new JComboBox();
@@ -56,8 +61,20 @@ public class MenuPilihMetodePembayaran {
             public void actionPerformed(ActionEvent e) {
                 Sql sql = new Sql();
                 Controller controller = new Controller();
-                TipeBayar tipeBayar = (TipeBayar) comboTipeBayar.getSelectedItem();
-                Transaksi tempo = sql.getTransaksiBottom(CurrentUser.getInstance().getUser().getId_user());
+                String tipe = (String) comboTipeBayar.getSelectedItem();
+                TipeBayar tipeBayar = null;
+                if(tipe.equals("Cash")){
+                    tipeBayar = tipeBayar.CASH;
+                } else if(tipe.equals("OVO")){
+                    tipeBayar = tipeBayar.OVO;
+                } else if(tipe.equals("Transfer Bank")){
+                    tipeBayar = tipeBayar.TRANSFER;
+                } else if(tipe.equals("GoPay")){
+                    tipeBayar = tipeBayar.GOPAY;
+                } else {
+                    tipeBayar = tipeBayar.COD;
+                }
+                Transaksi tempo = sql.getTransaksiBottom();
                 int idTransaksi = tempo.getId_transaksi() + 1;
                 ArrayList<DetailTransaksi> listDetailTransaksi = new ArrayList<>();
                 for (int i = 0; i < listKeranjangDipilih.size(); i++) {
@@ -73,11 +90,21 @@ public class MenuPilihMetodePembayaran {
                 for (int i = 0; i < listKeranjangDipilih.size(); i++) {
                     sql.deleteKainKeranjang(listKeranjangDipilih.get(i).getKain().getId_kain(), CurrentUser.getInstance().getUser().getId_user());
                 }
+                Customer customer = (Customer) CurrentUser.getInstance().getUser();
+                customer.getTransaksi().add(curTransaksi);
+                JOptionPane.showMessageDialog(null, "Transaksi Anda telah berhasil dilakukan", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                 frame.dispose();
                 new MainMenuUser();
             }
         });
         frame.add(buttonPilihMetodePembayaran);
         frame.setVisible(true);
+        frame.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+                new MenuLihatKeranjang();
+            }
+        });
     }
 }
