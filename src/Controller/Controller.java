@@ -16,6 +16,14 @@ public class Controller implements TipePengiriman {
 
     }
 
+    public boolean cekHargaKainCustom(KainCustom curKain) {
+        if (curKain.getHarga_kain_custom() == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     public int totalBiayaPengiriman(int tipePengiriman, ArrayList<Keranjang> listKeranjang) {
         int totalKG = hitungTotalBeratKeranjang(listKeranjang);
         int totalHarga = 0;

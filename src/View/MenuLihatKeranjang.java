@@ -21,7 +21,7 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 public class MenuLihatKeranjang {
-
+    
     public MenuLihatKeranjang() {
         Controller control = new Controller();
         Sql database = new Sql();
@@ -32,13 +32,19 @@ public class MenuLihatKeranjang {
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setTitle("Lihat Keranjang");
         JLabel title = new JLabel("Daftar Kain Keranjang : ");
         title.setBounds(10, 5, 300, 30);
         frame.add(title);
         for (int i = 0; i < listKeranjang.size(); i++) {
             if (listKeranjang.get(i).getKain() instanceof KainCustom) {
-                checkBoxKeranjang.add(new JCheckBox(control.getNamaKainCustom(listKeranjang.get(i).getKain().getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
+                KainCustom curKain = (KainCustom) listKeranjang.get(i).getKain();
+                JCheckBox curCheckbox = new JCheckBox(control.getNamaKainCustom(curKain.getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")");
+                if (control.cekHargaKainCustom(curKain)) {
+                    curCheckbox.setEnabled(false);
+                }
+                checkBoxKeranjang.add(curCheckbox);
             } else if (listKeranjang.get(i).getKain() instanceof KainToko) {
                 checkBoxKeranjang.add(new JCheckBox(control.getNamaKain(listKeranjang.get(i).getKain().getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
             }
@@ -83,7 +89,8 @@ public class MenuLihatKeranjang {
                     boolean hasilHapus = database.deleteKainKeranjang(listKeranjang.get(final_i).getKain().getId_kain(), CurrentUser.getInstance().getUser().getId_user());
                     if (hasilHapus) {
                         JOptionPane.showMessageDialog(null, "Kain Berhasil Dihapus Dari Keranjang", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
-                        frame.setVisible(true);
+                        frame.dispose();
+                        new MenuLihatKeranjang();
                     } else {
                         JOptionPane.showMessageDialog(null, "Kain Gagal Dihapus dari Keranjang", "Peringatan", JOptionPane.WARNING_MESSAGE);
                     }

@@ -72,8 +72,10 @@ public class MenuPilihMetodePembayaran {
                 Date date = new Date();
                 Timestamp timestamp2 = new Timestamp(date.getTime());
                 int totalBayar = totalBiayaPengiriman + controller.hitungTotalDetailTransaksi(listDetailTransaksi);
-                Transaksi curTransaksi = new Transaksi(idTransaksi, kurir, alamat, totalBayar, Progress.DIBUAT, tipeBayar, listDetailTransaksi,timestamp2);
-                sql.insertTransaksi(CurrentUser.getInstance().getUser().getId_user(),curTransaksi);
+                Transaksi curTransaksi = new Transaksi(idTransaksi, kurir, alamat, totalBayar, Progress.DIBUAT, tipeBayar, listDetailTransaksi, timestamp2);
+                sql.insertTransaksi(CurrentUser.getInstance().getUser().getId_user(), curTransaksi);
+                frame.dispose();
+                new MainMenuUser();
             }
         });
         frame.add(buttonPilihMetodePembayaran);
