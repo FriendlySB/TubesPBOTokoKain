@@ -78,7 +78,7 @@ public class MenuPilihAlamatMetodePengiriman {
             public void actionPerformed(ActionEvent e) {
                 if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
                     comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
-                    comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                    //comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                     comboAlamat.addItem("Ambil Di Toko");
                 } else if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
                     comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
@@ -100,11 +100,11 @@ public class MenuPilihAlamatMetodePengiriman {
                     }
                     if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
                         comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
-                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                        //comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                     }
                     if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
                         comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
-                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                        //comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                     }
                 } else if ("Tulis Alamat Berbeda".equals((String) comboAlamat.getSelectedItem())) {
                     labelAlamatTulis.setVisible(true);
@@ -115,11 +115,11 @@ public class MenuPilihAlamatMetodePengiriman {
                     }
                     if ("Bandung".equals((String) comboBandung.getSelectedItem())) {
                         comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
-                        comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                        //comboMetodePengiriman.addItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                     }
                     if ("Luar Bandung".equals((String) comboBandung.getSelectedItem())) {
                         comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PEGAWAI));
-                        comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
+                        //comboMetodePengiriman.removeItem(control.getTipePengiriman(TipePengiriman.PICKUP));
                     }
                 } else if ("Ambil Di Toko".equals((String) comboAlamat.getSelectedItem())) {
                     comboMetodePengiriman.removeAllItems();
