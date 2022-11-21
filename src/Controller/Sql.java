@@ -482,7 +482,7 @@ public class Sql {
             ResultSet rs = stmt.executeQuery(query);
             while (rs.next()) {
                 Keranjang curKeranjang = new Keranjang();
-                curKeranjang.setId_kain(rs.getString("id_kain"));
+                curKeranjang.setKain(getKain(rs.getString("id_kain")));
                 curKeranjang.setQuantity(rs.getInt("quantity"));
                 listKeranjang.add(curKeranjang);
             }
@@ -658,6 +658,7 @@ public class Sql {
         }
         return curTransaksi;
     }
+
     // Insert DetailTransaksi
     public static boolean insertDetailTransaksi(int id_transaksi, DetailTransaksi curDetail) {
         conn.connect();

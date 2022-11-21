@@ -45,11 +45,10 @@ public class Controller implements TipePengiriman {
     }
 
     public KainDibeli ubahKainKeranjangMenjadiKainDibeli(Keranjang curKeranjang) {
-        Sql sql = new Sql();
-        Kain curKain = sql.getKain(curKeranjang.getId_kain());
+        Kain curKain = curKeranjang.getKain();
         KainDibeli curKainDibeli = new KainDibeli();
 
-        curKainDibeli.setId_kain(curKeranjang.getId_kain());
+        curKainDibeli.setId_kain(curKeranjang.getKain().getId_kain());
         if (curKain instanceof KainCustom) {
             KainCustom curKainCustom = (KainCustom) curKain;
             curKainDibeli.setNama_kain(getNamaKainCustom(curKainCustom.getId_kain()));
@@ -159,9 +158,9 @@ public class Controller implements TipePengiriman {
 
     public void kurangiStokToko(Keranjang keranjang) {
         Sql sql = new Sql();
-        if (sql.getKain(keranjang.getId_kain()) instanceof KainToko) {
-            int totalStok = sql.countStockKain(keranjang.getId_kain()) - 1;
-            sql.updateStokKain(keranjang.getId_kain(), totalStok);
+        if (keranjang.getKain() instanceof KainToko) {
+            int totalStok = sql.countStockKain(keranjang.getKain().getId_kain()) - 1;
+            sql.updateStokKain(keranjang.getKain().getId_kain(), totalStok);
         }
     }
 
@@ -261,7 +260,7 @@ public class Controller implements TipePengiriman {
         Sql sql = new Sql();
         ArrayList<Keranjang> cart = new ArrayList<>(sql.getKeranjang(id_user));
         for (int i = 0; i < cart.size(); i++) {
-            if (id_kain.equals(cart.get(i).getId_kain())) {
+            if (id_kain.equals(cart.get(i).getKain().getId_kain())) {
                 return true;
             }
         }

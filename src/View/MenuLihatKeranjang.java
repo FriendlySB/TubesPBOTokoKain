@@ -4,6 +4,7 @@ import Controller.Controller;
 import Controller.Sql;
 import Model.CurrentUser;
 import Model.Kain;
+import Model.KainCustom;
 import Model.Keranjang;
 import Model.User;
 import Model.KainToko;
@@ -36,10 +37,10 @@ public class MenuLihatKeranjang {
         title.setBounds(10, 5, 300, 30);
         frame.add(title);
         for (int i = 0; i < listKeranjang.size(); i++) {
-            if (listKeranjang.get(i).getId_kain().contains("CUSTOM-")) {
-                checkBoxKeranjang.add(new JCheckBox(control.getNamaKainCustom(listKeranjang.get(i).getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
-            } else {
-                checkBoxKeranjang.add(new JCheckBox(control.getNamaKain(listKeranjang.get(i).getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
+            if (listKeranjang.get(i).getKain() instanceof KainCustom) {
+                checkBoxKeranjang.add(new JCheckBox(control.getNamaKainCustom(listKeranjang.get(i).getKain().getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
+            } else if (listKeranjang.get(i).getKain() instanceof KainToko) {
+                checkBoxKeranjang.add(new JCheckBox(control.getNamaKain(listKeranjang.get(i).getKain().getId_kain()) + "(" + listKeranjang.get(i).getQuantity() + ")"));
             }
             JButton buttonX = new JButton("x");
             buttonX.setForeground(Color.RED);
@@ -79,7 +80,7 @@ public class MenuLihatKeranjang {
             listButtonX.get(i).addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    boolean hasilHapus = database.deleteKainKeranjang(listKeranjang.get(final_i).getId_kain(), CurrentUser.getInstance().getUser().getId_user());
+                    boolean hasilHapus = database.deleteKainKeranjang(listKeranjang.get(final_i).getKain().getId_kain(), CurrentUser.getInstance().getUser().getId_user());
                     if (hasilHapus) {
                         JOptionPane.showMessageDialog(null, "Kain Berhasil Dihapus Dari Keranjang", "Berhasil", JOptionPane.INFORMATION_MESSAGE);
                         frame.setVisible(true);
