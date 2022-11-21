@@ -9,8 +9,11 @@ import Model.Keranjang;
 import Model.User;
 import Model.KainToko;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.ArrayList;
@@ -101,6 +104,12 @@ public class MenuLihatKeranjang {
                     } else {
                         JOptionPane.showMessageDialog(null, "Kain Gagal Dihapus dari Keranjang", "Peringatan", JOptionPane.WARNING_MESSAGE);
                     }
+                }
+            });
+            listButtonX.get(i).addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent evt) {
+                    listButtonX.get(final_i).setCursor(new Cursor(Cursor.HAND_CURSOR));
                 }
             });
         }
