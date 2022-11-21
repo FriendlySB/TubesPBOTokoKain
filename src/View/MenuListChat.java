@@ -6,7 +6,6 @@ import Model.Admin;
 import Model.CurrentUser;
 import Model.Customer;
 import Model.Message;
-import Model.User;
 import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.GridLayout;

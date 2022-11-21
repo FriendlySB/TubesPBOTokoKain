@@ -1,7 +1,6 @@
 package View;
 
 import javax.swing.*;
-import Controller.Sql;
 import Model.*;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;

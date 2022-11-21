@@ -3,7 +3,6 @@ package View;
 import Controller.Controller;
 import Controller.Sql;
 import Model.CurrentUser;
-import Model.Kain;
 import Model.KainCustom;
 import Model.Keranjang;
 import Model.User;
