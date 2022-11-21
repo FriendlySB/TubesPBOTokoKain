@@ -6,4 +6,5 @@ public interface TipePengiriman {
     final int GOJEK = 1;
     final int JNT = 2;
     final int PEGAWAI = 3;
+    final int PICKUP = 4;
 }
