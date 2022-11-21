@@ -32,7 +32,6 @@ import java.sql.PreparedStatement;
 
 public class Sql {
 
-    //static DatabaseHandler conn = new DatabaseHandler();
     public ArrayList<BahanKain> getAllBahan() {
         ArrayList<BahanKain> listBahan = new ArrayList();
         DatabaseHandler conn = new DatabaseHandler();
@@ -923,12 +922,16 @@ public class Sql {
     public boolean deleteKain(String idKain) {
         DatabaseHandler conn = new DatabaseHandler();
         conn.connect();
-        String query = "DELETE FROM kain where id_kain LIKE '%" + idKain + "%';";
+        String query = "DELETE FROM kain_custom where id_kain LIKE '%" + idKain + "%';";
         String query2 = "DELETE FROM kain_toko where id_kain LIKE '%" + idKain + "%';";
         try {
             PreparedStatement stmt = conn.con.prepareStatement(query);
             PreparedStatement stmt2 = conn.con.prepareStatement(query);
-            stmt2.executeUpdate(query2);
+            if(idKain.contains("CUSTOM")){
+                stmt.executeUpdate();
+            } else {
+                stmt2.executeUpdate(query2);
+            }
             conn.disconnect();
             return true;
         } catch (SQLException e) {

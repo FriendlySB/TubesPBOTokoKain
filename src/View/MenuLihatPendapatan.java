@@ -66,7 +66,7 @@ public class MenuLihatPendapatan {
             @Override
             public void windowClosing(WindowEvent e) {
                 frame.dispose();
-                new MainMenuUser();
+                new MainMenuAdmin();
             }
         });
     }

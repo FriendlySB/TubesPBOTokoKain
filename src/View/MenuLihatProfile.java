@@ -26,11 +26,11 @@ public class MenuLihatProfile {
         frame.add(labNama);
 
         JLabel namaLengkap = new JLabel(customer.getNama_lengkap());
-        namaLengkap.setBounds(120, 55, 100, 25);
+        namaLengkap.setBounds(120, 55, 250, 25);
         frame.add(namaLengkap);
 
         JLabel userName = new JLabel(customer.getUsername());
-        userName.setBounds(120, 20, 100, 25);
+        userName.setBounds(120, 20, 250, 25);
         frame.add(userName);
 
         JLabel labAlamat = new JLabel("Alamat: ");
@@ -38,7 +38,7 @@ public class MenuLihatProfile {
         frame.add(labAlamat);
 
         JLabel alamat = new JLabel(customer.getAlamat());
-        alamat.setBounds(120, 85, 70, 25);
+        alamat.setBounds(120, 85, 350, 25);
         frame.add(alamat);
 
         JLabel labEmail = new JLabel("Email :");
@@ -46,7 +46,7 @@ public class MenuLihatProfile {
         frame.add(labEmail);
 
         JLabel email = new JLabel(customer.getEmail());
-        email.setBounds(120, 115, 200, 25);
+        email.setBounds(120, 115, 250, 25);
         frame.add(email);
 
         JLabel labTelfon = new JLabel("No. Telepon: ");
@@ -54,7 +54,7 @@ public class MenuLihatProfile {
         frame.add(labTelfon);
 
         JLabel telfon = new JLabel(customer.getNoTelpon());
-        telfon.setBounds(120, 145, 100, 25);
+        telfon.setBounds(120, 145, 250, 25);
         frame.add(telfon);
         
         JButton edit = new JButton("Edit Data");

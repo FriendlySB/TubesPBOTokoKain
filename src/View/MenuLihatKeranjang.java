@@ -8,15 +8,20 @@ import Model.Keranjang;
 import Model.User;
 import Model.KainToko;
 import java.awt.Color;
+import java.awt.Cursor;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.util.ArrayList;
+import javax.swing.Box;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JMenuBar;
 import javax.swing.JOptionPane;
 
 
@@ -31,7 +36,8 @@ public class MenuLihatKeranjang {
         ArrayList<JButton> listButtonX = new ArrayList<>();
         if (listKeranjang.isEmpty()) {
             JOptionPane.showMessageDialog(null, "Keranjang Kosong", "Peringatan", JOptionPane.WARNING_MESSAGE);
-            new MenuLihatKeranjang();
+            new MainMenuUser();
+            return;
         }
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
@@ -80,8 +86,13 @@ public class MenuLihatKeranjang {
                         listKeranjangDipilih.add(listKeranjang.get(i));
                     }
                 }
-                frame.dispose();
-                new MenuPilihAlamatMetodePengiriman(listKeranjangDipilih);
+                if(listKeranjangDipilih.isEmpty()){
+                    JOptionPane.showMessageDialog(null, "Mohon memilih kain yang akan di check out", "Peringatan", JOptionPane.WARNING_MESSAGE);
+                } else {
+                    frame.dispose();
+                    new MenuPilihAlamatMetodePengiriman(listKeranjangDipilih);
+                }
+                
             }
         });
         frame.setVisible(true);
@@ -110,6 +121,18 @@ public class MenuLihatKeranjang {
                 }
             });
         }
+        JMenuBar mb = new JMenuBar();
+        JButton mainMenu = new JButton("Main Menu");
+        mainMenu.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                frame.dispose();
+                new MainMenuUser();
+            }
+        });
+        mb.add(Box.createGlue());
+        mb.add(mainMenu);
+        frame.setJMenuBar(mb);
         frame.addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
