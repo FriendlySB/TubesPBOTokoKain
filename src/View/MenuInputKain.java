@@ -153,7 +153,7 @@ public class MenuInputKain {
                             for (int j = 0; j < idMotif.size(); j++) {
                                 String idKain = Integer.toString(bahan.getId_bahan());
                                 MotifKain tempMotif = con.getMotif(idMotif.get(j));
-                                idKain += "-" + idWarna.get(j) + "-" + idMotif.get(i);
+                                idKain += "-" + idWarna.get(i) + "-" + idMotif.get(j);
                                 KainToko tempKain = new KainToko(tempMotif, tempWarna, bahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = Integer.toString(bahan.getId_bahan());
@@ -294,9 +294,9 @@ public class MenuInputKain {
                         for (int i = 0; i < idBahan.size(); i++) {
                             BahanKain tempBahan = con.getBahan(namaBahan.get(i));
                             for (int j = 0; j < idMotif.size(); j++) {
-                                String idKain = idBahan.get(j);
+                                String idKain = idBahan.get(i);
                                 MotifKain tempMotif = con.getMotif(namaMotif.get(j));
-                                idKain += "-" + warna.getId_warna() + "-" + idMotif.get(i);
+                                idKain += "-" + warna.getId_warna() + "-" + idMotif.get(j);
                                 KainToko tempKain = new KainToko(tempMotif, warna, tempBahan, 0, idKain);
                                 con.insertKain(tempKain, idKain);
                                 idKain = idBahan.get(j);
