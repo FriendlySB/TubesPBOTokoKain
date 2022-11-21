@@ -34,6 +34,7 @@ public class MenuPilihAlamatMetodePengiriman {
         JFrame frame = new JFrame();
         frame.setSize(600, 400);
         frame.setLayout(null);
+        frame.setLocationRelativeTo(null);
         frame.setTitle("Input Alamat & Metode Pengiriman");
         //Pilih Alamat
         JLabel labelBandung = new JLabel("Berada di");
@@ -126,7 +127,7 @@ public class MenuPilihAlamatMetodePengiriman {
                     new MenuPilihAlamatMetodePengiriman(listKeranjangDipilih);
                 } else if (konfirmasi == JOptionPane.OK_OPTION) {
                     frame.dispose();
-                    new MenuPilihMetodePembayaran(listKeranjangDipilih, metodePengiriman,Alamat,totalBiayaPengiriman);
+                    new MenuPilihMetodePembayaran(listKeranjangDipilih, metodePengiriman, Alamat, totalBiayaPengiriman);
                 }
             }
         });
