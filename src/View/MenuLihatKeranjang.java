@@ -19,6 +19,7 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+
 public class MenuLihatKeranjang {
 
     public MenuLihatKeranjang() {
@@ -100,6 +101,12 @@ public class MenuLihatKeranjang {
                     } else {
                         JOptionPane.showMessageDialog(null, "Kain Gagal Dihapus dari Keranjang", "Peringatan", JOptionPane.WARNING_MESSAGE);
                     }
+                }
+            });
+            listButtonX.get(i).addMouseListener(new MouseAdapter() {
+                @Override
+                public void mouseEntered(MouseEvent evt) {
+                    listButtonX.get(final_i).setCursor(new Cursor(Cursor.HAND_CURSOR));
                 }
             });
         }
