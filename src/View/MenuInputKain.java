@@ -143,8 +143,6 @@ public class MenuInputKain {
                                 WarnaKain tempWarna = con.getWarna(namaWarna.get(j));
                                 idKain += "-" + idWarna.get(j) + "-" + idMotif.get(i);
                                 KainToko tempKain = new KainToko(tempMotif, tempWarna, bahan, 0, idKain);
-                                System.out.println(tempMotif.getId_motif());
-                                System.out.println(tempWarna.getId_warna());
                                 con.insertKain(tempKain, idKain);
                                 idKain = Integer.toString(bahan.getId_bahan());
                             }
@@ -157,8 +155,6 @@ public class MenuInputKain {
                                 MotifKain tempMotif = con.getMotif(namaMotif.get(j));
                                 idKain += "-" + idWarna.get(i) + "-" + idMotif.get(j);
                                 KainToko tempKain = new KainToko(tempMotif, tempWarna, bahan, 0, idKain);
-                                System.out.println(tempMotif.getId_motif());
-                                System.out.println(tempWarna.getId_warna());
                                 con.insertKain(tempKain, idKain);
                                 idKain = Integer.toString(bahan.getId_bahan());
                             }
