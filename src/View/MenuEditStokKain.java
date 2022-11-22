@@ -9,6 +9,8 @@ import Controller.Controller;
 import Controller.Sql;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.ArrayList;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
@@ -104,6 +106,14 @@ public class MenuEditStokKain {
         f.add(spinnerStokBaru);
         f.add(buttonAddToCartToko);
         f.add(back);
+        
+        f.addWindowListener(new WindowAdapter() { 
+            @Override
+            public void windowClosing(WindowEvent e) {
+                f.dispose();
+                new MenuEditKain();
+            }
+        });
     }
 
    

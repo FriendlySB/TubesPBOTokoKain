@@ -73,7 +73,7 @@ public class Controller implements TipePengiriman {
         return curKainToko.getBahan().getHarga_bahan() + curKainToko.getWarna().getHarga_warna() + curKainToko.getMotif().getHarga_motif();
     }
 
-    //Contoh polymorphism
+    //Overloading
     public String createIDKain(BahanKain bahan, WarnaKain warna, MotifKain motif) {
         Sql sql = new Sql();
         String idKain = "";
